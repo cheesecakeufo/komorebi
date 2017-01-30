@@ -98,7 +98,7 @@ namespace Komorebi.OnScreen {
             // Read the config file
             var keyFile = new KeyFile();
 
-            keyFile.load_from_file("/System/Resources/Komorebi/cloudy_forest/config", KeyFileFlags.NONE);
+            keyFile.load_from_file("/System/Resources/Komorebi/dark_forest/config", KeyFileFlags.NONE);
 
             string animationMode = keyFile.get_string ("Komorebi", "AnimationMode");
 
@@ -108,13 +108,17 @@ namespace Komorebi.OnScreen {
             int dateTimeBoxMarginBottom = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginBottom");
             int dateTimeBoxMarginRight = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginRight");
 
+            string dateTimeBoxHAlign = keyFile.get_string ("Komorebi", "DateTimeBoxHAlign");
+            string dateTimeBoxVAlign = keyFile.get_string ("Komorebi", "DateTimeBoxVAlign");
+
+
 
             string timeLabelAlignment = keyFile.get_string ("Komorebi", "TimeLabelAlignment");
             string dateTimeColor = keyFile.get_string ("Komorebi", "DateTimeColor");
 
 
-            string timeLabelSize = "80";
-            string dateLabelSize = "60";
+            string timeLabelSize = keyFile.get_string ("Komorebi", "TimeLabelSize");
+            string dateLabelSize = keyFile.get_string ("Komorebi", "DateLabelSize");
 
 
             // DateTime box margins
@@ -122,6 +126,22 @@ namespace Komorebi.OnScreen {
             dateTimeBox.margin_top = dateTimeBoxMarginTop;
             dateTimeBox.margin_bottom = dateTimeBoxMarginBottom;
             dateTimeBox.margin_right = dateTimeBoxMarginRight;
+
+            // DateTime box alignments
+            if(dateTimeBoxHAlign == "start")
+                dateTimeBox.halign = Align.START;
+            else if(dateTimeBoxHAlign == "center")
+                dateTimeBox.halign = Align.CENTER;
+            else
+                dateTimeBox.halign = Align.END;
+
+
+            if(dateTimeBoxVAlign == "start")
+                dateTimeBox.valign = Align.START;
+            else if(dateTimeBoxVAlign == "center")
+                dateTimeBox.valign = Align.CENTER;
+            else
+                dateTimeBox.valign = Align.END;
 
 
             // Time label alignment
@@ -133,9 +153,9 @@ namespace Komorebi.OnScreen {
                 timeLabel.halign = Align.END;
 
 
-            loadBackground("cloudy_forest");
+            loadBackground("dark_forest");
             loadDateTime(dateTimeColor, timeLabelSize, dateLabelSize);
-            loadAssets("cloudy_forest", animationMode);
+            loadAssets("dark_forest", animationMode);
 
 
         }
@@ -169,7 +189,7 @@ namespace Komorebi.OnScreen {
 
                 case "clouds":
                     Acis.ApplyCSS({assetImage}, "*{
-                        animation: displace 7s linear infinite;
+                        animation: displace 100s linear infinite;
                         }
 
                         @keyframes displace {

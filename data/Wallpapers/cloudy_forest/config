@@ -8,7 +8,7 @@ DateTimeBoxMarginBottom=0
 DateTimeBoxMarginRight=0
 
 DateTimeBoxHAlign=center
-DateTimeBoxVAlign=center
+DateTimeBoxVAlign=start
 
 TimeLabelAlignment=center
 
