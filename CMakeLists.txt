@@ -47,4 +47,5 @@ install(TARGETS komorebi RUNTIME DESTINATION /System/Applications/)
 ######### Wallpapers ############
 install(DIRECTORY data/Wallpapers/cloudy_forest/ DESTINATION /System/Resources/Komorebi/cloudy_forest)
 install(DIRECTORY data/Wallpapers/dark_forest/ DESTINATION /System/Resources/Komorebi/dark_forest)
+install(DIRECTORY data/Wallpapers/sunny_sand/ DESTINATION /System/Resources/Komorebi/sunny_sand)
 

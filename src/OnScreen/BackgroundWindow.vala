@@ -52,6 +52,9 @@ namespace Komorebi.OnScreen {
         int screenWidth =  Gdk.Screen.get_default ().width();
 
 
+        // Time updater
+        uint timeout;
+
         public BackgroundWindow () {
 
             title = "Background";
@@ -76,7 +79,7 @@ namespace Komorebi.OnScreen {
             dateTimeBox.halign = Align.START;
             dateTimeBox.valign = Align.CENTER;
 
-            initializeBackground();
+            initializeBackground("sunny_sand");
 
             // Add Widgets
             dateTimeBox.add(timeLabel);
@@ -93,12 +96,12 @@ namespace Komorebi.OnScreen {
             add(lowerOverlay);
         }
 
-        void initializeBackground () {
+        void initializeBackground (string backgroundName) {
 
             // Read the config file
             var keyFile = new KeyFile();
 
-            keyFile.load_from_file("/System/Resources/Komorebi/dark_forest/config", KeyFileFlags.NONE);
+            keyFile.load_from_file(@"/System/Resources/Komorebi/$backgroundName/config", KeyFileFlags.NONE);
 
             string animationMode = keyFile.get_string ("Komorebi", "AnimationMode");
 
@@ -110,7 +113,6 @@ namespace Komorebi.OnScreen {
 
             string dateTimeBoxHAlign = keyFile.get_string ("Komorebi", "DateTimeBoxHAlign");
             string dateTimeBoxVAlign = keyFile.get_string ("Komorebi", "DateTimeBoxVAlign");
-
 
 
             string timeLabelAlignment = keyFile.get_string ("Komorebi", "TimeLabelAlignment");
@@ -152,10 +154,13 @@ namespace Komorebi.OnScreen {
             else
                 timeLabel.halign = Align.END;
 
+            // Cancel any previous timeout
+            if(timeout > 0)
+                Source.remove(timeout);
 
-            loadBackground("dark_forest");
+            loadBackground(backgroundName);
             loadDateTime(dateTimeColor, timeLabelSize, dateLabelSize);
-            loadAssets("dark_forest", animationMode);
+            loadAssets(backgroundName, animationMode);
 
 
         }
@@ -170,10 +175,22 @@ namespace Komorebi.OnScreen {
 
         void loadDateTime(string color, string timeSize, string dateSize) {
 
-            timeLabel.set_markup(@"<span color='$color' font='Lato Hairline $timeSize'>12:04am</span>");
-            dateLabel.set_markup(@"<span color='$color' font='Lato Hairline $dateSize'>October 8, 2017</span>");
+            timeLabel.set_markup(@"<span color='$color' font='Lato Light $timeSize'></span>");
+            dateLabel.set_markup(@"<span color='$color' font='Lato Light $dateSize'></span>");
 
 
+            timeout = Timeout.add(60, () => {
+
+                var glibTime = new GLib.DateTime.now_local().format("%l:%M %p");
+                var glibDate = new GLib.DateTime.now_local().format("%A, %B %e");
+
+                timeLabel.set_markup(@"<span color='$color' font='Lato Light $timeSize'>$glibTime</span>");
+                dateLabel.set_markup(@"<span color='$color' font='Lato Light $dateSize'>$glibDate</span>");
+
+      
+                return true;
+
+            });
 
 
         }
