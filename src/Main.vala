@@ -16,9 +16,9 @@
 // 
 
 using Acis;
-using Tempo.OnScreen;
+using Komorebi.OnScreen;
 
-namespace Tempo {
+namespace Komorebi {
 
     BackgroundWindow backgroundWindow;
 
@@ -53,7 +53,7 @@ namespace Tempo {
     public static void main (string [] args) {
         
         /* Be nice to log-watchers */
-        PrintWelcome("Tempo", COLOR.Red);
+        PrintWelcome("Komorebi", COLOR.Red);
 
         // Setup our output text shape
         if(args[1] == "--debug" || args[1] == "debug")

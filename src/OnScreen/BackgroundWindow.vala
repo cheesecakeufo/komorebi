@@ -95,23 +95,33 @@ namespace Komorebi.OnScreen {
 
         void initializeBackground () {
 
-            string dateTimeBoxMarginLeft = "50";
-            string dateTimeBoxMarginTop = "0";
-            string dateTimeBoxMarginBottom = "0";
-            string dateTimeBoxMarginRight = "0";
+            // Read the config file
+            var keyFile = new KeyFile();
 
-            string timeLabelAlignment = "start";
+            keyFile.load_from_file("/System/Resources/Komorebi/cloudy_forest/config", KeyFileFlags.NONE);
 
-            string dateTimeColor = "white";
+            string animationMode = keyFile.get_string ("Komorebi", "AnimationMode");
+
+
+            int dateTimeBoxMarginLeft = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginLeft");
+            int dateTimeBoxMarginTop = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginTop");
+            int dateTimeBoxMarginBottom = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginBottom");
+            int dateTimeBoxMarginRight = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginRight");
+
+
+            string timeLabelAlignment = keyFile.get_string ("Komorebi", "TimeLabelAlignment");
+            string dateTimeColor = keyFile.get_string ("Komorebi", "DateTimeColor");
+
+
             string timeLabelSize = "80";
             string dateLabelSize = "60";
 
 
             // DateTime box margins
-            dateTimeBox.margin_left = dateTimeBoxMarginLeft.to_int();
-            dateTimeBox.margin_top = dateTimeBoxMarginTop.to_int();
-            dateTimeBox.margin_bottom = dateTimeBoxMarginBottom.to_int();
-            dateTimeBox.margin_right = dateTimeBoxMarginRight.to_int();
+            dateTimeBox.margin_left = dateTimeBoxMarginLeft;
+            dateTimeBox.margin_top = dateTimeBoxMarginTop;
+            dateTimeBox.margin_bottom = dateTimeBoxMarginBottom;
+            dateTimeBox.margin_right = dateTimeBoxMarginRight;
 
 
             // Time label alignment
@@ -123,16 +133,16 @@ namespace Komorebi.OnScreen {
                 timeLabel.halign = Align.END;
 
 
-            loadBackground();
+            loadBackground("cloudy_forest");
             loadDateTime(dateTimeColor, timeLabelSize, dateLabelSize);
-            loadAssets();
+            loadAssets("cloudy_forest", animationMode);
 
 
         }
 
-        void loadBackground() {
+        void loadBackground(string backgroundName) {
 
-            backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale("/System/Resources/Komorebi/dark_forest/bg.jpg", screenWidth, screenHeight, false);
+            backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth, screenHeight, false);
             backgroundImage.set_from_pixbuf(backgroundPixbuf);
 
 
@@ -148,15 +158,14 @@ namespace Komorebi.OnScreen {
 
         }
 
-        void loadAssets() {
+        void loadAssets(string backgroundName, string animationMode) {
 
-            assetPixbuf = new Gdk.Pixbuf.from_file_at_scale("/System/Resources/Komorebi/dark_forest/assets.png", screenWidth, screenHeight, false);
+            assetPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/assets.png", screenWidth, screenHeight, false);
             assetImage.set_from_pixbuf(assetPixbuf);
 
-            var animation = "noanimation";
 
             // Load animation
-            switch (animation) {
+            switch (animationMode) {
 
                 case "clouds":
                     Acis.ApplyCSS({assetImage}, "*{
