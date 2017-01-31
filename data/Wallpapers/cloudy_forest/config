@@ -1,6 +1,7 @@
 [Komorebi]
 
 AnimationMode=clouds
+Parallax=true
 
 DateTimeBoxMarginLeft=0
 DateTimeBoxMarginTop=60
@@ -15,5 +16,5 @@ TimeLabelAlignment=center
 DateTimeColor=black
 DateTimeShadow=none
 
-TimeLabelSize=80
-DateLabelSize=60
+TimeLabelFont=Lato Hairline 80
+DateLabelFont=Lato Hairline 60

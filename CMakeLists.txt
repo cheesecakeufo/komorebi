@@ -27,6 +27,7 @@ vala_precompile(VALA_C
     src/Main.vala
 
     src/OnScreen/BackgroundWindow.vala
+    src/OnScreen/DateTimeBox.vala
     
 PACKAGES
 	acis
@@ -48,4 +49,5 @@ install(TARGETS komorebi RUNTIME DESTINATION /System/Applications/)
 install(DIRECTORY data/Wallpapers/cloudy_forest/ DESTINATION /System/Resources/Komorebi/cloudy_forest)
 install(DIRECTORY data/Wallpapers/dark_forest/ DESTINATION /System/Resources/Komorebi/dark_forest)
 install(DIRECTORY data/Wallpapers/sunny_sand/ DESTINATION /System/Resources/Komorebi/sunny_sand)
+install(DIRECTORY data/Wallpapers/foggy_sunny_mountain/ DESTINATION /System/Resources/Komorebi/foggy_sunny_mountain)
 

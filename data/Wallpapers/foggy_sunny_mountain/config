@@ -1,0 +1,22 @@
+#URL: https://www.pexels.com/photo/silhouette-of-trees-at-sunset-257092/
+
+[Komorebi]
+
+AnimationMode=light
+Parallax=false
+
+DateTimeBoxMarginLeft=0
+DateTimeBoxMarginTop=0
+DateTimeBoxMarginBottom=0
+DateTimeBoxMarginRight=0
+
+DateTimeBoxHAlign=center
+DateTimeBoxVAlign=center
+
+TimeLabelAlignment=center
+
+DateTimeColor=white
+DateTimeShadow=0px 4px 3px rgba(127,60,93,0.7)
+
+TimeLabelFont=Lato Light 50
+DateLabelFont=Lato Light 30

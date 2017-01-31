@@ -36,11 +36,10 @@ namespace Komorebi.OnScreen {
 
         // Contains Date and time box 
         Gtk.Box higherBox = new Box(Orientation.VERTICAL, 5);
+        Gtk.Fixed dateTimeFixed = new Fixed();
 
-        // Date and time labels box
-        Gtk.Box dateTimeBox = new Box(Orientation.VERTICAL, 5);
-        Gtk.Label timeLabel = new Label("12:04am");
-        Gtk.Label dateLabel = new Label("October, 8th 2017");
+        // Date and time box itself
+        DateTimeBox dateTimeBox = new DateTimeBox();
 
         // Asset Image
         Image assetImage = new Image();
@@ -51,9 +50,12 @@ namespace Komorebi.OnScreen {
         int screenHeight = Gdk.Screen.get_default ().height();
         int screenWidth =  Gdk.Screen.get_default ().width();
 
+        // Current animation mode
+        string currentAnimationMode = "none";
 
-        // Time updater
-        uint timeout;
+        // Light asset time updater
+        public uint lightTimeout;
+
 
         public BackgroundWindow () {
 
@@ -62,13 +64,15 @@ namespace Komorebi.OnScreen {
             resizable = false;
             // set_type_hint(WindowTypeHint.DESKTOP);
             // set_keep_below(true);
-            // app_paintable = false;
+            app_paintable = false;
             // skip_pager_hint = true;
             // skip_taskbar_hint = true;
             accept_focus = true;
             stick ();
             decorated = false;
-
+            add_events (EventMask.ENTER_NOTIFY_MASK   |
+                        EventMask.POINTER_MOTION_MASK |
+                        EventMask.SMOOTH_SCROLL_MASK);
             // Setup Widgets
 
             // Properties
@@ -77,21 +81,20 @@ namespace Komorebi.OnScreen {
 
             dateTimeBox.halign = Align.START;
             dateTimeBox.valign = Align.CENTER;
+            dateTimeFixed.hexpand = false;
 
 
-            initializeBackground("cloudy_forest");
+            initializeBackground("sunny_sand");
 
             // Add Widgets
-            dateTimeBox.add(timeLabel);
-            dateTimeBox.add(dateLabel);
+            dateTimeFixed.put(dateTimeBox, 0, 0);
 
-            higherBox.pack_start(dateTimeBox);
-
-            higherOverlay.add(higherBox);
+            higherOverlay.add(dateTimeFixed);
             higherOverlay.add_overlay(assetImage);
 
             lowerOverlay.add(backgroundImage);
             lowerOverlay.add_overlay(higherOverlay);
+
 
             add(lowerOverlay);
         }
@@ -103,7 +106,8 @@ namespace Komorebi.OnScreen {
 
             keyFile.load_from_file(@"/System/Resources/Komorebi/$backgroundName/config", KeyFileFlags.NONE);
 
-            string animationMode = keyFile.get_string ("Komorebi", "AnimationMode");
+            currentAnimationMode = keyFile.get_string ("Komorebi", "AnimationMode");
+            bool parallax = keyFile.get_boolean ("Komorebi", "Parallax");
 
 
             int dateTimeBoxMarginLeft = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginLeft");
@@ -120,54 +124,76 @@ namespace Komorebi.OnScreen {
             string dateTimeColor = keyFile.get_string ("Komorebi", "DateTimeColor");
             string dateTimeShadow = keyFile.get_string ("Komorebi", "DateTimeShadow");
 
-
-            string timeLabelSize = keyFile.get_string ("Komorebi", "TimeLabelSize");
-            string dateLabelSize = keyFile.get_string ("Komorebi", "DateLabelSize");
-
+            string timeLabelFont = keyFile.get_string ("Komorebi", "TimeLabelFont");
+            string dateLabelFont = keyFile.get_string ("Komorebi", "DateLabelFont");
 
             // DateTime labels shadow
-            Acis.ApplyCSS({timeLabel, dateLabel}, @"*{text-shadow: $dateTimeShadow;}");
-
+            Acis.ApplyCSS({dateTimeBox.timeLabel, dateTimeBox.dateLabel}, @"*{text-shadow: $dateTimeShadow;}");
 
 
             // DateTime box margins
-            dateTimeBox.margin_left = dateTimeBoxMarginLeft;
-            dateTimeBox.margin_top = dateTimeBoxMarginTop;
-            dateTimeBox.margin_bottom = dateTimeBoxMarginBottom;
-            dateTimeBox.margin_right = dateTimeBoxMarginRight;
+            dateTimeFixed.margin_left = dateTimeBoxMarginLeft;
+            dateTimeFixed.margin_top = dateTimeBoxMarginTop;
+            dateTimeFixed.margin_bottom = dateTimeBoxMarginBottom;
+            dateTimeFixed.margin_right = dateTimeBoxMarginRight;
 
             // DateTime box alignments
             if(dateTimeBoxHAlign == "start")
-                dateTimeBox.halign = Align.START;
+                dateTimeFixed.halign = Align.START;
             else if(dateTimeBoxHAlign == "center")
-                dateTimeBox.halign = Align.CENTER;
+                dateTimeFixed.halign = Align.CENTER;
             else
-                dateTimeBox.halign = Align.END;
+                dateTimeFixed.halign = Align.END;
 
 
             if(dateTimeBoxVAlign == "start")
-                dateTimeBox.valign = Align.START;
+                dateTimeFixed.valign = Align.START;
             else if(dateTimeBoxVAlign == "center")
-                dateTimeBox.valign = Align.CENTER;
+                dateTimeFixed.valign = Align.CENTER;
             else
-                dateTimeBox.valign = Align.END;
+                dateTimeFixed.valign = Align.END;
 
 
             // Time label alignment
             if(timeLabelAlignment == "start")
-                timeLabel.halign = Align.START;
+                dateTimeBox.timeLabel.halign = Align.START;
             else if(timeLabelAlignment == "center")
-                timeLabel.halign = Align.CENTER;
+                dateTimeBox.timeLabel.halign = Align.CENTER;
             else
-                timeLabel.halign = Align.END;
+                dateTimeBox.timeLabel.halign = Align.END;
 
             // Cancel any previous timeout
-            if(timeout > 0)
-                Source.remove(timeout);
+            if(dateTimeBox.timeout > 0)
+                Source.remove(dateTimeBox.timeout);
+
+            if(lightTimeout > 0)
+                Source.remove(lightTimeout);
 
             loadBackground(backgroundName);
-            loadDateTime(dateTimeColor, timeLabelSize, dateLabelSize);
-            loadAssets(backgroundName, animationMode);
+            dateTimeBox.loadDateTime(dateTimeColor, timeLabelFont, dateLabelFont);
+            loadAssets(backgroundName, currentAnimationMode);
+
+            // Animation if parallax is enabled
+            if(parallax) {
+
+
+                motion_notify_event.connect((event) => {
+
+                    // Calculate the percentage of how far the cursor is
+                    // from the edges of the screen
+                    var x = (int)((event.x / screenWidth) * 100) / 15;
+                    var y = (int)((event.y / screenHeight) * 100) / 15;
+
+
+                    dateTimeFixed.move(dateTimeBox, -x, -y);
+
+
+                    return true;
+                });
+
+
+
+            }
 
 
         }
@@ -180,30 +206,14 @@ namespace Komorebi.OnScreen {
 
         }
 
-        void loadDateTime(string color, string timeSize, string dateSize) {
-
-
-            timeout = Timeout.add(60, () => {
-
-                var glibTime = new GLib.DateTime.now_local().format("%l:%M %p");
-                var glibDate = new GLib.DateTime.now_local().format("%A, %B %e");
-
-                timeLabel.set_markup(@"<span color='$color' font='Lato Hairline $timeSize'>$glibTime</span>");
-                dateLabel.set_markup(@"<span color='$color' font='Lato Hairline $dateSize'>$glibDate</span>");
-
-      
-                return true;
-
-            });
-
-
-        }
 
         void loadAssets(string backgroundName, string animationMode) {
 
+            // assets aren't allowed in 'light'
+            // mode. Use CSS gradient instead
             assetPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/assets.png", screenWidth, screenHeight, false);
             assetImage.set_from_pixbuf(assetPixbuf);
-
+            
 
             // Load animation
             switch (animationMode) {
@@ -220,6 +230,45 @@ namespace Komorebi.OnScreen {
                             75% { padding-left: 664px }
                             100% { padding-left: 0; }
                         }");
+                    break;
+
+                case "light":
+
+                    assetImage.set_opacity(0.0);
+
+                    var revealing = true;
+
+                    lightTimeout = Timeout.add(40, () => {
+
+                        var currentOpacity = assetImage.get_opacity();
+
+                        if(revealing) {
+
+                            if(currentOpacity > 0.9) {
+                                revealing = false;
+                                return true;
+                            } else {
+                                currentOpacity += 0.01;
+                            }
+
+                        } else {
+
+                            if(currentOpacity < 0.1) {
+                                revealing = true;
+                                return true;
+                            } else {
+                                currentOpacity -= 0.01;
+                            }
+
+                        }
+                        
+
+                        assetImage.set_opacity(currentOpacity);
+
+                        return true;
+
+                    });
+
                     break;
 
                 case "noanimation":
