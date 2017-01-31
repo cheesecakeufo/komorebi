@@ -50,4 +50,6 @@ install(DIRECTORY data/Wallpapers/cloudy_forest/ DESTINATION /System/Resources/K
 install(DIRECTORY data/Wallpapers/dark_forest/ DESTINATION /System/Resources/Komorebi/dark_forest)
 install(DIRECTORY data/Wallpapers/sunny_sand/ DESTINATION /System/Resources/Komorebi/sunny_sand)
 install(DIRECTORY data/Wallpapers/foggy_sunny_mountain/ DESTINATION /System/Resources/Komorebi/foggy_sunny_mountain)
+install(DIRECTORY data/Wallpapers/abstract_light_lines/ DESTINATION /System/Resources/Komorebi/abstract_light_lines)
+install(DIRECTORY data/Wallpapers/city_lights/ DESTINATION /System/Resources/Komorebi/city_lights)
 

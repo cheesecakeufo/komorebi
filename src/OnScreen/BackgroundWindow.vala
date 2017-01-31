@@ -84,7 +84,7 @@ namespace Komorebi.OnScreen {
             dateTimeFixed.hexpand = false;
 
 
-            initializeBackground("sunny_sand");
+            initializeBackground("city_lights");
 
             // Add Widgets
             dateTimeFixed.put(dateTimeBox, 0, 0);

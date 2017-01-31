@@ -1,0 +1,22 @@
+#URL: https://www.pexels.com/photo/lights-blue-dark-32997/
+
+[Komorebi]
+
+AnimationMode=light
+Parallax=false
+
+DateTimeBoxMarginLeft=0
+DateTimeBoxMarginTop=0
+DateTimeBoxMarginBottom=80
+DateTimeBoxMarginRight=0
+
+DateTimeBoxHAlign=center
+DateTimeBoxVAlign=end
+
+TimeLabelAlignment=center
+
+DateTimeColor=white
+DateTimeShadow=none
+
+TimeLabelFont=Lato Light 50
+DateLabelFont=Lato Light 30
