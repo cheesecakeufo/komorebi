@@ -62,7 +62,7 @@ namespace Komorebi.OnScreen {
             resizable = false;
             // set_type_hint(WindowTypeHint.DESKTOP);
             // set_keep_below(true);
-            app_paintable = false;
+            // app_paintable = false;
             // skip_pager_hint = true;
             // skip_taskbar_hint = true;
             accept_focus = true;
@@ -75,11 +75,11 @@ namespace Komorebi.OnScreen {
             higherBox.hexpand = true;
             higherBox.vexpand = true;
 
-            dateTimeBox.margin_top = 80;
             dateTimeBox.halign = Align.START;
             dateTimeBox.valign = Align.CENTER;
 
-            initializeBackground("sunny_sand");
+
+            initializeBackground("cloudy_forest");
 
             // Add Widgets
             dateTimeBox.add(timeLabel);
@@ -116,11 +116,18 @@ namespace Komorebi.OnScreen {
 
 
             string timeLabelAlignment = keyFile.get_string ("Komorebi", "TimeLabelAlignment");
+            
             string dateTimeColor = keyFile.get_string ("Komorebi", "DateTimeColor");
+            string dateTimeShadow = keyFile.get_string ("Komorebi", "DateTimeShadow");
 
 
             string timeLabelSize = keyFile.get_string ("Komorebi", "TimeLabelSize");
             string dateLabelSize = keyFile.get_string ("Komorebi", "DateLabelSize");
+
+
+            // DateTime labels shadow
+            Acis.ApplyCSS({timeLabel, dateLabel}, @"*{text-shadow: $dateTimeShadow;}");
+
 
 
             // DateTime box margins
@@ -175,17 +182,14 @@ namespace Komorebi.OnScreen {
 
         void loadDateTime(string color, string timeSize, string dateSize) {
 
-            timeLabel.set_markup(@"<span color='$color' font='Lato Light $timeSize'></span>");
-            dateLabel.set_markup(@"<span color='$color' font='Lato Light $dateSize'></span>");
-
 
             timeout = Timeout.add(60, () => {
 
                 var glibTime = new GLib.DateTime.now_local().format("%l:%M %p");
                 var glibDate = new GLib.DateTime.now_local().format("%A, %B %e");
 
-                timeLabel.set_markup(@"<span color='$color' font='Lato Light $timeSize'>$glibTime</span>");
-                dateLabel.set_markup(@"<span color='$color' font='Lato Light $dateSize'>$glibDate</span>");
+                timeLabel.set_markup(@"<span color='$color' font='Lato Hairline $timeSize'>$glibTime</span>");
+                dateLabel.set_markup(@"<span color='$color' font='Lato Hairline $dateSize'>$glibDate</span>");
 
       
                 return true;

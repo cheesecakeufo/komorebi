@@ -3,7 +3,7 @@
 AnimationMode=clouds
 
 DateTimeBoxMarginLeft=0
-DateTimeBoxMarginTop=80
+DateTimeBoxMarginTop=60
 DateTimeBoxMarginBottom=0
 DateTimeBoxMarginRight=0
 
@@ -13,6 +13,7 @@ DateTimeBoxVAlign=start
 TimeLabelAlignment=center
 
 DateTimeColor=black
+DateTimeShadow=none
 
 TimeLabelSize=80
 DateLabelSize=60
