@@ -1,0 +1,25 @@
+[Komorebi]
+
+AnimationMode=gradient
+AnimationSpeed=20
+Parallax=true
+
+GradientBackground=#2982bf;;#b94491;;#b94491;;#2982bf
+
+DateTimeBoxMarginLeft=50
+DateTimeBoxMarginTop=0
+DateTimeBoxMarginBottom=0
+DateTimeBoxMarginRight=0
+
+DateTimeBoxHAlign=start
+DateTimeBoxVAlign=center
+
+TimeLabelAlignment=start
+
+DateTimeBoxOnTop=false
+
+DateTimeColor=white
+DateTimeShadow=0px 4px 3px rgba(0,0,0,0.4),0px 8px 13px rgba(0,0,0,0.1),0px 18px 23px rgba(0,0,0,0.1)
+
+TimeLabelFont=Lato Regular 50
+DateLabelFont=Lato Hairline 40

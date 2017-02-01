@@ -53,6 +53,9 @@ namespace Komorebi.OnScreen {
         // Current animation mode
         string currentAnimationMode = "none";
 
+        // Gradient bg animation (if available)
+        string gradientBackground = "";
+
         // Light asset time updater
         public uint lightTimeout;
 
@@ -73,7 +76,6 @@ namespace Komorebi.OnScreen {
             add_events (EventMask.ENTER_NOTIFY_MASK   |
                         EventMask.POINTER_MOTION_MASK |
                         EventMask.SMOOTH_SCROLL_MASK);
-            // Setup Widgets
 
             // Properties
             higherBox.hexpand = true;
@@ -84,7 +86,7 @@ namespace Komorebi.OnScreen {
             dateTimeFixed.hexpand = false;
 
 
-            initializeBackground("day_night_mountain");
+            initializeBackground("dark_night_gradient");
 
 
 
@@ -122,7 +124,7 @@ namespace Komorebi.OnScreen {
             string dateLabelFont = keyFile.get_string ("Komorebi", "DateLabelFont");
 
             // DateTime labels shadow
-            Acis.ApplyCSS({dateTimeBox.timeLabel, dateTimeBox.dateLabel}, @"*{text-shadow: $dateTimeShadow;}");
+            ApplyCSS({dateTimeBox.timeLabel, dateTimeBox.dateLabel}, @"*{text-shadow: $dateTimeShadow;}");
 
 
             // DateTime box margins
@@ -163,8 +165,11 @@ namespace Komorebi.OnScreen {
             if(lightTimeout > 0)
                 Source.remove(lightTimeout);
 
-            addWidgets(dateTimeBoxOnTop);
-            loadBackground(backgroundName);
+            if(currentAnimationMode == "gradient")
+                gradientBackground = keyFile.get_string ("Komorebi", "GradientBackground");
+
+            addWidgets(dateTimeBoxOnTop, currentAnimationMode);
+            loadBackground(backgroundName, currentAnimationMode);
             dateTimeBox.loadDateTime(dateTimeColor, timeLabelFont, dateLabelFont);
             loadAssets(backgroundName, currentAnimationMode, animationSpeed);
 
@@ -193,33 +198,44 @@ namespace Komorebi.OnScreen {
 
         }
 
-        void addWidgets(bool dateTimeBoxOnTop) {
+        void addWidgets(bool dateTimeBoxOnTop, string animationMode) {
 
             dateTimeFixed.put(dateTimeBox, 0, 0);
 
-            // Determine whether we should place the date and time on the top or not
-            if(dateTimeBoxOnTop) {
-                higherOverlay.add(assetImage);
-                higherOverlay.add_overlay(dateTimeFixed);
+            // Anything that's not gradient
+            // is added normally
+            if(animationMode != "gradient") {
 
-            } else {
-                higherOverlay.add(dateTimeFixed);
-                higherOverlay.add_overlay(assetImage);
+                // Determine whether we should place the date and time on the top or not
+                if(dateTimeBoxOnTop) {
+                    higherOverlay.add(assetImage);
+                    higherOverlay.add_overlay(dateTimeFixed);
+
+                } else {
+                    higherOverlay.add(dateTimeFixed);
+                    higherOverlay.add_overlay(assetImage);
+
+                }
+
+                lowerOverlay.add(backgroundImage);
+                lowerOverlay.add_overlay(higherOverlay);
+
+            } else { // Gradient is a different story
+
+
+                lowerOverlay.add(dateTimeFixed);
+
 
             }
 
-            lowerOverlay.add(backgroundImage);
-            lowerOverlay.add_overlay(higherOverlay);
-
-
-
         }
 
-        void loadBackground(string backgroundName) {
+        void loadBackground(string backgroundName, string animationMode) {
 
-            backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth, screenHeight, false);
-            backgroundImage.set_from_pixbuf(backgroundPixbuf);
-
+            if(animationMode != "gradient") {
+                backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth, screenHeight, false);
+                backgroundImage.set_from_pixbuf(backgroundPixbuf);
+            }
 
         }
 
@@ -228,7 +244,7 @@ namespace Komorebi.OnScreen {
 
             // assets aren't allowed in 'gradient'
             // mode. Use CSS gradient instead
-            if(animationMode == "gradient") {
+            if(animationMode != "gradient") {
                 assetPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/assets.png", screenWidth, screenHeight, false);
                 assetImage.set_from_pixbuf(assetPixbuf);
             }
@@ -237,7 +253,7 @@ namespace Komorebi.OnScreen {
             switch (animationMode) {
 
                 case "clouds":
-                    Acis.ApplyCSS({assetImage}, @"*{
+                    ApplyCSS({assetImage}, @"*{
                         animation: displace $(animationSpeed.to_string())s linear infinite;
                         }
 
@@ -290,6 +306,23 @@ namespace Komorebi.OnScreen {
                     break;
 
                 case "gradient":
+
+                    string fromColor = gradientBackground.split(";;")[0];
+                    string toColor = gradientBackground.split(";;")[1];
+
+                    string secondFromColor = gradientBackground.split(";;")[2];
+                    string secondToColor = gradientBackground.split(";;")[3];
+
+                    ApplyCSS({this}, @"*{
+                        animation: scale $(animationSpeed.to_string())s ease-out 1;
+                        animation-iteration-count: infinite;
+                        }
+
+                        @keyframes scale {
+                            0% { background-image: -gtk-gradient (linear, left top, right top, from ($(fromColor)), to ($(toColor))); }
+                            50% { background-image: -gtk-gradient (linear, left top, right top, from ($(secondFromColor)), to ($(secondToColor))); }
+                            100% { background-image: -gtk-gradient (linear, left top, right top, from ($(fromColor)), to ($(toColor))); }
+                        }");
                     break;
 
                 case "noanimation":
@@ -325,6 +358,17 @@ namespace Komorebi.OnScreen {
 
         }
 
+        /* TAKEN FROM ACIS --- Until Acis is public */
+        /* Applies CSS theming for specified GTK+ Widget */
+        public void ApplyCSS (Widget[] widgets, string CSS) {
+
+            var Provider = new Gtk.CssProvider ();
+            Provider.load_from_data (CSS, -1);
+
+            foreach(var widget in widgets)
+                widget.get_style_context().add_provider(Provider,-1);
+
+        }
 
 
     }

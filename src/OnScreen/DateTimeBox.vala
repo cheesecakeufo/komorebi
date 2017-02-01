@@ -15,7 +15,6 @@
 
 using Gtk;
 using Cairo;
-using Acis;
 
 namespace Komorebi.OnScreen {
 

@@ -15,45 +15,46 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // 
 
-using Acis;
 using Komorebi.OnScreen;
 
 namespace Komorebi {
 
     BackgroundWindow backgroundWindow;
 
-    /* Wether to debug or not */
+    /* Whether to debug or not */
     bool Debug = false;
 
     public static void ManageOutput (string? d, LogLevelFlags flags, string msg) {
 
-        switch (flags) {
+        // switch (flags) {
 
-            case LogLevelFlags.LEVEL_ERROR:
-                LogEvent (msg, true);
-                break;
+        //     case LogLevelFlags.LEVEL_ERROR:
+        //         //LogEvent (msg, true);
+        //         break;
             
-            case LogLevelFlags.LEVEL_INFO:
-            case LogLevelFlags.LEVEL_CRITICAL:
-            case LogLevelFlags.LEVEL_MESSAGE:
-            case LogLevelFlags.LEVEL_DEBUG:
-            case LogLevelFlags.LEVEL_WARNING:
-                if(Debug)
-                    LogEvent (msg, false);
-            break;
+        //     case LogLevelFlags.LEVEL_INFO:
+        //     case LogLevelFlags.LEVEL_CRITICAL:
+        //     case LogLevelFlags.LEVEL_MESSAGE:
+        //     case LogLevelFlags.LEVEL_DEBUG:
+        //     case LogLevelFlags.LEVEL_WARNING:
+        //         if(Debug)
+        //             //LogEvent (msg, false);
+        //     break;
 
-            default:
-                LogEvent (msg, false);
-                break;
-        }
+        //     default:
+        //         //LogEvent (msg, false);
+        //         break;
+        // }
 
 
     }
 
     public static void main (string [] args) {
         
+        // TODO: Update after Acis is out
         /* Be nice to log-watchers */
-        PrintWelcome("Komorebi", COLOR.Red);
+        // PrintWelcome("Komorebi", COLOR.Red);
+        print("Welcome to Komorebi\n");
 
         // Setup our output text shape
         if(args[1] == "--debug" || args[1] == "debug")
@@ -64,7 +65,8 @@ namespace Komorebi {
             return;
         }
 
-        Log.set_default_handler(ManageOutput);
+        // TODO: Update after Acis is out
+        //Log.set_default_handler(ManageOutput);
 
 
         Gtk.init (ref args);
@@ -72,9 +74,10 @@ namespace Komorebi {
         backgroundWindow = new BackgroundWindow();
         backgroundWindow.fadeIn();
 
+        // TODO: Update after Acis is out
+        // GtkMain(false);
+        Gtk.main();
 
-        GtkMain(false);
-        
         return;
     }
 }

@@ -19,7 +19,7 @@ find_package(Vala REQUIRED)
 include(ValaVersion)
 include(ValaPrecompile)
 
-pkg_check_modules(DEPS REQUIRED acis gtk+-3.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 glib-2.0  )
 find_package(Vala REQUIRED)
 
 ensure_vala_version("0.16" MINIMUM)
@@ -30,8 +30,8 @@ vala_precompile(VALA_C
     src/OnScreen/DateTimeBox.vala
     
 PACKAGES
-	acis
     gtk+-3.0
+    glib-2.0
     gio-2.0
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
@@ -54,4 +54,6 @@ install(DIRECTORY data/Wallpapers/abstract_light_lines/ DESTINATION /System/Reso
 install(DIRECTORY data/Wallpapers/city_lights/ DESTINATION /System/Resources/Komorebi/city_lights)
 install(DIRECTORY data/Wallpapers/yosemite_cloudy/ DESTINATION /System/Resources/Komorebi/yosemite_cloudy)
 install(DIRECTORY data/Wallpapers/day_night_mountain/ DESTINATION /System/Resources/Komorebi/day_night_mountain)
+install(DIRECTORY data/Wallpapers/blue_pink_gradient/ DESTINATION /System/Resources/Komorebi/blue_pink_gradient)
+install(DIRECTORY data/Wallpapers/dark_night_gradient/ DESTINATION /System/Resources/Komorebi/dark_night_gradient)
 
