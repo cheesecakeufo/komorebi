@@ -20,12 +20,19 @@ namespace Komorebi.OnScreen {
 
     public class DateTimeBox: Box {
 
-        // Date and time labels box
+        // Labels box
         Gtk.Box mainContainer = new Box(Orientation.VERTICAL, 5);
 
         // Date and time labels
         public Gtk.Label timeLabel = new Label("");
         public Gtk.Label dateLabel = new Label("");
+
+        // Contains info widgets
+        Gtk.Box infoContainer = new Box(Orientation.HORIZONTAL, 5);
+
+        // RAM Image and label
+        Gtk.Image ramImage = new Image();
+        Gtk.Label ramLabel = new Label("1.5/4.0GB");
 
         // Time updater
         public uint timeout;
@@ -35,13 +42,23 @@ namespace Komorebi.OnScreen {
             orientation = Orientation.VERTICAL;
             // set_size_request(350, 350);
 
+            infoContainer.add(ramImage);
+            infoContainer.add(ramLabel);
 
             mainContainer.add(timeLabel);
             mainContainer.add(dateLabel);
+            mainContainer.add(infoContainer);
 
             add(mainContainer);
         }
 
+
+        void initInfoWidgets () {
+
+            ramLabel.set_markup(@"<span color='white' font='Lato Regular 15'>1.5/4.0GB</span>");
+
+
+        }
 
 
         public void loadDateTime(string color, string timeLabelFont, string dateLabelFont) {

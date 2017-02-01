@@ -19,7 +19,7 @@ find_package(Vala REQUIRED)
 include(ValaVersion)
 include(ValaPrecompile)
 
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 glib-2.0  )
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0)
 find_package(Vala REQUIRED)
 
 ensure_vala_version("0.16" MINIMUM)
@@ -28,10 +28,11 @@ vala_precompile(VALA_C
 
     src/OnScreen/BackgroundWindow.vala
     src/OnScreen/DateTimeBox.vala
+    src/OnScreen/InfoBox.vala
     
 PACKAGES
     gtk+-3.0
-    glib-2.0
+    glibtop
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
    --disable-warnings
@@ -39,7 +40,7 @@ OPTIONS
 
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
 add_executable(komorebi ${VALA_C})
-target_link_libraries(komorebi ${DEPS_LIBRARIES})
+target_link_libraries(komorebi ${DEPS_LIBRARIES} -lm)
 
 install(TARGETS komorebi RUNTIME DESTINATION /System/Applications/)
 

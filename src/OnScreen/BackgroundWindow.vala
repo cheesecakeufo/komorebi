@@ -41,6 +41,9 @@ namespace Komorebi.OnScreen {
         // Date and time box itself
         DateTimeBox dateTimeBox = new DateTimeBox();
 
+        // Info box (RAM, HD, etc..)
+        InfoBox infoBox = new InfoBox();
+
         // Asset Image
         Image assetImage = new Image();
         Pixbuf assetPixbuf = null;
@@ -65,11 +68,11 @@ namespace Komorebi.OnScreen {
             title = "Background";
             set_size_request(screenWidth, screenHeight);
             resizable = false;
-            set_type_hint(WindowTypeHint.DESKTOP);
-            set_keep_below(true);
-            app_paintable = false;
-            skip_pager_hint = true;
-            skip_taskbar_hint = true;
+            // set_type_hint(WindowTypeHint.DESKTOP);
+            // set_keep_below(true);
+            // app_paintable = false;
+            // skip_pager_hint = true;
+            // skip_taskbar_hint = true;
             accept_focus = true;
             stick ();
             decorated = false;
@@ -85,8 +88,10 @@ namespace Komorebi.OnScreen {
             dateTimeBox.valign = Align.CENTER;
             dateTimeFixed.hexpand = false;
 
+            infoBox.halign = Align.CENTER;
+            infoBox.valign = Align.START;
 
-            initializeBackground("dark_forest");
+            initializeBackground("sunny_sand");
 
 
 
@@ -210,9 +215,11 @@ namespace Komorebi.OnScreen {
                 if(dateTimeBoxOnTop) {
                     higherOverlay.add(assetImage);
                     higherOverlay.add_overlay(dateTimeFixed);
+                    higherOverlay.add_overlay(infoBox);
 
                 } else {
                     higherOverlay.add(dateTimeFixed);
+                    higherOverlay.add_overlay(infoBox);
                     higherOverlay.add_overlay(assetImage);
 
                 }
@@ -224,6 +231,7 @@ namespace Komorebi.OnScreen {
 
 
                 lowerOverlay.add(dateTimeFixed);
+                lowerOverlay.add_overlay(infoBox);
 
 
             }
