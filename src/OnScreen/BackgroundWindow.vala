@@ -62,11 +62,11 @@ namespace Komorebi.OnScreen {
             title = "Background";
             set_size_request(screenWidth, screenHeight);
             resizable = false;
-            // set_type_hint(WindowTypeHint.DESKTOP);
-            // set_keep_below(true);
+            set_type_hint(WindowTypeHint.DESKTOP);
+            set_keep_below(true);
             app_paintable = false;
-            // skip_pager_hint = true;
-            // skip_taskbar_hint = true;
+            skip_pager_hint = true;
+            skip_taskbar_hint = true;
             accept_focus = true;
             stick ();
             decorated = false;
@@ -84,16 +84,8 @@ namespace Komorebi.OnScreen {
             dateTimeFixed.hexpand = false;
 
 
-            initializeBackground("city_lights");
+            initializeBackground("day_night_mountain");
 
-            // Add Widgets
-            dateTimeFixed.put(dateTimeBox, 0, 0);
-
-            higherOverlay.add(dateTimeFixed);
-            higherOverlay.add_overlay(assetImage);
-
-            lowerOverlay.add(backgroundImage);
-            lowerOverlay.add_overlay(higherOverlay);
 
 
             add(lowerOverlay);
@@ -107,6 +99,7 @@ namespace Komorebi.OnScreen {
             keyFile.load_from_file(@"/System/Resources/Komorebi/$backgroundName/config", KeyFileFlags.NONE);
 
             currentAnimationMode = keyFile.get_string ("Komorebi", "AnimationMode");
+            int animationSpeed = keyFile.get_integer ("Komorebi", "AnimationSpeed");
             bool parallax = keyFile.get_boolean ("Komorebi", "Parallax");
 
 
@@ -118,6 +111,7 @@ namespace Komorebi.OnScreen {
             string dateTimeBoxHAlign = keyFile.get_string ("Komorebi", "DateTimeBoxHAlign");
             string dateTimeBoxVAlign = keyFile.get_string ("Komorebi", "DateTimeBoxVAlign");
 
+            bool dateTimeBoxOnTop = keyFile.get_boolean ("Komorebi", "DateTimeBoxOnTop");
 
             string timeLabelAlignment = keyFile.get_string ("Komorebi", "TimeLabelAlignment");
             
@@ -169,9 +163,10 @@ namespace Komorebi.OnScreen {
             if(lightTimeout > 0)
                 Source.remove(lightTimeout);
 
+            addWidgets(dateTimeBoxOnTop);
             loadBackground(backgroundName);
             dateTimeBox.loadDateTime(dateTimeColor, timeLabelFont, dateLabelFont);
-            loadAssets(backgroundName, currentAnimationMode);
+            loadAssets(backgroundName, currentAnimationMode, animationSpeed);
 
             // Animation if parallax is enabled
             if(parallax) {
@@ -198,6 +193,28 @@ namespace Komorebi.OnScreen {
 
         }
 
+        void addWidgets(bool dateTimeBoxOnTop) {
+
+            dateTimeFixed.put(dateTimeBox, 0, 0);
+
+            // Determine whether we should place the date and time on the top or not
+            if(dateTimeBoxOnTop) {
+                higherOverlay.add(assetImage);
+                higherOverlay.add_overlay(dateTimeFixed);
+
+            } else {
+                higherOverlay.add(dateTimeFixed);
+                higherOverlay.add_overlay(assetImage);
+
+            }
+
+            lowerOverlay.add(backgroundImage);
+            lowerOverlay.add_overlay(higherOverlay);
+
+
+
+        }
+
         void loadBackground(string backgroundName) {
 
             backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth, screenHeight, false);
@@ -207,20 +224,21 @@ namespace Komorebi.OnScreen {
         }
 
 
-        void loadAssets(string backgroundName, string animationMode) {
+        void loadAssets(string backgroundName, string animationMode, int animationSpeed) {
 
-            // assets aren't allowed in 'light'
+            // assets aren't allowed in 'gradient'
             // mode. Use CSS gradient instead
-            assetPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/assets.png", screenWidth, screenHeight, false);
-            assetImage.set_from_pixbuf(assetPixbuf);
-            
+            if(animationMode == "gradient") {
+                assetPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/assets.png", screenWidth, screenHeight, false);
+                assetImage.set_from_pixbuf(assetPixbuf);
+            }
 
             // Load animation
             switch (animationMode) {
 
                 case "clouds":
-                    Acis.ApplyCSS({assetImage}, "*{
-                        animation: displace 100s linear infinite;
+                    Acis.ApplyCSS({assetImage}, @"*{
+                        animation: displace $(animationSpeed.to_string())s linear infinite;
                         }
 
                         @keyframes displace {
@@ -238,7 +256,7 @@ namespace Komorebi.OnScreen {
 
                     var revealing = true;
 
-                    lightTimeout = Timeout.add(40, () => {
+                    lightTimeout = Timeout.add(animationSpeed, () => {
 
                         var currentOpacity = assetImage.get_opacity();
 
@@ -271,6 +289,9 @@ namespace Komorebi.OnScreen {
 
                     break;
 
+                case "gradient":
+                    break;
+
                 case "noanimation":
                     break;
 
@@ -282,9 +303,25 @@ namespace Komorebi.OnScreen {
         }
 
         /* Shows the window */
-        public void FadeIn() {
+        public void fadeIn() {
 
             show_all();
+            this.set_opacity(0.0);
+
+            Timeout.add(20, () => {
+
+                var currentOpacity = this.get_opacity();
+
+                if(currentOpacity > 1.0)
+                    return false;
+                else
+                    currentOpacity += 0.1;
+                        
+                this.set_opacity(currentOpacity);
+
+                return true;
+
+            });
 
         }
 

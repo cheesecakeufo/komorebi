@@ -70,7 +70,7 @@ namespace Komorebi {
         Gtk.init (ref args);
 
         backgroundWindow = new BackgroundWindow();
-        backgroundWindow.FadeIn();
+        backgroundWindow.fadeIn();
 
 
         GtkMain(false);

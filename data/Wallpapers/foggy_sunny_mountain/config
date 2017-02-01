@@ -3,6 +3,7 @@
 [Komorebi]
 
 AnimationMode=light
+AnimationSpeed=100
 Parallax=false
 
 DateTimeBoxMarginLeft=0
@@ -12,6 +13,8 @@ DateTimeBoxMarginRight=0
 
 DateTimeBoxHAlign=center
 DateTimeBoxVAlign=center
+
+DateTimeBoxOnTop=false
 
 TimeLabelAlignment=center
 

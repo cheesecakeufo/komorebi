@@ -1,6 +1,7 @@
 [Komorebi]
 
 AnimationMode=clouds
+AnimationSpeed=100
 Parallax=true
 
 DateTimeBoxMarginLeft=0
@@ -12,6 +13,8 @@ DateTimeBoxHAlign=center
 DateTimeBoxVAlign=start
 
 TimeLabelAlignment=center
+
+DateTimeBoxOnTop=false
 
 DateTimeColor=black
 DateTimeShadow=none

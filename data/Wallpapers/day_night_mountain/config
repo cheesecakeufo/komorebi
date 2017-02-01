@@ -1,25 +1,25 @@
-#URL: https://www.pexels.com/photo/lights-blue-dark-32997/
+#URL: https://www.pexels.com/photo/mountains-snow-snow-peak-forest-23049/
 
 [Komorebi]
 
 AnimationMode=light
-AnimationSpeed=100
+AnimationSpeed=1000
 Parallax=false
 
-DateTimeBoxMarginLeft=0
+DateTimeBoxMarginLeft=20
 DateTimeBoxMarginTop=0
 DateTimeBoxMarginBottom=80
 DateTimeBoxMarginRight=0
 
-DateTimeBoxHAlign=center
+DateTimeBoxHAlign=start
 DateTimeBoxVAlign=end
 
 DateTimeBoxOnTop=true
 
-TimeLabelAlignment=center
+TimeLabelAlignment=start
 
 DateTimeColor=white
-DateTimeShadow=none
+DateTimeShadow=0px 4px 3px rgba(0,0,0,0.7)
 
 TimeLabelFont=Lato Light 50
 DateLabelFont=Lato Light 30

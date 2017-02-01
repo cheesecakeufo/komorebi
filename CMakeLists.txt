@@ -52,4 +52,6 @@ install(DIRECTORY data/Wallpapers/sunny_sand/ DESTINATION /System/Resources/Komo
 install(DIRECTORY data/Wallpapers/foggy_sunny_mountain/ DESTINATION /System/Resources/Komorebi/foggy_sunny_mountain)
 install(DIRECTORY data/Wallpapers/abstract_light_lines/ DESTINATION /System/Resources/Komorebi/abstract_light_lines)
 install(DIRECTORY data/Wallpapers/city_lights/ DESTINATION /System/Resources/Komorebi/city_lights)
+install(DIRECTORY data/Wallpapers/yosemite_cloudy/ DESTINATION /System/Resources/Komorebi/yosemite_cloudy)
+install(DIRECTORY data/Wallpapers/day_night_mountain/ DESTINATION /System/Resources/Komorebi/day_night_mountain)
 

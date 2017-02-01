@@ -2,21 +2,24 @@
 
 [Komorebi]
 
-AnimationMode=light
+AnimationMode=clouds
+AnimationSpeed=100
 Parallax=false
 
 DateTimeBoxMarginLeft=0
-DateTimeBoxMarginTop=0
-DateTimeBoxMarginBottom=80
-DateTimeBoxMarginRight=0
+DateTimeBoxMarginTop=20
+DateTimeBoxMarginBottom=0
+DateTimeBoxMarginRight=30
 
-DateTimeBoxHAlign=center
-DateTimeBoxVAlign=center
+DateTimeBoxHAlign=end
+DateTimeBoxVAlign=start
 
-TimeLabelAlignment=center
+DateTimeBoxOnTop=false
+
+TimeLabelAlignment=end
 
 DateTimeColor=white
 DateTimeShadow=0px 4px 3px rgba(0,0,0,0.7)
 
-TimeLabelFont=Bangers Regular 80
-DateLabelFont=Bangers Regular 30
+TimeLabelFont=Lato Regular 40
+DateLabelFont=Lato Regular 30
