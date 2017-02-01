@@ -1,10 +1,5 @@
-
-<p align="center"> 
-</p>
-<p align="center">
-  <b>Komorebi - Linux Wallpaper manager</b>
-  <p>(n) sunlight filtering through trees.</p>
-</p>
+<h1 align="center">Komorebi - Linux Wallpaper manager</h1>
+<p align="center">(n) sunlight filtering through trees.</p>
 
 
 <p align="center">
