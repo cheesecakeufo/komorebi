@@ -86,7 +86,7 @@ namespace Komorebi.OnScreen {
             dateTimeFixed.hexpand = false;
 
 
-            initializeBackground("cloudy_forest");
+            initializeBackground("dark_forest");
 
 
 

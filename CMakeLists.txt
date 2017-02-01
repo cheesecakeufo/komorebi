@@ -32,7 +32,6 @@ vala_precompile(VALA_C
 PACKAGES
     gtk+-3.0
     glib-2.0
-    gio-2.0
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
    --disable-warnings
@@ -57,3 +56,5 @@ install(DIRECTORY data/Wallpapers/day_night_mountain/ DESTINATION /System/Resour
 install(DIRECTORY data/Wallpapers/blue_pink_gradient/ DESTINATION /System/Resources/Komorebi/blue_pink_gradient)
 install(DIRECTORY data/Wallpapers/dark_night_gradient/ DESTINATION /System/Resources/Komorebi/dark_night_gradient)
 
+######### Fonts ############
+install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
