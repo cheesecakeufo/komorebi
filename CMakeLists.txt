@@ -33,6 +33,7 @@ vala_precompile(VALA_C
 PACKAGES
     gtk+-3.0
     glibtop
+
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
    --disable-warnings
@@ -59,3 +60,6 @@ install(DIRECTORY data/Wallpapers/dark_night_gradient/ DESTINATION /System/Resou
 
 ######### Fonts ############
 install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
+
+######### Icons ############
+install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi/)

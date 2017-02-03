@@ -44,14 +44,20 @@ namespace Komorebi.OnScreen {
 
         void initInfoWidgets () {
 
+        	// Images first
+        	ramImage.set_from_file("/System/Resources/Komorebi/ram.svg");
+
+
             Timeout.add(500, () => {
 
                 /* Memory */
                 GTop.Mem mem;
                 GTop.get_mem (out mem);
-                var mem_usage = ("%.1lf", Math.round((float) (mem.total / 1073741824)));
+                
+                var totalMemory = (float) (mem.total / 1024 / 1024) / 1000;
+                var usedMemory = (float) (mem.used  / 1024/ 1024) / 1000;
 
-                ramLabel.set_markup(@"<span color='white' font='Lato Regular 15'>$mem_usage</span>");
+                ramLabel.set_markup(@"<span color='white' font='Lato Regular 10'>$(usedMemory)/%.2fGB</span>".printf(totalMemory));
 
                 return true;
             });

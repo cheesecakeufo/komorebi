@@ -21,8 +21,9 @@ See screenshots below.
 2. Install Komorebi using your favorite package installer (aka. double click on it)
 3. Launch Komorebi!
 
-## Manual Installing
+### Manual Installing
 
+1. You need libgtop2-dev, libgtk-3-dev, cmake, and valac
 1. `git clone https://github.com/iabem97/komorebi.git`
 2. `cd komorebi`
 3. `mkdir build && cd build`
