@@ -62,4 +62,4 @@ install(DIRECTORY data/Wallpapers/dark_night_gradient/ DESTINATION /System/Resou
 install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
 
 ######### Icons ############
-install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi/)
+install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi)

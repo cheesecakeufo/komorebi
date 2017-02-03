@@ -24,28 +24,44 @@ namespace Komorebi.OnScreen {
         Gtk.Box mainContainer = new Box(Orientation.HORIZONTAL, 5);
 
         // RAM Image and label
+        Gtk.Box ramContainer = new Box(Orientation.VERTICAL, 5);
         Gtk.Image ramImage = new Image();
         Gtk.Label ramLabel = new Label("1.5/4.0GB");
+
+        // CPU Image and label
+        Gtk.Box cpuContainer = new Box(Orientation.VERTICAL, 5);
+        Gtk.Image cpuImage = new Image();
+        Gtk.Label cpuLabel = new Label("54.4%");
+
 
         // Time updater
         public uint timeout;
 
         public InfoBox () {
 
-            orientation = Orientation.VERTICAL;
+            orientation = Orientation.HORIZONTAL;
+            spacing = 50;
             margin = 30;
 
             initInfoWidgets();
 
-            add(ramImage);
-            add(ramLabel);
+            // Add widgets
+            ramContainer.add(ramImage);
+            ramContainer.add(ramLabel);
+
+            cpuContainer.add(cpuImage);
+            cpuContainer.add(cpuLabel);
+
+            add(ramContainer);
+            add(cpuContainer);
         }
 
 
         void initInfoWidgets () {
 
         	// Images first
-        	ramImage.set_from_file("/System/Resources/Komorebi/ram.svg");
+        	ramImage.set_from_file("/System/Resources/Komorebi/ram_light.svg");
+        	cpuImage.set_from_file("/System/Resources/Komorebi/cpu_64_light.svg");
 
 
             Timeout.add(500, () => {
@@ -58,6 +74,15 @@ namespace Komorebi.OnScreen {
                 var usedMemory = (float) (mem.used  / 1024/ 1024) / 1000;
 
                 ramLabel.set_markup(@"<span color='white' font='Lato Regular 10'>$(usedMemory)/%.2fGB</span>".printf(totalMemory));
+                
+                /* CPU */
+                GTop.Cpu cpu_data;
+                GTop.get_cpu (out cpu_data);
+                var used = cpu_data.user + cpu_data.nice + cpu_data.sys;
+                var cpu_load = ((double) (used - 0)) / (cpu_data.total - 0);
+
+
+                cpuLabel.set_markup(@"<span color='white' font='Lato Regular 10'>$(cpu_load)%</span>");
 
                 return true;
             });
