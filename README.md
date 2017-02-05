@@ -5,6 +5,7 @@
 
 <p align="center">
 	<a href="http://www.kernel.org"><img alt="Platform (GNU/Linux)" src="https://img.shields.io/badge/platform-GNU/Linux-blue.svg"></a>
+	[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 </p>
 
 ---
@@ -43,7 +44,7 @@ Configuration can be done in a single file located in your home directory ~/.Kom
 
 Making/Customizing a wallpaper for Komorebi is very easy, and can be done in minutes.
 
-Wallpapers are stored in /System/Resources/Komorebi/
+*View Tutorial: [`Click here`](https://github.com/iabem97/komorebi)*
 
 ### Cloudy-like wallpaper
 
