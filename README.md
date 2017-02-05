@@ -7,8 +7,10 @@
 <p align="center">
 	<a href="http://www.kernel.org"><img alt="Platform (GNU/Linux)" src="https://img.shields.io/badge/platform-GNU/Linux-blue.svg"></a>
 	<a href="https://github.com/sindresorhus/awesome"><img alt="Awesome" src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg"></a>
+	<a href="https://travis-ci.org/iabem97/komorebi"><img alt="Build Status" src="https://travis-ci.org/phw/peek.svg?branch=master"></a>
 </p>
 
+https://travis-ci.org/iabem97/komorebi.svg?branch=master
 ---
 ## What is Komorebi?
 Komorebi is an awesome background manager for all Linux platforms.
