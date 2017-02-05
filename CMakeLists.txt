@@ -57,6 +57,7 @@ install(DIRECTORY data/Wallpapers/yosemite_cloudy/ DESTINATION /System/Resources
 install(DIRECTORY data/Wallpapers/day_night_mountain/ DESTINATION /System/Resources/Komorebi/day_night_mountain)
 install(DIRECTORY data/Wallpapers/blue_pink_gradient/ DESTINATION /System/Resources/Komorebi/blue_pink_gradient)
 install(DIRECTORY data/Wallpapers/dark_night_gradient/ DESTINATION /System/Resources/Komorebi/dark_night_gradient)
+install(DIRECTORY data/Wallpapers/parallax_sky/ DESTINATION /System/Resources/Komorebi/parallax_sky)
 
 ######### Fonts ############
 install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)

@@ -91,7 +91,7 @@ namespace Komorebi.OnScreen {
             infoBox.halign = Align.CENTER;
             infoBox.valign = Align.START;
 
-            initializeBackground("sunny_sand");
+            initializeBackground("parallax_sky");
 
 
 
@@ -127,6 +127,8 @@ namespace Komorebi.OnScreen {
 
             string timeLabelFont = keyFile.get_string ("Komorebi", "TimeLabelFont");
             string dateLabelFont = keyFile.get_string ("Komorebi", "DateLabelFont");
+
+            // Info box
 
             // DateTime labels shadow
             ApplyCSS({dateTimeBox.timeLabel, dateTimeBox.dateLabel}, @"*{text-shadow: $dateTimeShadow;}");
@@ -331,6 +333,9 @@ namespace Komorebi.OnScreen {
                             50% { background-image: -gtk-gradient (linear, left top, right top, from ($(secondFromColor)), to ($(secondToColor))); }
                             100% { background-image: -gtk-gradient (linear, left top, right top, from ($(fromColor)), to ($(toColor))); }
                         }");
+                    break;
+
+                case "parallax-bg":
                     break;
 
                 case "noanimation":

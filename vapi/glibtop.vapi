@@ -26,6 +26,9 @@ namespace GTop {
         uint64 xcpu_flags;
     }
     public void get_cpu (out Cpu cpu);
+    
+    [CCode (cname = "GLIBTOP_NCPU")]
+    public const int GLIBTOP_NCPU;
 
     [CCode (cname = "GLIBTOP_KERN_PROC_ALL")]
     public const int KERN_PROC_ALL;
