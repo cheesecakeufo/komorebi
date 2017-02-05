@@ -74,11 +74,11 @@ namespace Komorebi.OnScreen {
             title = "Background";
             set_size_request(screenWidth, screenHeight);
             resizable = false;
-            // set_type_hint(WindowTypeHint.DESKTOP);
-            // set_keep_below(true);
-            // app_paintable = false;
-            // skip_pager_hint = true;
-            // skip_taskbar_hint = true;
+            set_type_hint(WindowTypeHint.DESKTOP);
+            set_keep_below(true);
+            app_paintable = false;
+            skip_pager_hint = true;
+            skip_taskbar_hint = true;
             accept_focus = true;
             stick ();
             decorated = false;
