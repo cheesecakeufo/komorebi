@@ -5,8 +5,8 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 set (PKGDATADIR "${DATADIR}/komorebi")
 set (RELEASE_NAME "summit")
-set (VERSION "0.1")
-set (VERSION_INFO "Stable")
+set (VERSION "0.9")
+set (VERSION_INFO "Beta")
 set (ARCHIVE_NAME komorebi-${VERSION})
 
 
@@ -66,3 +66,6 @@ install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
 
 ######### Icons ############
 install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi)
+
+######### Other ############
+install(FILES data/Other/komorebi.desktop DESTINATION /usr/share/applications/)
