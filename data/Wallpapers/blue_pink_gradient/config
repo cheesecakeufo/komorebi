@@ -2,9 +2,10 @@
 
 AnimationMode=gradient
 AnimationSpeed=20
-Parallax=true
 
 GradientBackground=#2982bf;;#b94491;;#b94491;;#2982bf
+
+DateTimeBoxParallax=true
 
 DateTimeBoxMarginLeft=50
 DateTimeBoxMarginTop=0

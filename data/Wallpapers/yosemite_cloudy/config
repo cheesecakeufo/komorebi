@@ -4,7 +4,8 @@
 
 AnimationMode=clouds
 AnimationSpeed=100
-Parallax=false
+
+DateTimeBoxParallax=false
 
 DateTimeBoxMarginLeft=0
 DateTimeBoxMarginTop=20

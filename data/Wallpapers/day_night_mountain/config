@@ -4,7 +4,8 @@
 
 AnimationMode=light
 AnimationSpeed=1000
-Parallax=false
+
+DateTimeBoxParallax=false
 
 DateTimeBoxMarginLeft=20
 DateTimeBoxMarginTop=0

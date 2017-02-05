@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2015-2016 Abraham Masri <imasrim114@gmail.com>
+//  Copyright (C) 2015-2017 Abraham Masri <imasrim114@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify it 
 //  under the terms of the GNU Lesser General Public License version 3, as published    
@@ -46,7 +46,6 @@ namespace Komorebi.OnScreen {
             spacing = 50;
             margin = 30;
 
-            initInfoWidgets();
 
             // Add widgets
             ramContainer.add(ramImage);
@@ -60,13 +59,13 @@ namespace Komorebi.OnScreen {
         }
 
 
-        void initInfoWidgets () {
+        public void initInfoWidgets () {
 
-        	// Images first
-        	ramImage.set_from_file("/System/Resources/Komorebi/ram_light.svg");
+            // Images first
+            ramImage.set_from_file("/System/Resources/Komorebi/ram_light.svg");
         	cpuImage.set_from_file("/System/Resources/Komorebi/cpu_64_light.svg");
 
-        	updateInfo();
+            updateInfo();
 
             Timeout.add(1000, updateInfo);
 

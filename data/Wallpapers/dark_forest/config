@@ -2,7 +2,8 @@
 
 AnimationMode=noanimation
 AnimationSpeed=100
-Parallax=true
+
+DateTimeBoxParallax=true
 
 DateTimeBoxMarginLeft=50
 DateTimeBoxMarginTop=0

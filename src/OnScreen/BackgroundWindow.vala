@@ -63,6 +63,11 @@ namespace Komorebi.OnScreen {
         // Light asset time updater
         public uint lightTimeout;
 
+        // Info box (on/off)
+        bool showInfoBox = false;
+        
+        // Info box (dark/light)
+        bool darkInfoBox = false;
 
         public BackgroundWindow () {
 
@@ -92,12 +97,93 @@ namespace Komorebi.OnScreen {
             infoBox.halign = Align.CENTER;
             infoBox.valign = Align.START;
 
-            initializeBackground("parallax_sky");
-
+            initializeConfigFile();
 
 
             add(lowerOverlay);
         }
+
+
+        void initializeConfigFile () {
+
+            var keyFile = new KeyFile ();
+            var backgroundName = "";
+
+
+            // Check if config file exists
+            var configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
+            var configFile = File.new_for_path(configFilePath);
+                
+            if(!configFile.query_exists()) {
+
+                print("No configuration file found. Creating one..");
+
+                keyFile.set_string  ("KomorebiProperies", "BackgroundName", "foggy_sunny_mountain");
+                keyFile.set_boolean ("KomorebiProperies", "ShowInfoBox", false);
+                keyFile.set_boolean ("KomorebiProperies", "DarkInfoBox", false);
+
+                // save the key file
+                var stream = new DataOutputStream (configFile.create (0));
+                stream.put_string (keyFile.to_data ());
+                stream.close ();
+
+                backgroundName = "foggy_sunny_mountain";
+                showInfoBox = true;
+
+            } else {
+
+                print("Reading config file..");
+
+                keyFile.load_from_file(@"$configFilePath", KeyFileFlags.NONE);
+
+                backgroundName = keyFile.get_string ("KomorebiProperies", "BackgroundName");
+                showInfoBox = keyFile.get_boolean ("KomorebiProperies", "ShowInfoBox");
+                darkInfoBox = keyFile.get_boolean ("KomorebiProperies", "DarkInfoBox");
+
+
+            }
+
+
+            initializeBackground(backgroundName);
+            watchConfigChanges();
+        }
+
+        FileMonitor fileMonitor;
+
+        void watchConfigChanges () {
+
+            var configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
+            var configFile = File.new_for_path(configFilePath);
+
+            fileMonitor = configFile.monitor(0);
+            fileMonitor.changed.connect((file, otherFile, eventType) => {
+
+                if(eventType == FileMonitorEvent.CHANGED) {
+
+                    Source.remove(dateTimeBox.timeout);
+
+                    Source.remove(lightTimeout);
+
+                    dateTimeBox.get_style_context().reset_widgets(Gdk.Screen.get_default());
+
+                    foreach(var child in lowerOverlay.get_children()) 
+                        lowerOverlay.remove(child);
+
+                    foreach(var child in higherOverlay.get_children())
+                        higherOverlay.remove(child);
+
+
+                    initializeConfigFile();
+
+                    print("Configuration file has changed. Reloading..\n");
+                }
+                    
+
+            });
+
+
+        }
+
 
         void initializeBackground (string backgroundName) {
 
@@ -225,13 +311,18 @@ namespace Komorebi.OnScreen {
 
             dateTimeFixed.put(dateTimeBox, 0, 0);
 
+            if(showInfoBox)
+                infoBox.initInfoWidgets();
+
             // Anything that's not gradient
             // is added normally
             switch (animationMode) {
 
                 case "gradient" :
                     lowerOverlay.add(dateTimeFixed);
-                    lowerOverlay.add_overlay(infoBox);
+
+                    if(showInfoBox)
+                        lowerOverlay.add_overlay(infoBox);
                 break;
 
 
@@ -241,11 +332,16 @@ namespace Komorebi.OnScreen {
                     if(dateTimeBoxOnTop) {
                         higherOverlay.add(assetImage);
                         higherOverlay.add_overlay(dateTimeFixed);
-                        higherOverlay.add_overlay(infoBox);
+
+                        if(showInfoBox)
+                            higherOverlay.add_overlay(infoBox);
 
                     } else {
                         higherOverlay.add(dateTimeFixed);
-                        higherOverlay.add_overlay(infoBox);
+                        
+                        if(showInfoBox)
+                            higherOverlay.add_overlay(infoBox);
+                        
                         higherOverlay.add_overlay(assetImage);
 
                     }
@@ -261,11 +357,15 @@ namespace Komorebi.OnScreen {
                     if(dateTimeBoxOnTop) {
                         higherOverlay.add(assetImage);
                         higherOverlay.add_overlay(dateTimeFixed);
-                        higherOverlay.add_overlay(infoBox);
+                        if(showInfoBox)
+                            higherOverlay.add_overlay(infoBox);
 
                     } else {
                         higherOverlay.add(dateTimeFixed);
-                        higherOverlay.add_overlay(infoBox);
+                        
+                        if(showInfoBox)
+                            higherOverlay.add_overlay(infoBox);
+                        
                         higherOverlay.add_overlay(assetImage);
 
                     }
@@ -276,6 +376,8 @@ namespace Komorebi.OnScreen {
 
 
             }
+
+            show_all();
 
         }
 

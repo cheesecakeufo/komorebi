@@ -1,0 +1,27 @@
+# URL: https://www.pexels.com/photo/forest-fog-foggy-spruce-17579/
+# Asset: https://www.pexels.com/photo/man-standing-on-a-cliff-next-to-sea-63917/
+
+[Komorebi]
+
+AnimationMode=parallax-bg
+AnimationSpeed=100
+
+DateTimeBoxParallax=false
+
+DateTimeBoxMarginLeft=0
+DateTimeBoxMarginTop=0
+DateTimeBoxMarginBottom=70
+DateTimeBoxMarginRight=50
+
+DateTimeBoxHAlign=end
+DateTimeBoxVAlign=end
+
+TimeLabelAlignment=end
+
+DateTimeBoxOnTop=true
+
+DateTimeColor=white
+DateTimeShadow=0px 0px 5px rgba(255,255,255,0.4)
+
+TimeLabelFont=Lato Light 40
+DateLabelFont=Lato Light 30
