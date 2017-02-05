@@ -45,7 +45,7 @@ Configuration can be done in a single file located in your home directory ~/.Kom
 
 Making/Customizing a wallpaper for Komorebi is very easy, and can be done in minutes.
 
-### View Tutorial: *[`Click here`](https://github.com/iabem97/komorebi/master/Tutorial.md)*
+### View Tutorial: *[`Click here`](https://github.com/iabem97/komorebi/blob/master/Tutorial.md)*
 
 ## Screenshots
 
