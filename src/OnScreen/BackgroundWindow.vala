@@ -168,6 +168,12 @@ namespace Komorebi.OnScreen {
                     assetImage.destroy();
                     assetImage = new Image();
 
+                    backgroundFixed.destroy();
+                    backgroundFixed = new Fixed();
+
+                    dateTimeFixed.destroy();
+                    dateTimeFixed = new Fixed();
+
                     if(infoBox.timeout > 0) {
                         Source.remove(infoBox.timeout);
                         infoBox.timeout = 0;
@@ -278,10 +284,11 @@ namespace Komorebi.OnScreen {
             dateTimeBox.loadDateTime(dateTimeColor, timeLabelFont, dateLabelFont);
             loadAssets(backgroundName, currentAnimationMode, animationSpeed);
 
-            // Animation if parallax is enabled
-            if(currentAnimationMode != "parallax-bg") {
-                if(parallax) {
-                    motion_notify_event.connect((event) => {
+            motion_notify_event.connect((event) => {
+
+                // Animation if parallax is enabled
+                if(currentAnimationMode != "parallax-bg") {
+                    if(parallax) {
 
                         // Calculate the percentage of how far the cursor is
                         // from the edges of the screen
@@ -290,15 +297,9 @@ namespace Komorebi.OnScreen {
 
 
                         dateTimeFixed.move(dateTimeBox, -x, -y);
+                    }
 
-
-                        return true;
-                    });
-                }
-
-            } else { // Parallax Background
-
-                motion_notify_event.connect((event) => {
+                } else {
 
                     // Calculate the percentage of how far the cursor is
                     // from the edges of the screen
@@ -307,13 +308,12 @@ namespace Komorebi.OnScreen {
 
 
 
-                    backgroundFixed.move(backgroundImage, -x, -y);
+                    backgroundFixed.move(backgroundImage, -x, -y);    
+                }
 
 
-                    return true;
-                });
-
-            }
+                return true;
+            });
 
 
         }
