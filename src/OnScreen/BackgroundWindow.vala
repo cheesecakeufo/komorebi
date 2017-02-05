@@ -28,6 +28,7 @@ namespace Komorebi.OnScreen {
         Gtk.Overlay lowerOverlay = new Overlay();
 
         // Background Image
+        Gtk.Fixed backgroundFixed = new Fixed();
         Image backgroundImage = new Image();
         Pixbuf backgroundPixbuf = null;
 
@@ -107,7 +108,7 @@ namespace Komorebi.OnScreen {
 
             currentAnimationMode = keyFile.get_string ("Komorebi", "AnimationMode");
             int animationSpeed = keyFile.get_integer ("Komorebi", "AnimationSpeed");
-            bool parallax = keyFile.get_boolean ("Komorebi", "Parallax");
+            bool parallax = keyFile.get_boolean ("Komorebi", "DateTimeBoxParallax");
 
 
             int dateTimeBoxMarginLeft = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginLeft");
@@ -181,24 +182,39 @@ namespace Komorebi.OnScreen {
             loadAssets(backgroundName, currentAnimationMode, animationSpeed);
 
             // Animation if parallax is enabled
-            if(parallax) {
+            if(currentAnimationMode != "parallax-bg") {
+                if(parallax) {
+                    motion_notify_event.connect((event) => {
 
+                        // Calculate the percentage of how far the cursor is
+                        // from the edges of the screen
+                        var x = (int)((event.x / screenWidth) * 100) / 15;
+                        var y = (int)((event.y / screenHeight) * 100) / 15;
+
+
+                        dateTimeFixed.move(dateTimeBox, -x, -y);
+
+
+                        return true;
+                    });
+                }
+
+            } else { // Parallax Background
 
                 motion_notify_event.connect((event) => {
 
                     // Calculate the percentage of how far the cursor is
                     // from the edges of the screen
-                    var x = (int)((event.x / screenWidth) * 100) / 15;
-                    var y = (int)((event.y / screenHeight) * 100) / 15;
+                    var x = (int)((event.x / screenWidth) * 100) / 5;
+                    var y = (int)((event.y / screenHeight) * 100) / 5;
 
 
-                    dateTimeFixed.move(dateTimeBox, -x, -y);
+
+                    backgroundFixed.move(backgroundImage, -x, -y);
 
 
                     return true;
                 });
-
-
 
             }
 
@@ -211,29 +227,52 @@ namespace Komorebi.OnScreen {
 
             // Anything that's not gradient
             // is added normally
-            if(animationMode != "gradient") {
+            switch (animationMode) {
 
-                // Determine whether we should place the date and time on the top or not
-                if(dateTimeBoxOnTop) {
-                    higherOverlay.add(assetImage);
-                    higherOverlay.add_overlay(dateTimeFixed);
-                    higherOverlay.add_overlay(infoBox);
-
-                } else {
-                    higherOverlay.add(dateTimeFixed);
-                    higherOverlay.add_overlay(infoBox);
-                    higherOverlay.add_overlay(assetImage);
-
-                }
-
-                lowerOverlay.add(backgroundImage);
-                lowerOverlay.add_overlay(higherOverlay);
-
-            } else { // Gradient is a different story
+                case "gradient" :
+                    lowerOverlay.add(dateTimeFixed);
+                    lowerOverlay.add_overlay(infoBox);
+                break;
 
 
-                lowerOverlay.add(dateTimeFixed);
-                lowerOverlay.add_overlay(infoBox);
+                case "parallax-bg":
+
+                    // Determine whether we should place the date and time on the top or not
+                    if(dateTimeBoxOnTop) {
+                        higherOverlay.add(assetImage);
+                        higherOverlay.add_overlay(dateTimeFixed);
+                        higherOverlay.add_overlay(infoBox);
+
+                    } else {
+                        higherOverlay.add(dateTimeFixed);
+                        higherOverlay.add_overlay(infoBox);
+                        higherOverlay.add_overlay(assetImage);
+
+                    }
+
+                    backgroundFixed.put(backgroundImage, 0, 0);
+                    lowerOverlay.add(backgroundFixed);
+                    lowerOverlay.add_overlay(higherOverlay);
+
+                break;
+
+                default:
+                    // Determine whether we should place the date and time on the top or not
+                    if(dateTimeBoxOnTop) {
+                        higherOverlay.add(assetImage);
+                        higherOverlay.add_overlay(dateTimeFixed);
+                        higherOverlay.add_overlay(infoBox);
+
+                    } else {
+                        higherOverlay.add(dateTimeFixed);
+                        higherOverlay.add_overlay(infoBox);
+                        higherOverlay.add_overlay(assetImage);
+
+                    }
+
+                    lowerOverlay.add(backgroundImage);
+                    lowerOverlay.add_overlay(higherOverlay);
+                break;
 
 
             }
@@ -241,6 +280,13 @@ namespace Komorebi.OnScreen {
         }
 
         void loadBackground(string backgroundName, string animationMode) {
+
+            // Check if we're parallax
+            if(animationMode == "parallax-bg") {
+                backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth + 20, screenHeight + 20, false);
+                backgroundImage.set_from_pixbuf(backgroundPixbuf);
+                return;
+            }
 
             if(animationMode != "gradient") {
                 backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth, screenHeight, false);
@@ -251,6 +297,13 @@ namespace Komorebi.OnScreen {
 
 
         void loadAssets(string backgroundName, string animationMode, int animationSpeed) {
+
+            // Check if we're parallax
+            if(animationMode == "parallax-bg") {
+                assetPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/assets.png", screenWidth + 20, screenHeight + 20, false);
+                assetImage.set_from_pixbuf(assetPixbuf);
+                return;
+            }
 
             // assets aren't allowed in 'gradient'
             // mode. Use CSS gradient instead
@@ -333,9 +386,6 @@ namespace Komorebi.OnScreen {
                             50% { background-image: -gtk-gradient (linear, left top, right top, from ($(secondFromColor)), to ($(secondToColor))); }
                             100% { background-image: -gtk-gradient (linear, left top, right top, from ($(fromColor)), to ($(toColor))); }
                         }");
-                    break;
-
-                case "parallax-bg":
                     break;
 
                 case "noanimation":

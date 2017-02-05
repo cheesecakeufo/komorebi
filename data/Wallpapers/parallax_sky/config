@@ -5,22 +5,23 @@
 
 AnimationMode=parallax-bg
 AnimationSpeed=100
-Parallax=true
 
-DateTimeBoxMarginLeft=50
+DateTimeBoxParallax=false
+
+DateTimeBoxMarginLeft=0
 DateTimeBoxMarginTop=0
-DateTimeBoxMarginBottom=0
-DateTimeBoxMarginRight=0
+DateTimeBoxMarginBottom=70
+DateTimeBoxMarginRight=50
 
-DateTimeBoxHAlign=start
-DateTimeBoxVAlign=center
+DateTimeBoxHAlign=end
+DateTimeBoxVAlign=end
 
-TimeLabelAlignment=start
+TimeLabelAlignment=end
 
-DateTimeBoxOnTop=false
+DateTimeBoxOnTop=true
 
 DateTimeColor=white
-DateTimeShadow=0px 4px 3px rgba(0,0,0,0.4),0px 8px 13px rgba(0,0,0,0.1),0px 18px 23px rgba(0,0,0,0.1)
+DateTimeShadow=0px 0px 5px rgba(255,255,255,0.4)
 
-TimeLabelFont=Lato Hairline 80
-DateLabelFont=Lato Hairline 60
+TimeLabelFont=Lato Light 40
+DateLabelFont=Lato Light 30
