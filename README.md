@@ -1,4 +1,5 @@
-<h1 align="center">Komorebi - Linux Wallpaper manager</h1>
+<p align="center"><img src="https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/komorebi-icon.png" width="160"></p>
+<h1 align="center">Komorebi - Linux Wallpapers Manager</h1>
 <p align="center">(n) sunlight filtering through trees.</p>
 
 
@@ -8,7 +9,8 @@
 
 ---
 ## What is Komorebi?
-Komorebi is an awesome background manager for all Linux platforms. It provides fully customizeable backgrounds that can be tweaked at any time!
+Komorebi is an awesome background manager for all Linux platforms.
+It provides fully customizeable backgrounds that can be tweaked at any time!
 Wallpapers included by default range from animated ones, still, and gradients!
 See screenshots below.
 
