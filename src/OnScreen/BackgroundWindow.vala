@@ -116,7 +116,7 @@ namespace Komorebi.OnScreen {
                 
             if(!configFile.query_exists()) {
 
-                print("No configuration file found. Creating one..");
+                print("No configuration file found. Creating one..\n");
 
                 keyFile.set_string  ("KomorebiProperies", "BackgroundName", "foggy_sunny_mountain");
                 keyFile.set_boolean ("KomorebiProperies", "ShowInfoBox", false);
@@ -132,7 +132,7 @@ namespace Komorebi.OnScreen {
 
             } else {
 
-                print("Reading config file..");
+                print("Reading config file..\n");
 
                 keyFile.load_from_file(@"$configFilePath", KeyFileFlags.NONE);
 
@@ -160,11 +160,18 @@ namespace Komorebi.OnScreen {
 
                 if(eventType == FileMonitorEvent.CHANGED) {
 
-                    Source.remove(dateTimeBox.timeout);
-
-                    Source.remove(lightTimeout);
-
                     dateTimeBox.get_style_context().reset_widgets(Gdk.Screen.get_default());
+
+                    dateTimeBox.destroy();
+                    dateTimeBox = new DateTimeBox();
+
+                    assetImage.destroy();
+                    assetImage = new Image();
+
+                    if(infoBox.timeout > 0) {
+                        Source.remove(infoBox.timeout);
+                        infoBox.timeout = 0;
+                    }
 
                     foreach(var child in lowerOverlay.get_children()) 
                         lowerOverlay.remove(child);
@@ -253,11 +260,15 @@ namespace Komorebi.OnScreen {
                 dateTimeBox.timeLabel.halign = Align.END;
 
             // Cancel any previous timeout
-            if(dateTimeBox.timeout > 0)
+            if(dateTimeBox.timeout > 0) {
                 Source.remove(dateTimeBox.timeout);
+                dateTimeBox.timeout = 0;
+            }
 
-            if(lightTimeout > 0)
+            if(lightTimeout > 0) {
                 Source.remove(lightTimeout);
+                lightTimeout = 0;
+            }
 
             if(currentAnimationMode == "gradient")
                 gradientBackground = keyFile.get_string ("Komorebi", "GradientBackground");
@@ -312,7 +323,7 @@ namespace Komorebi.OnScreen {
             dateTimeFixed.put(dateTimeBox, 0, 0);
 
             if(showInfoBox)
-                infoBox.initInfoWidgets();
+                infoBox.initInfoWidgets(darkInfoBox);
 
             // Anything that's not gradient
             // is added normally

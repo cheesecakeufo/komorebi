@@ -40,6 +40,9 @@ namespace Komorebi.OnScreen {
         // Time updater
         public uint timeout;
 
+        // Color mode (dark/light)
+        bool darkMode = false;
+
         public InfoBox () {
 
             orientation = Orientation.HORIZONTAL;
@@ -59,46 +62,62 @@ namespace Komorebi.OnScreen {
         }
 
 
-        public void initInfoWidgets () {
+        public void initInfoWidgets (bool darkMode) {
+
+            this.darkMode = darkMode;
+            var mode = "light";
+
+            if(darkMode)
+                mode = "dark";
 
             // Images first
-            ramImage.set_from_file("/System/Resources/Komorebi/ram_light.svg");
-        	cpuImage.set_from_file("/System/Resources/Komorebi/cpu_64_light.svg");
+            ramImage.set_from_file(@"/System/Resources/Komorebi/ram_$mode.svg");
+        	cpuImage.set_from_file(@"/System/Resources/Komorebi/cpu_64_$mode.svg");
 
             updateInfo();
 
-            Timeout.add(1000, updateInfo);
+            timeout = Timeout.add(1000, updateInfo);
 
         }
 
         bool updateInfo () {
 
-			// Memory (RAM)
-			GTop.Mem mem;
-			GTop.get_mem (out mem);
-                
-			var totalMemory = (float) (mem.total / 1024 / 1024) / 1000;
-			var usedMemory = (float) (mem.used  / 1024/ 1024) / 1000;
+            var color = "white";
 
-			ramLabel.set_markup(@"<span color='white' font='Lato Regular 10'>$(usedMemory)/%.2fGB</span>".printf(totalMemory));
-                
-			// CPU
-			GTop.Cpu cpu;
-			GTop.get_cpu (out cpu);
+            if(darkMode)
+                color = "black";
+
+            try {
+    			// Memory (RAM)
+    			GTop.Mem mem;
+    			GTop.get_mem (out mem);
+                    
+    			var totalMemory = (float) (mem.total / 1024 / 1024) / 1000;
+    			var usedMemory = (float) (mem.used  / 1024/ 1024) / 1000;
+
+    			ramLabel.set_markup(@"<span color='%s' font='Lato Regular 10'>%.2f/%.2fGB</span>".printf(color, usedMemory, totalMemory));
+                    
+    			// CPU
+    			GTop.Cpu cpu;
+    			GTop.get_cpu (out cpu);
 
 
-			var newTotalCPU = cpu.total;
-			var newIdleCPU = cpu.idle;
+    			var newTotalCPU = cpu.total;
+    			var newIdleCPU = cpu.idle;
 
-			var totalCPUDiff = (totalCPU - (long)cpu.total).abs();
-			var idleCPUDiff  = (idleCPU  - (long)cpu.idle).abs();
+    			var totalCPUDiff = (totalCPU - (long)cpu.total).abs();
+    			var idleCPUDiff  = (idleCPU  - (long)cpu.idle).abs();
 
-			var percentage = cpu.frequency - (idleCPUDiff * 100 / totalCPUDiff);
+    			var percentage = cpu.frequency - (idleCPUDiff * 100 / totalCPUDiff);
 
-			totalCPU = (long)newTotalCPU;
-			idleCPU = (long)newIdleCPU;
+    			totalCPU = (long)newTotalCPU;
+    			idleCPU = (long)newIdleCPU;
 
-			cpuLabel.set_markup(@"<span color='white' font='Lato Regular 10'>%.f%</span>".printf(percentage));
+    			cpuLabel.set_markup(@"<span color='%s' font='Lato Regular 10'>%.f%</span>".printf(color, percentage));
+
+            } catch (Error e) {
+                print(e.message);
+            }
 
 			return true;
         }
