@@ -56,6 +56,8 @@ namespace Komorebi.OnScreen {
 
         // Current animation mode
         string currentAnimationMode = "none";
+        bool dateTimeBoxParallax = false;
+
 
         // Gradient bg animation (if available)
         string gradientBackground = "";
@@ -207,7 +209,7 @@ namespace Komorebi.OnScreen {
 
             currentAnimationMode = keyFile.get_string ("Komorebi", "AnimationMode");
             int animationSpeed = keyFile.get_integer ("Komorebi", "AnimationSpeed");
-            bool parallax = keyFile.get_boolean ("Komorebi", "DateTimeBoxParallax");
+            dateTimeBoxParallax = keyFile.get_boolean ("Komorebi", "DateTimeBoxParallax");
 
 
             int dateTimeBoxMarginLeft = keyFile.get_integer ("Komorebi", "DateTimeBoxMarginLeft");
@@ -288,7 +290,8 @@ namespace Komorebi.OnScreen {
 
                 // Animation if parallax is enabled
                 if(currentAnimationMode != "parallax-bg") {
-                    if(parallax) {
+
+                    if(dateTimeBoxParallax) {
 
                         // Calculate the percentage of how far the cursor is
                         // from the edges of the screen
