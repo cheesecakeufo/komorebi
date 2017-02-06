@@ -71,6 +71,9 @@ namespace Komorebi.OnScreen {
         // Info box (dark/light)
         bool darkInfoBox = false;
 
+        // Time format (12/24)
+        bool timeTwentyFour = false;
+
         public BackgroundWindow () {
 
             title = "Background";
@@ -124,6 +127,10 @@ namespace Komorebi.OnScreen {
                 keyFile.set_boolean ("KomorebiProperies", "ShowInfoBox", false);
                 keyFile.set_boolean ("KomorebiProperies", "DarkInfoBox", false);
 
+                // TODO: Update me when MFK is out - Automatically adapt from MFK
+                keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", false);
+
+
                 // save the key file
                 var stream = new DataOutputStream (configFile.create (0));
                 stream.put_string (keyFile.to_data ());
@@ -131,6 +138,7 @@ namespace Komorebi.OnScreen {
 
                 backgroundName = "foggy_sunny_mountain";
                 showInfoBox = true;
+                timeTwentyFour = true;
 
             } else {
 
@@ -142,6 +150,22 @@ namespace Komorebi.OnScreen {
                 showInfoBox = keyFile.get_boolean ("KomorebiProperies", "ShowInfoBox");
                 darkInfoBox = keyFile.get_boolean ("KomorebiProperies", "DarkInfoBox");
 
+                // Check if we have the 24-hr key
+                if(keyFile.has_key("KomorebiProperies", "TimeTwentyFour"))
+                    timeTwentyFour = keyFile.get_boolean ("KomorebiProperies", "TimeTwentyFour");
+                else {
+
+                    // Add the key and value
+                    keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", false);
+
+                    // Delete the file
+                    configFile.delete();
+
+                    // Save the file
+                    var stream = new DataOutputStream (configFile.create (0));
+                    stream.put_string (keyFile.to_data ());
+                    stream.close ();
+                }
 
             }
 
@@ -277,6 +301,9 @@ namespace Komorebi.OnScreen {
                 Source.remove(lightTimeout);
                 lightTimeout = 0;
             }
+
+            // Time label format
+            dateTimeBox.setTimeFormat(timeTwentyFour);
 
             if(currentAnimationMode == "gradient")
                 gradientBackground = keyFile.get_string ("Komorebi", "GradientBackground");

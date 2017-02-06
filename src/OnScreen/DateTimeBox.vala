@@ -30,6 +30,9 @@ namespace Komorebi.OnScreen {
         // Time updater
         public uint timeout;
 
+        // Time format
+        string timeFormat = "%l:%M %p";
+
         public DateTimeBox () {
 
             orientation = Orientation.VERTICAL;
@@ -41,13 +44,24 @@ namespace Komorebi.OnScreen {
             add(mainContainer);
         }
 
+        public void setTimeFormat(bool timeTwentyFour) {
+
+            if(timeTwentyFour)
+                timeFormat = "%H:%M";
+            else
+                timeFormat = "%l:%M %p";
+
+
+
+        }
+
 
         public void loadDateTime(string color, string timeLabelFont, string dateLabelFont) {
 
 
             timeout = Timeout.add(200, () => {
 
-                var glibTime = new GLib.DateTime.now_local().format("%l:%M %p");
+                var glibTime = new GLib.DateTime.now_local().format(timeFormat);
                 var glibDate = new GLib.DateTime.now_local().format("%A, %B %e");
 
                 timeLabel.set_markup(@"<span color='$color' font='$timeLabelFont'>$glibTime</span>");
