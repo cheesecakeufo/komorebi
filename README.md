@@ -10,6 +10,11 @@
 	<a href="https://travis-ci.org/iabem97/komorebi"><img alt="Build Status" src="https://travis-ci.org/phw/peek.svg?branch=master"></a>
 </p>
 
+<p align="center">
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=qbs2tcdxtWo
+" target="_blank"><img src="http://img.youtube.com/vi/qbs2tcdxtWo/0.jpg" 
+alt="Komorebi Demo" width="240" height="180" border="10" /><br>Watch demo</a>
+</p>
 ---
 ## What is Komorebi?
 Komorebi is an awesome background manager for all Linux platforms.
