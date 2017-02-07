@@ -32,6 +32,8 @@ vala_precompile(VALA_C
     src/OnScreen/DateTimeBox.vala
     src/OnScreen/InfoBox.vala
     
+    src/OnScreen/PreferencesWindow.vala
+
 PACKAGES
     gtk+-3.0
     glibtop

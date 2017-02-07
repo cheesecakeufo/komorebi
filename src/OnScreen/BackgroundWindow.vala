@@ -22,6 +22,9 @@ using Gdk;
 
 namespace Komorebi.OnScreen {
 
+    // Global - Name of active wallpaper
+    string activeWallpaperName;
+
     public class BackgroundWindow : Gtk.Window {
 
         // Main container (image) (overlay(time)(assets))
@@ -104,6 +107,18 @@ namespace Komorebi.OnScreen {
 
             initializeConfigFile();
 
+            // Signals
+            button_release_event.connect((e) => {
+
+                // Show options
+                if(e.button == 3)
+                    new PreferencesWindow();
+
+                return true;
+            });
+
+
+
 
             add(lowerOverlay);
         }
@@ -139,6 +154,7 @@ namespace Komorebi.OnScreen {
                 backgroundName = "foggy_sunny_mountain";
                 showInfoBox = true;
                 timeTwentyFour = true;
+                activeWallpaperName = "foggy_sunny_mountain";
 
             } else {
 
@@ -168,6 +184,8 @@ namespace Komorebi.OnScreen {
                 }
 
             }
+
+            activeWallpaperName = backgroundName;
 
 
             initializeBackground(backgroundName);
