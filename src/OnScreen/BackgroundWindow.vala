@@ -84,6 +84,10 @@ namespace Komorebi.OnScreen {
         public BackgroundWindow () {
 
             title = "Background";
+
+            // Get current monitor size
+            getMonitorSize();
+
             set_size_request(screenWidth, screenHeight);
             resizable = false;
             set_type_hint(WindowTypeHint.DESKTOP);
@@ -129,6 +133,19 @@ namespace Komorebi.OnScreen {
 
 
             add(lowerOverlay);
+        }
+
+        void getMonitorSize() {
+
+			var screen = Gdk.Screen.get_default ();
+
+			Rectangle rectangle;
+			screen.get_monitor_geometry(0, out rectangle);
+
+
+			screenHeight = rectangle.height;
+			screenWidth = rectangle.width;
+
         }
 
 
