@@ -27,10 +27,22 @@ namespace Komorebi.OnScreen {
         HeaderBar headerBar = new HeaderBar();
 
         /* Main container */
-        Gtk.Box mainContainer = new Box(Orientation.VERTICAL, 0);
+        Gtk.Box mainContainer = new Box(Orientation.HORIZONTAL, 10);
 
         // Contains options
-        Gtk.Box optionsContainer = new Box(Orientation.VERTICAL, 0);
+        Gtk.Box optionsContainer = new Box(Orientation.VERTICAL, 5);
+
+        // Contains other options (time/info box/etc..)
+        Gtk.Box otherOptionsContainer = new Box(Orientation.VERTICAL, 5);
+
+        // Show info box button
+        Gtk.CheckButton showSystemStatsButton = new Gtk.CheckButton.with_label ("Show System Stats");
+
+        // Dark info box button
+        Gtk.CheckButton darkSystemStatsButton = new Gtk.CheckButton.with_label ("Dark System Stats");
+
+        // 24 Hours time button
+        Gtk.CheckButton twentyFourHoursButton = new Gtk.CheckButton.with_label ("Display time as 24-hr");
 
         // Close button
         Button closeButton = new Button.with_label("Hide");
@@ -49,7 +61,7 @@ namespace Komorebi.OnScreen {
         /* Add some style */
         string CSS = "*{
                         
-                         border-radius: 10px;
+                         background-color: rgba(255, 255, 255, 0.60);
                        }";
 
 
@@ -61,79 +73,60 @@ namespace Komorebi.OnScreen {
             resizable = false;
             window_position = WindowPosition.CENTER;
             set_titlebar(headerBar);
-            // ApplyCSS({this}, CSS);
+            ApplyCSS({this}, CSS);
             AddAlpha({this});
 
             // Setup Widgets
             loadWallpapers();
 
+            showSystemStatsButton.active = showInfoBox;
+            darkSystemStatsButton.active = darkInfoBox;
+            twentyFourHoursButton.active = timeTwentyFour;
 
             // Properties
             closeButton.margin_top = 6;
             closeButton.margin_left = 6;
 
-            optionsContainer.margin_top = 10;
+            mainContainer.margin = 10;
+            optionsContainer.margin_left = 10;
+
+            otherOptionsContainer.margin_right = 10;
+
             optionsContainer.halign = Align.CENTER;
 
             wallpaperLabel.halign = Align.START;
             closeButton.halign = Align.START;
 
+            otherOptionsContainer.valign = Align.CENTER;
+
             // Signals
-            motion_notify_event.connect(() => {
+            destroy.connect(() => {canOpenPreferences = true;});
 
-                canDestroy = false;
-                
-                return false;
-            });
+            closeButton.released.connect(() => { destroy(); });
 
-            leave_notify_event.connect(() => {
+            wallpapersComboBox.changed.connect (() => { activeWallpaperName = wallpapersComboBox.get_active_text ().replace(" ", "_"); updateConfigurationFile(); });
 
-                canDestroy = true;
+            showSystemStatsButton.toggled.connect (() => { showInfoBox = showSystemStatsButton.active; updateConfigurationFile(); });
+            darkSystemStatsButton.toggled.connect (() => { darkInfoBox = darkSystemStatsButton.active; updateConfigurationFile(); });
+            twentyFourHoursButton.toggled.connect (() => { timeTwentyFour = twentyFourHoursButton.active; updateConfigurationFile(); });
 
-                return false;
-            });
-
-            focus_out_event.connect(() => {
-
-                // if(canDestroy)
-                    // destroy(); // Bye!
-                return false;
-            });
-
-
-            wallpapersComboBox.changed.connect (() => {
-
-                string activeWallpaper = wallpapersComboBox.get_active_text ().replace(" ", "_");
-
-                // Update Komorebi.prop
-                var configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
-                var configFile = File.new_for_path(configFilePath);
-                var keyFile = new KeyFile ();
-
-                keyFile.load_from_file(@"$configFilePath", KeyFileFlags.NONE);
-                keyFile.set_string  ("KomorebiProperies", "BackgroundName", activeWallpaper);
-
-
-                // Delete the file
-                configFile.delete();
-
-                // save the key file
-                var stream = new DataOutputStream (configFile.create (0));
-                stream.put_string (keyFile.to_data ());
-                stream.close ();
-
-
-
-            });
 
             // Add Widgets
             headerBar.add(closeButton);
+
             optionsContainer.add(new Image.from_file("/System/Resources/Komorebi/komorebi.svg"));
             optionsContainer.add(wallpaperLabel);
             optionsContainer.add(wallpapersComboBox);
 
+            otherOptionsContainer.add(showSystemStatsButton);
+            otherOptionsContainer.add(darkSystemStatsButton);
+            otherOptionsContainer.add(twentyFourHoursButton);
 
-            add(optionsContainer);
+            mainContainer.add(optionsContainer);
+            mainContainer.add(new Separator(Orientation.VERTICAL));
+            mainContainer.add(otherOptionsContainer);
+
+            add(mainContainer);
 
             show_all();
         }
@@ -176,6 +169,34 @@ namespace Komorebi.OnScreen {
 
         }
 
+        /* Updates the .prop file */
+        void updateConfigurationFile () {
+
+
+
+            // Update Komorebi.prop
+            var configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
+            var configFile = File.new_for_path(configFilePath);
+            var keyFile = new KeyFile ();
+
+            keyFile.load_from_file(@"$configFilePath", KeyFileFlags.NONE);
+
+            keyFile.set_string  ("KomorebiProperies", "BackgroundName", activeWallpaperName);
+            keyFile.set_boolean ("KomorebiProperies", "ShowInfoBox", showInfoBox);
+            keyFile.set_boolean ("KomorebiProperies", "DarkInfoBox", darkInfoBox);
+            keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", timeTwentyFour);
+
+            // Delete the file
+            configFile.delete();
+
+            // save the key file
+            var stream = new DataOutputStream (configFile.create (0));
+            stream.put_string (keyFile.to_data ());
+            stream.close ();
+
+
+
+        }
 
 
         /* Shows the window */

@@ -25,6 +25,18 @@ namespace Komorebi.OnScreen {
     // Global - Name of active wallpaper
     string activeWallpaperName;
 
+    // Global - Show info box
+    bool showInfoBox;
+
+    // Global - Dark info box
+    bool darkInfoBox;
+
+    // Global - 24 hr time
+    bool timeTwentyFour;
+
+    // Global - Whether we can open preferences window
+    bool canOpenPreferences;
+
     public class BackgroundWindow : Gtk.Window {
 
         // Main container (image) (overlay(time)(assets))
@@ -68,14 +80,6 @@ namespace Komorebi.OnScreen {
         // Light asset time updater
         public uint lightTimeout;
 
-        // Info box (on/off)
-        bool showInfoBox = false;
-        
-        // Info box (dark/light)
-        bool darkInfoBox = false;
-
-        // Time format (12/24)
-        bool timeTwentyFour = false;
 
         public BackgroundWindow () {
 
@@ -105,14 +109,18 @@ namespace Komorebi.OnScreen {
             infoBox.halign = Align.CENTER;
             infoBox.valign = Align.START;
 
+            canOpenPreferences = true;
+
             initializeConfigFile();
 
             // Signals
             button_release_event.connect((e) => {
 
                 // Show options
-                if(e.button == 3)
+                if(e.button == 3 && canOpenPreferences) {
+                    canOpenPreferences = false;
                     new PreferencesWindow();
+                }
 
                 return true;
             });
