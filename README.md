@@ -41,7 +41,11 @@ See screenshots below.
 
 ## Configuration
 
-Configuration can be done in a single file located in your home directory ~/.Komorebi.prop
+You can simply configure/customize Komorebi by right-clicking anywhere on the wallpaper.
+
+![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/settings.png)
+
+Alternatively, you can edit a single file located in your home directory ~/.Komorebi.prop
 
 1. To change the background/wallpaper, change BackgroundName's value to the name of the wallpaper you want (wallpapers are located in /System/Resources/Komorebi/)
 2. To show system stats on the top, change ShowInfoBox's value to true (false if otherwise)
