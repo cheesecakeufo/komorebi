@@ -164,8 +164,6 @@ namespace Komorebi.OnScreen {
             }
 
 
-            // Set active wallpaper
-            wallpapersComboBox.set_title("SHIT");
 
         }
 
