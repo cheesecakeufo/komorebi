@@ -43,7 +43,7 @@ See screenshots below.
 
 You can simply configure/customize Komorebi by right-clicking anywhere on the wallpaper.
 
-![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/settings.png)
+![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/settings.jpg)
 
 Alternatively, you can edit a single file located in your home directory ~/.Komorebi.prop
 
