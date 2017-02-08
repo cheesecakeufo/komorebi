@@ -1,0 +1,24 @@
+[Komorebi]
+
+AnimationMode=parallax-bg
+AnimationSpeed=100
+
+DateTimeBoxParallax=true
+
+DateTimeBoxMarginLeft=0
+DateTimeBoxMarginTop=0
+DateTimeBoxMarginBottom=70
+DateTimeBoxMarginRight=50
+
+DateTimeBoxHAlign=end
+DateTimeBoxVAlign=center
+
+TimeLabelAlignment=end
+
+DateTimeBoxOnTop=true
+
+DateTimeColor=white
+DateTimeShadow=0px 0px 5px rgba(0,70,90,0.4)
+
+TimeLabelFont=Lato Light 40
+DateLabelFont=Lato Light 30

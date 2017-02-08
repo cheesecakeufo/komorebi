@@ -64,6 +64,7 @@ install(DIRECTORY data/Wallpapers/blue_pink_gradient/ DESTINATION /System/Resour
 install(DIRECTORY data/Wallpapers/dark_night_gradient/ DESTINATION /System/Resources/Komorebi/dark_night_gradient)
 install(DIRECTORY data/Wallpapers/parallax_sky/ DESTINATION /System/Resources/Komorebi/parallax_sky)
 install(DIRECTORY data/Wallpapers/parallax_man_mountain/ DESTINATION /System/Resources/Komorebi/parallax_man_mountain)
+install(DIRECTORY data/Wallpapers/parallax_cartoon_mountain/ DESTINATION /System/Resources/Komorebi/parallax_cartoon_mountain)
 
 
 ######### Fonts ############
