@@ -72,7 +72,11 @@ namespace Komorebi.OnScreen {
 
             // Images first
             ramImage.set_from_file(@"/System/Resources/Komorebi/ram_$mode.svg");
-        	cpuImage.set_from_file(@"/System/Resources/Komorebi/cpu_64_$mode.svg");
+
+            if(getCPUArch() == 32)
+        	   cpuImage.set_from_file(@"/System/Resources/Komorebi/cpu_32_$mode.svg");
+            else
+               cpuImage.set_from_file(@"/System/Resources/Komorebi/cpu_64_$mode.svg");
 
             updateInfo();
 
@@ -120,6 +124,21 @@ namespace Komorebi.OnScreen {
             }
 
 			return true;
+        }
+
+        /* TAKEN FROM ACIS --- Until Acis is public */
+        /* Get CPU arch */
+        public int getCPUArch () {
+
+            string Content;
+            FileUtils.get_contents("/proc/cpuinfo", out Content);
+
+            if("lm" in Content)
+                return 64;
+            else
+                return 32;
+
+
         }
 
     }

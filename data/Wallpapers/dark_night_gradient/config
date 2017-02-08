@@ -1,3 +1,5 @@
+# Gradients must have a bg.jpg representing how they look
+
 [Komorebi]
 
 AnimationMode=gradient

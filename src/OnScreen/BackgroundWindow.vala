@@ -84,6 +84,10 @@ namespace Komorebi.OnScreen {
         public BackgroundWindow () {
 
             title = "Background";
+
+            // Get current monitor size
+            getMonitorSize();
+
             set_size_request(screenWidth, screenHeight);
             resizable = false;
             set_type_hint(WindowTypeHint.DESKTOP);
@@ -129,6 +133,19 @@ namespace Komorebi.OnScreen {
 
 
             add(lowerOverlay);
+        }
+
+        void getMonitorSize() {
+
+			var screen = Gdk.Screen.get_default ();
+
+			Rectangle rectangle;
+			screen.get_monitor_geometry(0, out rectangle);
+
+
+			screenHeight = rectangle.height;
+			screenWidth = rectangle.width;
+
         }
 
 
@@ -195,6 +212,10 @@ namespace Komorebi.OnScreen {
 
             activeWallpaperName = backgroundName;
 
+            // Set GNOME's wallpaper to this
+            var wallpaperPath = @"/System/Resources/Komorebi/$activeWallpaperName/bg.jpg";
+            new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperPath));
+            new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 
             initializeBackground(backgroundName);
             watchConfigChanges();
