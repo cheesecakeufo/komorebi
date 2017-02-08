@@ -39,6 +39,8 @@ See screenshots below.
 3. `mkdir build && cd build`
 4. `cmake .. && sudo make install && ./komorebi`
 
+Note: If you are having issues building with glib.h, run `cmake ..` twice.
+
 ## Configuration
 
 You can simply configure/customize Komorebi by right-clicking anywhere on the wallpaper.
