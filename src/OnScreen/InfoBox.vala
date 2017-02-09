@@ -80,7 +80,7 @@ namespace Komorebi.OnScreen {
 
             updateInfo();
 
-            timeout = Timeout.add(1000, updateInfo);
+            timeout = Timeout.add(2000, updateInfo);
 
         }
 

@@ -34,6 +34,9 @@ namespace Komorebi.OnScreen {
     // Global - 24 hr time
     bool timeTwentyFour;
 
+    // Global - Optimize For Memory
+    bool optimizeForMemory;
+
     // Global - Whether we can open preferences window
     bool canOpenPreferences;
 
@@ -101,6 +104,8 @@ namespace Komorebi.OnScreen {
             add_events (EventMask.ENTER_NOTIFY_MASK   |
                         EventMask.POINTER_MOTION_MASK |
                         EventMask.SMOOTH_SCROLL_MASK);
+            AddAlpha({this});
+            ApplyCSS({this}, @"*{background-color:rgba(0,0,0,0);}");
 
             // Properties
             higherBox.hexpand = true;
@@ -170,6 +175,8 @@ namespace Komorebi.OnScreen {
                 // TODO: Update me when MFK is out - Automatically adapt from MFK
                 keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", false);
 
+                keyFile.set_boolean ("KomorebiProperies", "OptimizeForMemory", false);
+
 
                 // save the key file
                 var stream = new DataOutputStream (configFile.create (0));
@@ -179,6 +186,7 @@ namespace Komorebi.OnScreen {
                 backgroundName = "foggy_sunny_mountain";
                 showInfoBox = true;
                 timeTwentyFour = true;
+                optimizeForMemory = true;
                 activeWallpaperName = "foggy_sunny_mountain";
 
             } else {
@@ -191,13 +199,30 @@ namespace Komorebi.OnScreen {
                 showInfoBox = keyFile.get_boolean ("KomorebiProperies", "ShowInfoBox");
                 darkInfoBox = keyFile.get_boolean ("KomorebiProperies", "DarkInfoBox");
 
-                // Check if we have the 24-hr key
+                // Check if we have the 24-hr key (TODO: Should be removed version 1.0)
                 if(keyFile.has_key("KomorebiProperies", "TimeTwentyFour"))
                     timeTwentyFour = keyFile.get_boolean ("KomorebiProperies", "TimeTwentyFour");
                 else {
 
                     // Add the key and value
                     keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", false);
+
+                    // Delete the file
+                    configFile.delete();
+
+                    // Save the file
+                    var stream = new DataOutputStream (configFile.create (0));
+                    stream.put_string (keyFile.to_data ());
+                    stream.close ();
+                }
+
+                // Check if we have the optimize for memory key (TODO: Should be removed version 1.0)
+                if(keyFile.has_key("KomorebiProperies", "OptimizeForMemory"))
+                    optimizeForMemory = keyFile.get_boolean ("KomorebiProperies", "OptimizeForMemory");
+                else {
+
+                    // Add the key and value
+                    keyFile.set_boolean ("KomorebiProperies", "OptimizeForMemory", false);
 
                     // Delete the file
                     configFile.delete();
@@ -301,7 +326,6 @@ namespace Komorebi.OnScreen {
             string timeLabelFont = keyFile.get_string ("Komorebi", "TimeLabelFont");
             string dateLabelFont = keyFile.get_string ("Komorebi", "DateLabelFont");
 
-            // Info box
 
             // DateTime labels shadow
             ApplyCSS({dateTimeBox.timeLabel, dateTimeBox.dateLabel}, @"*{text-shadow: $dateTimeShadow;}");
@@ -392,6 +416,8 @@ namespace Komorebi.OnScreen {
                 return true;
             });
 
+            // Destroy
+            keyFile = null;
 
         }
 
@@ -471,12 +497,17 @@ namespace Komorebi.OnScreen {
 
         void loadBackground(string backgroundName, string animationMode) {
 
-            // Check if we're parallax
+
+
+            // Check if we're parallax (Parallax is exempt from memory optimization)
             if(animationMode == "parallax-bg") {
                 backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth + 20, screenHeight + 20, false);
                 backgroundImage.set_from_pixbuf(backgroundPixbuf);
                 return;
             }
+
+            if(optimizeForMemory)
+                return;
 
             if(animationMode != "gradient") {
                 backgroundPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$backgroundName/bg.jpg", screenWidth, screenHeight, false);
@@ -624,5 +655,14 @@ namespace Komorebi.OnScreen {
         }
 
 
+        /* TAKEN FROM ACIS --- Until Acis is public */
+        /* Allow alpha layer in the window */
+        public void AddAlpha (Widget[] widgets) {
+
+            foreach(var widget in widgets)
+                widget.set_visual (widget.get_screen ().get_rgba_visual () ??
+                                   widget.get_screen ().get_system_visual ());
+
+        }
     }
 }

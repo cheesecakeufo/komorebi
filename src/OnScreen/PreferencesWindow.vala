@@ -44,6 +44,9 @@ namespace Komorebi.OnScreen {
         // 24 Hours time button
         Gtk.CheckButton twentyFourHoursButton = new Gtk.CheckButton.with_label ("Display time as 24-hr");
 
+        // Optimize for memory (Beta) button
+        Gtk.CheckButton optimizeForMemoryButton = new Gtk.CheckButton.with_label ("Optimize For Memory(Beta)");
+
         // Close button
         Button closeButton = new Button.with_label("Hide");
 
@@ -82,6 +85,7 @@ namespace Komorebi.OnScreen {
             showSystemStatsButton.active = showInfoBox;
             darkSystemStatsButton.active = darkInfoBox;
             twentyFourHoursButton.active = timeTwentyFour;
+            optimizeForMemoryButton.active = optimizeForMemory;
 
             // Properties
             closeButton.margin_top = 6;
@@ -109,6 +113,7 @@ namespace Komorebi.OnScreen {
             showSystemStatsButton.toggled.connect (() => { showInfoBox = showSystemStatsButton.active; updateConfigurationFile(); });
             darkSystemStatsButton.toggled.connect (() => { darkInfoBox = darkSystemStatsButton.active; updateConfigurationFile(); });
             twentyFourHoursButton.toggled.connect (() => { timeTwentyFour = twentyFourHoursButton.active; updateConfigurationFile(); });
+            optimizeForMemoryButton.toggled.connect (() => { optimizeForMemory = optimizeForMemoryButton.active; updateConfigurationFile(); });
 
 
             // Add Widgets
@@ -121,6 +126,7 @@ namespace Komorebi.OnScreen {
             otherOptionsContainer.add(showSystemStatsButton);
             otherOptionsContainer.add(darkSystemStatsButton);
             otherOptionsContainer.add(twentyFourHoursButton);
+            otherOptionsContainer.add(optimizeForMemoryButton);
 
             mainContainer.add(optionsContainer);
             mainContainer.add(new Separator(Orientation.VERTICAL));
@@ -183,6 +189,7 @@ namespace Komorebi.OnScreen {
             keyFile.set_boolean ("KomorebiProperies", "ShowInfoBox", showInfoBox);
             keyFile.set_boolean ("KomorebiProperies", "DarkInfoBox", darkInfoBox);
             keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", timeTwentyFour);
+            keyFile.set_boolean ("KomorebiProperies", "OptimizeForMemory", optimizeForMemory);
 
             // Delete the file
             configFile.delete();
