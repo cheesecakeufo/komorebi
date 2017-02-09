@@ -47,8 +47,11 @@ namespace Komorebi.OnScreen {
         // Optimize for memory (Beta) button
         Gtk.CheckButton optimizeForMemoryButton = new Gtk.CheckButton.with_label ("Optimize For Memory(Beta)");
 
-        // Close button
-        Button closeButton = new Button.with_label("Hide");
+        // Hide button
+        Button hideButton = new Button.with_label("Hide");
+        
+        // Quit button
+        Button quitButton = new Button.with_label("Quit Komorebi");
 
         // Wallpaper label
         Label wallpaperLabel = new Label("Wallpaper:");
@@ -88,8 +91,11 @@ namespace Komorebi.OnScreen {
             optimizeForMemoryButton.active = optimizeForMemory;
 
             // Properties
-            closeButton.margin_top = 6;
-            closeButton.margin_left = 6;
+            hideButton.margin_top = 6;
+            hideButton.margin_left = 6;
+
+            quitButton.margin_top = 6;
+            quitButton.margin_right = 6;
 
             mainContainer.margin = 10;
             optionsContainer.margin_left = 10;
@@ -99,14 +105,20 @@ namespace Komorebi.OnScreen {
             optionsContainer.halign = Align.CENTER;
 
             wallpaperLabel.halign = Align.START;
-            closeButton.halign = Align.START;
+            hideButton.halign = Align.START;
 
             otherOptionsContainer.valign = Align.CENTER;
 
             // Signals
             destroy.connect(() => {canOpenPreferences = true;});
 
-            closeButton.released.connect(() => { destroy(); });
+            hideButton.released.connect(() => { destroy(); });
+            quitButton.released.connect(() => { 
+
+                print("Komorebi is going on a trip to sleep land. Good bye!\n");
+                Gtk.main_quit();
+
+            });
 
             wallpapersComboBox.changed.connect (() => { activeWallpaperName = wallpapersComboBox.get_active_text ().replace(" ", "_"); updateConfigurationFile(); });
 
@@ -117,7 +129,8 @@ namespace Komorebi.OnScreen {
 
 
             // Add Widgets
-            headerBar.add(closeButton);
+            headerBar.add(hideButton);
+            headerBar.pack_end(quitButton);
 
             optionsContainer.add(new Image.from_file("/System/Resources/Komorebi/komorebi.svg"));
             optionsContainer.add(wallpaperLabel);
