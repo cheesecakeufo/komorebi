@@ -11,6 +11,7 @@ set (ARCHIVE_NAME komorebi-${VERSION})
 
 
 find_package(PkgConfig)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38)
 add_definitions(${DEPS_CFLAGS})
 
 
@@ -19,7 +20,6 @@ find_package(Vala REQUIRED)
 include(ValaVersion)
 include(ValaPrecompile)
 
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38)
 
 find_package(Vala REQUIRED)
 
@@ -41,10 +41,10 @@ PACKAGES
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
    	--disable-warnings
-    --target-glib=2.38
+
 )
 
-add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
+add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes  )
 add_executable(komorebi ${VALA_C})
 target_link_libraries(komorebi ${DEPS_LIBRARIES} -lm)
 
