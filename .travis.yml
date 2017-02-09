@@ -12,5 +12,4 @@ script:
   - mkdir build
   - cd build
   - cmake ..
-  - cmake ..
   - sudo make install
