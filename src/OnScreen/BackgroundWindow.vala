@@ -242,6 +242,10 @@ namespace Komorebi.OnScreen {
             new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperPath));
             new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 
+            // Disable nautilus to fix bug when clicking on another monitor
+            new GLib.Settings("org.gnome.desktop.background").set_boolean("show-desktop-icons", false);
+
+
             initializeBackground(backgroundName);
             watchConfigChanges();
         }
