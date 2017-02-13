@@ -7,7 +7,7 @@ cache:
 before_install:
   - sudo add-apt-repository ppa:vala-team -y
   - sudo apt-get -qq update
-  - sudo apt-get install -y cmake valac libgtk-3-dev libgtop2-dev
+  - sudo apt-get install -y cmake valac libgtk-3-dev libgtop2-dev libgee-0.8-dev
 script:
   - mkdir build
   - cd build
