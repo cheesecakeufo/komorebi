@@ -48,7 +48,7 @@ namespace Komorebi.OnScreen {
             orientation = Orientation.HORIZONTAL;
             spacing = 50;
             margin = 30;
-
+            margin_top = 50;
 
             // Add widgets
             ramContainer.add(ramImage);

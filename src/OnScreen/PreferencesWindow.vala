@@ -30,7 +30,7 @@ namespace Komorebi.OnScreen {
         Gtk.Box mainContainer = new Box(Orientation.HORIZONTAL, 10);
 
         // Contains options
-        Gtk.Box optionsContainer = new Box(Orientation.VERTICAL, 5);
+        Gtk.Box optionsContainer = new Box(Orientation.VERTICAL, 15);
 
         // Contains other options (time/info box/etc..)
         Gtk.Box otherOptionsContainer = new Box(Orientation.VERTICAL, 5);
@@ -59,16 +59,16 @@ namespace Komorebi.OnScreen {
         // Wallpapers list
         Gtk.ComboBoxText wallpapersComboBox = new Gtk.ComboBoxText ();
 
+        // Report an issue button
+        Button reportButton = new Button.with_label("Report an issue");
+
 
         // Triggered when pointer leaves window
         bool canDestroy = false;
 
 
         /* Add some style */
-        string CSS = "*{
-                        
-                         background-color: rgba(255, 255, 255, 0.60);
-                       }";
+        string CSS = "*{background-color: rgba(255, 255, 255, 0.60);}";
 
 
 
@@ -105,6 +105,7 @@ namespace Komorebi.OnScreen {
             optionsContainer.halign = Align.CENTER;
 
             wallpaperLabel.halign = Align.START;
+            reportButton.halign = Align.START;
             hideButton.halign = Align.START;
 
             otherOptionsContainer.valign = Align.CENTER;
@@ -122,6 +123,14 @@ namespace Komorebi.OnScreen {
 
             wallpapersComboBox.changed.connect (() => { activeWallpaperName = wallpapersComboBox.get_active_text ().replace(" ", "_"); updateConfigurationFile(); });
 
+            reportButton.released.connect(() => { 
+
+                AppInfo.launch_default_for_uri("https://github.com/iabem97/komorebi/issues", null);
+                destroy();
+
+            });
+
+
             showSystemStatsButton.toggled.connect (() => { showInfoBox = showSystemStatsButton.active; updateConfigurationFile(); });
             darkSystemStatsButton.toggled.connect (() => { darkInfoBox = darkSystemStatsButton.active; updateConfigurationFile(); });
             twentyFourHoursButton.toggled.connect (() => { timeTwentyFour = twentyFourHoursButton.active; updateConfigurationFile(); });
@@ -135,6 +144,7 @@ namespace Komorebi.OnScreen {
             optionsContainer.add(new Image.from_file("/System/Resources/Komorebi/komorebi.svg"));
             optionsContainer.add(wallpaperLabel);
             optionsContainer.add(wallpapersComboBox);
+            optionsContainer.add(reportButton);
 
             otherOptionsContainer.add(showSystemStatsButton);
             otherOptionsContainer.add(darkSystemStatsButton);
