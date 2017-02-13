@@ -47,6 +47,9 @@ namespace Komorebi.OnScreen {
         // Optimize for memory (Beta) button
         Gtk.CheckButton optimizeForMemoryButton = new Gtk.CheckButton.with_label ("Optimize For Memory(Beta)");
 
+        // Show Desktop Icons (Beta) button
+        Gtk.CheckButton showDesktopIconsButton = new Gtk.CheckButton.with_label ("Show desktop icons(Beta)");
+
         // Hide button
         Button hideButton = new Button.with_label("Hide");
         
@@ -91,6 +94,7 @@ namespace Komorebi.OnScreen {
             darkSystemStatsButton.active = darkInfoBox;
             twentyFourHoursButton.active = timeTwentyFour;
             optimizeForMemoryButton.active = optimizeForMemory;
+            showDesktopIconsButton.active = showDesktopIcons;
 
             // Properties
             hideButton.margin_top = 6;
@@ -137,6 +141,7 @@ namespace Komorebi.OnScreen {
             darkSystemStatsButton.toggled.connect (() => { darkInfoBox = darkSystemStatsButton.active; updateConfigurationFile(); });
             twentyFourHoursButton.toggled.connect (() => { timeTwentyFour = twentyFourHoursButton.active; updateConfigurationFile(); });
             optimizeForMemoryButton.toggled.connect (() => { optimizeForMemory = optimizeForMemoryButton.active; updateConfigurationFile(); });
+            showDesktopIconsButton.toggled.connect (() => { showDesktopIcons = showDesktopIconsButton.active; updateConfigurationFile(); });
 
 
             // Add Widgets
@@ -152,6 +157,7 @@ namespace Komorebi.OnScreen {
             otherOptionsContainer.add(darkSystemStatsButton);
             otherOptionsContainer.add(twentyFourHoursButton);
             otherOptionsContainer.add(optimizeForMemoryButton);
+            otherOptionsContainer.add(showDesktopIconsButton);
 
             mainContainer.add(optionsContainer);
             mainContainer.add(new Separator(Orientation.VERTICAL));

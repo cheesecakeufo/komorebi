@@ -37,6 +37,9 @@ namespace Komorebi.OnScreen {
     // Global - Optimize For Memory
     bool optimizeForMemory;
 
+    // Global - Show desktop Icons
+    bool showDesktopIcons;
+
     // Global - Whether we can open preferences window
     bool canOpenPreferences;
 
@@ -494,6 +497,11 @@ namespace Komorebi.OnScreen {
 
 
             }
+
+            // Check if we're adding desktop icons
+            if(showDesktopIcons)
+                higherOverlay.add_overlay(new DesktopIcons());
+
 
             show_all();
 

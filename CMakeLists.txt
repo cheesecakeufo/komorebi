@@ -11,7 +11,7 @@ set (ARCHIVE_NAME komorebi-${VERSION})
 
 
 find_package(PkgConfig)
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38 gee-0.8)
 add_definitions(${DEPS_CFLAGS})
 
 
@@ -31,13 +31,18 @@ vala_precompile(VALA_C
     src/OnScreen/BackgroundWindow.vala
     src/OnScreen/DateTimeBox.vala
     src/OnScreen/InfoBox.vala
+    src/OnScreen/DesktopIcons.vala
+    src/OnScreen/ResponsiveGrid.vala
+    src/OnScreen/Icon.vala
     
+    src/Utilities.vala
+
     src/OnScreen/PreferencesWindow.vala
 
 PACKAGES
     gtk+-3.0
     glibtop
-
+    gee-0.8
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
    	--disable-warnings
@@ -90,8 +95,8 @@ set(CPACK_PACKAGE_VERSION_MINOR 9)
 set(CPACK_PACKAGE_VERSION_PATCH 2)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Komorebi")
 
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common")
-set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "i386")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common libgee-0.8-dev")
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_SECTION "system")
 
 include(CPack)
