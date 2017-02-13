@@ -57,10 +57,10 @@ namespace Komorebi.OnScreen {
 
             set_orientation(Orientation.HORIZONTAL);
 
-            margin_left = 15;
+            margin = 30;
             hexpand = true;
             vexpand = true;
-            halign = Align.END;
+            halign = Align.START;
             Gtk.drag_dest_set (this, Gtk.DestDefaults.ALL, targets, Gdk.DragAction.COPY);
 
 

@@ -92,7 +92,8 @@ namespace Komorebi.OnScreen {
 
                         }";
 
-            add_events(EventMask.BUTTON_PRESS_MASK);
+            add_events (Gdk.EventMask.ALL_EVENTS_MASK);
+
             set_halign(Align.START);
             set_valign(Align.CENTER);
             margin = 7;
@@ -136,7 +137,7 @@ namespace Komorebi.OnScreen {
 
 
             /* Signals */
-            _Button.button_press_event.connect((e) => {
+            _Button.button_release_event.connect((e) => {
 
 
                 if(e.button == 1) {
@@ -224,7 +225,7 @@ namespace Komorebi.OnScreen {
 
 
 
-                return false;
+                return true;
             });
 
         }

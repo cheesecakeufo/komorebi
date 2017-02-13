@@ -248,6 +248,8 @@ namespace Komorebi.OnScreen {
             // Disable nautilus to fix bug when clicking on another monitor
             new GLib.Settings("org.gnome.desktop.background").set_boolean("show-desktop-icons", false);
 
+            // REMOVE ME
+            showDesktopIcons = true;
 
             initializeBackground(backgroundName);
             watchConfigChanges();
@@ -444,6 +446,10 @@ namespace Komorebi.OnScreen {
 
                     if(showInfoBox)
                         lowerOverlay.add_overlay(infoBox);
+
+                    // Check if we're adding desktop icons
+                    if(showDesktopIcons)
+                        lowerOverlay.add_overlay(new DesktopIcons());
                 break;
 
 
@@ -466,6 +472,10 @@ namespace Komorebi.OnScreen {
                         higherOverlay.add_overlay(assetImage);
 
                     }
+
+                    // Check if we're adding desktop icons
+                    if(showDesktopIcons)
+                        higherOverlay.add_overlay(new DesktopIcons());
 
                     backgroundFixed.put(backgroundImage, 0, 0);
                     lowerOverlay.add(backgroundFixed);
@@ -491,6 +501,10 @@ namespace Komorebi.OnScreen {
 
                     }
 
+                    // Check if we're adding desktop icons
+                    if(showDesktopIcons)
+                        higherOverlay.add_overlay(new DesktopIcons());
+
                     lowerOverlay.add(backgroundImage);
                     lowerOverlay.add_overlay(higherOverlay);
                 break;
@@ -498,9 +512,7 @@ namespace Komorebi.OnScreen {
 
             }
 
-            // Check if we're adding desktop icons
-            if(showDesktopIcons)
-                higherOverlay.add_overlay(new DesktopIcons());
+
 
 
             show_all();

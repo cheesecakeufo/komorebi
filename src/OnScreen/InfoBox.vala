@@ -24,12 +24,12 @@ namespace Komorebi.OnScreen {
         Gtk.Box mainContainer = new Box(Orientation.HORIZONTAL, 5);
 
         // RAM Image and label
-        Gtk.Box ramContainer = new Box(Orientation.VERTICAL, 5);
+        Gtk.Box ramContainer = new Box(Orientation.VERTICAL, 2);
         Gtk.Image ramImage = new Image();
         Gtk.Label ramLabel = new Label("1.5/4.0GB");
 
         // CPU Image and label
-        Gtk.Box cpuContainer = new Box(Orientation.VERTICAL, 5);
+        Gtk.Box cpuContainer = new Box(Orientation.VERTICAL, 2);
         Gtk.Image cpuImage = new Image();
         Gtk.Label cpuLabel = new Label("54.4%");
 
