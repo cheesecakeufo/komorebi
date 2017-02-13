@@ -71,6 +71,8 @@ namespace Komorebi {
 
         Gtk.init (ref args);
 
+        Gtk.Settings.get_default().gtk_application_prefer_dark_theme = true;
+
         backgroundWindow = new BackgroundWindow();
         backgroundWindow.fadeIn();
 

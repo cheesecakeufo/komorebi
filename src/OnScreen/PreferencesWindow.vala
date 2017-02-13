@@ -68,7 +68,8 @@ namespace Komorebi.OnScreen {
 
 
         /* Add some style */
-        string CSS = "*{background-color: rgba(255, 255, 255, 0.60);}";
+        string CSS = "*{background-color: rgba(40, 40, 40, 0.80); box-shadow: none; color: white; border-width: 0px;}";
+        string headerCSS = "*{background-color: rgba(30, 30, 30, 0.85);  box-shadow: none; color: white; border-width: 0px;}";
 
 
 
@@ -80,6 +81,7 @@ namespace Komorebi.OnScreen {
             window_position = WindowPosition.CENTER;
             set_titlebar(headerBar);
             ApplyCSS({this}, CSS);
+            ApplyCSS({headerBar, reportButton}, headerCSS);
             AddAlpha({this});
 
             // Setup Widgets
