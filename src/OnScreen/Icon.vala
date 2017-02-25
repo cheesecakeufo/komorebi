@@ -82,7 +82,7 @@ namespace Komorebi.OnScreen {
                          color: white;
                          text-shadow:2px 2px 4px rgba(0, 0, 0, 0.4);
                          icon-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
-                         font:7px Menlo;
+                         font:7px Lato;
                        }
 
                        *:focus {
@@ -92,7 +92,7 @@ namespace Komorebi.OnScreen {
 
                         }";
 
-            add_events (Gdk.EventMask.ALL_EVENTS_MASK);
+            // add_events (Gdk.EventMask.ALL_EVENTS_MASK);
 
             set_halign(Align.START);
             set_valign(Align.CENTER);
@@ -137,7 +137,7 @@ namespace Komorebi.OnScreen {
 
 
             /* Signals */
-            _Button.button_release_event.connect((e) => {
+            button_release_event.connect((e) => {
 
 
                 if(e.button == 1) {
@@ -160,66 +160,78 @@ namespace Komorebi.OnScreen {
                     var stack = new Stack();
                     var deleteButton = new Gtk.Button.with_label("Delete");
 
+        GLib.Menu menu = new GLib.Menu ();
+        var displayMenu = new GLib.Menu ();
+        displayMenu.append ("All Feeds", "show-all");
+        displayMenu.append ("Unread", "show-unread");
+        displayMenu.append ("Bookmarks", "show-favs");
+        menu.append_section ("Display:", displayMenu);
+        menu.append ("More …", "show-settings");
+        
+
                     // A box that contains label and the horizontal box
-                    var vbox = new Box(Orientation.VERTICAL, 0);
+                    // var vbox = new Box(Orientation.VERTICAL, 0);
 
-                    // A box that contains delete and cancel buttons
-                    var hbox = new Box(Orientation.HORIZONTAL, 0);
+                    // // A box that contains delete and cancel buttons
+                    // var hbox = new Box(Orientation.HORIZONTAL, 0);
 
-                    var confirmDeletebutton = new Gtk.Button.with_label("Yes");
-                    var cancelbutton = new Gtk.Button.with_label("Cancel");
+                    // var confirmDeletebutton = new Gtk.Button.with_label("Yes");
+                    // var cancelbutton = new Gtk.Button.with_label("Cancel");
 
                     applyCSS({popover}, "* { padding: 10px 10px 10px 10px; }");
                     popover.set_position(PositionType.RIGHT);
-                    
-                    hbox.halign = Align.CENTER;
+                    // 
+                    // hbox.halign = Align.CENTER;
 
-                    stack.set_transition_duration(100);
-                    stack.set_transition_type(StackTransitionType.OVER_UP);
+                    // stack.set_transition_duration(100);
+                    // stack.set_transition_type(StackTransitionType.OVER_UP);
+
+                    // deleteButton.released.connect(() => {
+
+                    //     stack.set_visible_child(vbox);
+                    // });
+
 
                     deleteButton.released.connect(() => {
 
-                        stack.set_visible_child(vbox);
-                    });
+                        print("FTW!!!");
+                        // popover.destroy();
+                        // hide();
 
-
-                    confirmDeletebutton.released.connect(() => {
-
-                        popover.destroy();
-                        hide();
-
-                        Timeout.add(2, () => {
-                            var file = File.new_for_path(desktopPath);
+                        // Timeout.add(2, () => {
+                        //     var file = File.new_for_path(desktopPath);
                             
-                            // Check if the file is a directory
-                            if(file.query_file_type (GLib.FileQueryInfoFlags.NONE, null) == GLib.FileType.DIRECTORY) {
-                                Process.spawn_command_line_async("rm -rf " + desktopPath);
-                            } else
-                                file.delete();
+                        //     // Check if the file is a directory
+                        //     if(file.query_file_type (GLib.FileQueryInfoFlags.NONE, null) == GLib.FileType.DIRECTORY) {
+                        //         Process.spawn_command_line_async("rm -rf " + desktopPath);
+                        //     } else
+                        //         file.delete();
 
-                            return false;
-                        });
+                        //     return false;
+                        // });
                     });
 
-                    cancelbutton.released.connect(() => {
+                    // cancelbutton.released.connect(() => {
 
-                        popover.destroy();
+                    //     popover.destroy();
 
-                    });
+                    // });
 
-                    hbox.add(confirmDeletebutton);
-                    hbox.add(cancelbutton);
+                    // hbox.add(confirmDeletebutton);
+                    // hbox.add(cancelbutton);
 
-                    vbox.add(new Label("Delete permanently?"));
-                    vbox.add(hbox);
+                    // vbox.add(new Label("Delete permanently?"));
+                    // vbox.add(hbox);
 
-                    stack.add_named(deleteButton, "deleteButton");
-                    stack.add_named(vbox, "deleteBox");
+                    // stack.add_named(deleteButton, "deleteButton");
+                    // stack.add_named(vbox, "deleteBox");
 
-                    popover.add(stack);
-
+                    popover.add(deleteButton);
+                    // popover.bind_model (menu, "win");
                     popover.show_all();
-
+                    // popover.present ();
+                    // popover.run ();
+                    // popover.destroy ();
 
                 }
 

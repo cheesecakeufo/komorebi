@@ -25,10 +25,9 @@ using GLib.Environment;
 
 namespace Komorebi.OnScreen {
 
-    public class DesktopIcons : Box {
+    public class DesktopIcons : ResponsiveGrid {
 
         /* Desktop items holder */
-        ResponsiveGrid Holder = new ResponsiveGrid();
 
         /* Desktops path */
         string DesktopPath = Environment.get_user_special_dir(UserDirectory.DESKTOP);
@@ -64,14 +63,14 @@ namespace Komorebi.OnScreen {
             Gtk.drag_dest_set (this, Gtk.DestDefaults.ALL, targets, Gdk.DragAction.COPY);
 
 
-            Holder.setEdgeLimit(0);
-            Holder.appendType = ResponsiveGrid.Type.ROW;
-            Holder.row_spacing = 5;
-            Holder.hexpand = true;
-            Holder.vexpand = true;
+            setEdgeLimit(0);
+            appendType = ResponsiveGrid.Type.ROW;
+            row_spacing = 5;
+            // Holder.hexpand = true;
+            // Holder.vexpand = true;
 
             /* Add widgets */
-            add(Holder);
+            // add(Holder);
 
             DetermineSize();
             MonitorChanges();
@@ -130,7 +129,7 @@ namespace Komorebi.OnScreen {
         /* Get .desktop(s) */
         public void GetDesktops () {
 
-            Holder.clear();
+            clear();
 
             Column = 0;
             Row = 0;
@@ -203,7 +202,7 @@ namespace Komorebi.OnScreen {
                 }
 
 
-                Holder.append(_DesktopItem);
+                append(_DesktopItem);
                 _DesktopItem.show_all();
 
             }
@@ -217,17 +216,17 @@ namespace Komorebi.OnScreen {
             var Height = _Screen.height();
 
             if(Height <= 480)
-                Holder.EdgeLimit = 3;
+               EdgeLimit = 3;
             else if(Height <= 600 && Height > 480)
-                Holder.EdgeLimit = 4;
+                EdgeLimit = 4;
             else if(Height <= 768 && Height > 600)
-                Holder.EdgeLimit = 5;
+                EdgeLimit = 5;
             else if(Height <= 864 && Height > 768)
-                Holder.EdgeLimit = 5;
+                EdgeLimit = 5;
             else if(Height <= 960 && Height > 864)
-                Holder.EdgeLimit = 5;
+                EdgeLimit = 5;
             else if(Height > 960)
-                Holder.EdgeLimit = 5;
+                EdgeLimit = 5;
 
         }
 

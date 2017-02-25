@@ -221,6 +221,7 @@ namespace Komorebi.OnScreen {
             keyFile.set_boolean ("KomorebiProperies", "DarkInfoBox", darkInfoBox);
             keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", timeTwentyFour);
             keyFile.set_boolean ("KomorebiProperies", "OptimizeForMemory", optimizeForMemory);
+            keyFile.set_boolean ("KomorebiProperies", "ShowDesktopIcons", showDesktopIcons);
 
             // Delete the file
             configFile.delete();

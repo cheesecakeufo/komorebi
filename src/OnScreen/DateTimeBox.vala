@@ -18,7 +18,7 @@ using Cairo;
 
 namespace Komorebi.OnScreen {
 
-    public class DateTimeBox: Box {
+    public class DateTimeBox: EventBox {
 
         // Labels box
         Gtk.Box mainContainer = new Box(Orientation.VERTICAL, 5);
@@ -35,7 +35,7 @@ namespace Komorebi.OnScreen {
 
         public DateTimeBox () {
 
-            orientation = Orientation.VERTICAL;
+
             // set_size_request(350, 350);
 
             mainContainer.add(timeLabel);
@@ -75,19 +75,19 @@ namespace Komorebi.OnScreen {
 
         }
 
-        public override bool draw (Context context) {
+        // public override bool draw (Context context) {
 
 
 
-            Cairo.Matrix matrix = Cairo.Matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
-            context.transform(matrix);
+        //     Cairo.Matrix matrix = Cairo.Matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
+        //     context.transform(matrix);
 
  
 
-            mainContainer.draw(context);
+        //     mainContainer.draw(context);
 
-            return true;
-        }
+        //     return true;
+        // }
 
     }
 }

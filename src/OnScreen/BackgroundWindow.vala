@@ -107,6 +107,7 @@ namespace Komorebi.OnScreen {
             add_events (EventMask.ENTER_NOTIFY_MASK   |
                         EventMask.POINTER_MOTION_MASK |
                         EventMask.SMOOTH_SCROLL_MASK);
+            icon = Utilities.GetIconFrom("user-desktop", 48);
             AddAlpha({this});
             ApplyCSS({this}, @"*{background-color:rgba(0,0,0,0);}");
 
@@ -179,6 +180,7 @@ namespace Komorebi.OnScreen {
                 keyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", false);
 
                 keyFile.set_boolean ("KomorebiProperies", "OptimizeForMemory", false);
+                keyFile.set_boolean ("KomorebiProperies", "ShowDesktopIcons", true);
 
 
                 // save the key file
@@ -190,6 +192,7 @@ namespace Komorebi.OnScreen {
                 showInfoBox = true;
                 timeTwentyFour = true;
                 optimizeForMemory = true;
+                showDesktopIcons = true;
                 activeWallpaperName = "foggy_sunny_mountain";
 
             } else {
@@ -236,6 +239,22 @@ namespace Komorebi.OnScreen {
                     stream.close ();
                 }
 
+                // Check if we have the 'Show desktop icons' key (TODO: Should be removed version 1.0)
+                if(keyFile.has_key("KomorebiProperies", "ShowDesktopIcons"))
+                    showDesktopIcons = keyFile.get_boolean ("KomorebiProperies", "ShowDesktopIcons");
+                else {
+
+                    // Add the key and value
+                    keyFile.set_boolean ("KomorebiProperies", "ShowDesktopIcons", true);
+
+                    // Delete the file
+                    configFile.delete();
+
+                    // Save the file
+                    var stream = new DataOutputStream (configFile.create (0));
+                    stream.put_string (keyFile.to_data ());
+                    stream.close ();
+                }
             }
 
             activeWallpaperName = backgroundName;
@@ -245,11 +264,19 @@ namespace Komorebi.OnScreen {
             new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperPath));
             new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 
-            // Disable nautilus to fix bug when clicking on another monitor
+            // Disable nautilus/nemo to fix bug when clicking on another monitor
             new GLib.Settings("org.gnome.desktop.background").set_boolean("show-desktop-icons", false);
 
-            // REMOVE ME
-            showDesktopIcons = true;
+            // Check if we have nemo installed
+            SettingsSchemaSource settingsSchemaSource = new SettingsSchemaSource.from_directory ("/usr/share/glib-2.0/schemas", null, false);
+            SettingsSchema settingsSchema = settingsSchemaSource.lookup ("org.nemo.desktop", false);
+
+            if (settingsSchema != null) {
+
+                // Disable Nemo's desktop icons
+                new GLib.Settings("org.nemo.desktop").set_boolean("show-desktop-icons", false);
+
+            }
 
             initializeBackground(backgroundName);
             watchConfigChanges();
@@ -447,9 +474,7 @@ namespace Komorebi.OnScreen {
                     if(showInfoBox)
                         lowerOverlay.add_overlay(infoBox);
 
-                    // Check if we're adding desktop icons
-                    if(showDesktopIcons)
-                        lowerOverlay.add_overlay(new DesktopIcons());
+
                 break;
 
 
@@ -473,9 +498,6 @@ namespace Komorebi.OnScreen {
 
                     }
 
-                    // Check if we're adding desktop icons
-                    if(showDesktopIcons)
-                        higherOverlay.add_overlay(new DesktopIcons());
 
                     backgroundFixed.put(backgroundImage, 0, 0);
                     lowerOverlay.add(backgroundFixed);
@@ -484,14 +506,18 @@ namespace Komorebi.OnScreen {
                 break;
 
                 default:
+
                     // Determine whether we should place the date and time on the top or not
                     if(dateTimeBoxOnTop) {
+
                         higherOverlay.add(assetImage);
                         higherOverlay.add_overlay(dateTimeFixed);
+
                         if(showInfoBox)
                             higherOverlay.add_overlay(infoBox);
 
                     } else {
+                        
                         higherOverlay.add(dateTimeFixed);
                         
                         if(showInfoBox)
@@ -501,11 +527,6 @@ namespace Komorebi.OnScreen {
 
                     }
 
-                    // Check if we're adding desktop icons
-                    if(showDesktopIcons)
-                        higherOverlay.add_overlay(new DesktopIcons());
-
-                    lowerOverlay.add(backgroundImage);
                     lowerOverlay.add_overlay(higherOverlay);
                 break;
 
@@ -514,6 +535,15 @@ namespace Komorebi.OnScreen {
 
 
 
+            // Check if we're adding desktop icons
+            // var assass = new Overlay();
+            var m = new DesktopIcons();
+            // assass.add(m);
+            lowerOverlay.add_overlay(m);
+            // if(showDesktopIcons)
+                // lowerOverlay.set_overlay_pass_through(higherOverlay,true);
+                // higherOverlay.set_overlay_pass_through(dateTimeFixed,true);
+            
 
             show_all();
 
