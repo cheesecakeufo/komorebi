@@ -130,6 +130,7 @@ namespace Komorebi.OnScreen {
             // Properties
             set_size_request(100, 100);
             halign = Align.CENTER;
+            add_events (EventMask.ALL_EVENTS_MASK);
 
             Title.margin_top = 10;
             Title.set_line_wrap(true);
@@ -158,20 +159,14 @@ namespace Komorebi.OnScreen {
 
 
             /* Signals */
-            button_release_event.connect((e) => {
+            button_press_event.connect((e) => {
 
 
                 if(e.button == 1) {
 
+
                     if(e.type == Gdk.EventType.@2BUTTON_PRESS) {
-
-                        // background.grab_focus();
-
-                        /* Open home folder */
-                        // if(IsExecutable)
-                        //     busserver.StartCommand(execPath);
-                        // else
-                        //     AppInfo.launch_default_for_uri (@"file://$DesktopPath", null);
+                        AppInfo.launch_default_for_uri (@"file://$filePath", null);
 
                     }
 
