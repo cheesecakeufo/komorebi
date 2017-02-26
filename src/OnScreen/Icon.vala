@@ -190,6 +190,7 @@ namespace Komorebi.OnScreen {
             openMenuItem.activate.connect(() => {
 
                 // Open the file/folder
+                AppInfo.launch_default_for_uri (@"file://$filePath", null);
 
             });
 
