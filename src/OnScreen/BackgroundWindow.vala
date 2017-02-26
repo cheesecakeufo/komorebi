@@ -43,6 +43,9 @@ namespace Komorebi.OnScreen {
     // Global - Whether we can open preferences window
     bool canOpenPreferences;
 
+    // Global - Clipboard
+    Gtk.Clipboard clipboard;
+
     public class BackgroundWindow : Gtk.Window {
 
         // Main container (image) (overlay(time)(assets))
@@ -72,11 +75,12 @@ namespace Komorebi.OnScreen {
 
         // Right click menu with its items
         Gtk.Menu rightClickMenu = new Gtk.Menu();
+        Gtk.MenuItem newFolderMenuItem = new Gtk.MenuItem.with_label ("New Folder");
         Gtk.MenuItem pasteMenuItem = new Gtk.MenuItem.with_label ("Paste");
         Gtk.MenuItem preferencesMenuItem = new Gtk.MenuItem.with_label ("Desktop Preferences");
 
-        // Clipboard
-        Gtk.Clipboard clipboard;
+        // Desktop icons
+        DesktopIcons desktopIcons;
 
         // Screen Size
         int screenHeight = Gdk.Screen.get_default ().height();
@@ -142,17 +146,27 @@ namespace Komorebi.OnScreen {
                 // Show options
                 if(e.button == 3) {
 
-                    // Check if we have anything in the clipboard,
-                    // if not, disable the 'Paste' menu item
-                    var clipboardText = clipboard.wait_for_text ();
+                    // Check if we're showing desktop icons
+                    if(showDesktopIcons) {
 
-                    if(clipboardText == "" || clipboardText == null)
+                        newFolderMenuItem.set_sensitive(true);
+
+                        // Check if we have anything in the clipboard,
+                        // if not, disable the 'Paste' menu item
+                        var clipboardText = clipboard.wait_for_text ();
+
+                        if(clipboardText == "" || clipboardText == null)
+                            pasteMenuItem.set_sensitive(false);
+                        else
+                            pasteMenuItem.set_sensitive(true);
+
+                    } else {
+
+                        newFolderMenuItem.set_sensitive(false);
                         pasteMenuItem.set_sensitive(false);
-                    else
-                        pasteMenuItem.set_sensitive(true);
+                    }
 
                     rightClickMenu.show_all();
-
                     rightClickMenu.popup(null, null, null, e.button, e.time);
 
                 }
@@ -163,7 +177,8 @@ namespace Komorebi.OnScreen {
 
             pasteMenuItem.activate.connect(() => {
 
-                print(clipboard.wait_for_text());
+
+                desktopIcons.copyToDesktop(clipboard.wait_for_text());
 
             });
 
@@ -178,10 +193,12 @@ namespace Komorebi.OnScreen {
                 }
             });
 
-            // Add widgets
+            // Add widgets    
+            rightClickMenu.append(newFolderMenuItem);
+            rightClickMenu.append(new SeparatorMenuItem());
             rightClickMenu.append(pasteMenuItem);
-            rightClickMenu.append(preferencesMenuItem);
-            
+            rightClickMenu.append(new SeparatorMenuItem());
+            rightClickMenu.append(preferencesMenuItem);               
             add(lowerOverlay);
         }
 
@@ -360,6 +377,7 @@ namespace Komorebi.OnScreen {
                     foreach(var child in higherOverlay.get_children())
                         higherOverlay.remove(child);
 
+                    desktopIcons.destroy();
 
                     initializeConfigFile();
 
@@ -505,8 +523,7 @@ namespace Komorebi.OnScreen {
             if(showInfoBox)
                 infoBox.initInfoWidgets(darkInfoBox);
 
-            // Anything that's not gradient
-            // is added normally
+            // Anything that's not gradient is added normally
             switch (animationMode) {
 
                 case "gradient" :
@@ -577,14 +594,12 @@ namespace Komorebi.OnScreen {
 
 
             // Check if we're adding desktop icons
-            // var assass = new Overlay();
-            var m = new DesktopIcons();
-            // assass.add(m);
-            lowerOverlay.add_overlay(m);
-            // if(showDesktopIcons)
-                // lowerOverlay.set_overlay_pass_through(higherOverlay,true);
-                // higherOverlay.set_overlay_pass_through(dateTimeFixed,true);
-            
+            if(showDesktopIcons) {
+
+                desktopIcons = new DesktopIcons();
+                lowerOverlay.add_overlay(desktopIcons);
+            }
+
 
             show_all();
 

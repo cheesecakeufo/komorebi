@@ -231,6 +231,27 @@ namespace Komorebi.OnScreen {
         }
 
 
+        /* Copies a file from a passed path to Desktop */
+        public void copyToDesktop (string path) {
+
+            var file = File.new_for_path(path);
+
+            // Check if the file exists
+            if(file.query_exists()) {
+
+                var destinationFile = File.new_for_path(DesktopPath + "/" + file.get_basename());
+
+                // Copy the file to desktop
+                try {
+
+                    file.copy (destinationFile, 0, null, (current_num_bytes, total_num_bytes) => {  });
+
+                } catch (Error e) {
+                    print (@"Error copying file: $(e.message)\n");
+                }
+            }
+
+        }
 
         /* Finds the icon of a file and returns as string */
         string LoadIcon (File file) {
