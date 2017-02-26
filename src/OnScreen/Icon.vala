@@ -42,7 +42,7 @@ namespace Komorebi.OnScreen {
                        }";
 
         /* Path of the file */
-        string DesktopPath = "";
+        string filePath = "";
 
         /* Path of executable path */
         public string execPath = "";
@@ -74,6 +74,7 @@ namespace Komorebi.OnScreen {
         /* Wether this item is temporary */
         bool IsTemp = false;
 
+        string desktopPath = Environment.get_user_special_dir(UserDirectory.DESKTOP);
 
         construct {
 
@@ -114,9 +115,9 @@ namespace Komorebi.OnScreen {
 
         }
 
-        public Icon (string name, Pixbuf icon, string execPath, string desktopPath, bool IsExec = false) {
+        public Icon (string name, Pixbuf icon, string execPath, string filePath, bool IsExec = false) {
 
-            DesktopPath = desktopPath;
+            filePath = filePath;
             this.execPath = execPath;
             TitleName = name;
             IsExecutable = IsExec;
@@ -201,10 +202,26 @@ namespace Komorebi.OnScreen {
             copyMenuItem.activate.connect(() => {
 
                 // Copy file/folder
-                clipboard.set_text(desktopPath, desktopPath.length);
+                clipboard.set_text(filePath, filePath.length);
                 clipboard.store();
 
-            });      
+            });  
+
+
+            makeAliasMenuItem.activate.connect(() => {
+
+                // Makes an alias to the file/folder
+                var sourceFile = File.new_for_path(filePath);
+                var sourceFileName = sourceFile.get_basename();
+
+                var targetFile = File.new_for_path(desktopPath + "/(Alias) " + sourceFileName);
+
+                targetFile.make_symbolic_link(filePath);
+
+            });
+
+
+ 
         }
   
         /* TAKEN FROM ACIS --- Until Acis is public */
