@@ -180,6 +180,8 @@ namespace Komorebi.OnScreen {
 
                     rightClickMenu.popup(null, null, null, e.button, e.time);
 
+                }
+
                 return true;
             });
 
@@ -190,11 +192,19 @@ namespace Komorebi.OnScreen {
 
             });
 
-            openMenuItem.activate.connect(() => {
+            moveToTrashMenuItem.activate.connect(() => {
 
-                // Open the file/folder
+                // Move file/folder to trash
 
             });
+
+            copyMenuItem.activate.connect(() => {
+
+                // Copy file/folder
+                clipboard.set_text(desktopPath, desktopPath.length);
+                clipboard.store();
+
+            });      
         }
   
         /* TAKEN FROM ACIS --- Until Acis is public */
