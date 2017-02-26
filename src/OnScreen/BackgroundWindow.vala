@@ -70,6 +70,13 @@ namespace Komorebi.OnScreen {
         Image assetImage = new Image();
         Pixbuf assetPixbuf = null;
 
+        // Right click menu with its items
+        Gtk.Menu rightClickMenu = new Gtk.Menu();
+        Gtk.MenuItem pasteMenuItem = new Gtk.MenuItem.with_label ("Paste");
+        Gtk.MenuItem preferencesMenuItem = new Gtk.MenuItem.with_label ("Desktop Preferences");
+
+        // Clipboard
+        Gtk.Clipboard clipboard;
 
         // Screen Size
         int screenHeight = Gdk.Screen.get_default ().height();
@@ -94,6 +101,7 @@ namespace Komorebi.OnScreen {
             // Get current monitor size
             getMonitorSize();
 
+            // Setup widgets
             set_size_request(screenWidth, screenHeight);
             resizable = false;
             set_type_hint(WindowTypeHint.DESKTOP);
@@ -110,6 +118,8 @@ namespace Komorebi.OnScreen {
             icon = Utilities.GetIconFrom("user-desktop", 48);
             AddAlpha({this});
             ApplyCSS({this}, @"*{background-color:rgba(0,0,0,0);}");
+
+            clipboard = Gtk.Clipboard.get_for_display (get_display (), Gdk.SELECTION_CLIPBOARD);
 
             // Properties
             higherBox.hexpand = true;
@@ -130,17 +140,48 @@ namespace Komorebi.OnScreen {
             button_release_event.connect((e) => {
 
                 // Show options
-                if(e.button == 3 && canOpenPreferences) {
-                    canOpenPreferences = false;
-                    new PreferencesWindow();
+                if(e.button == 3) {
+
+                    // Check if we have anything in the clipboard,
+                    // if not, disable the 'Paste' menu item
+                    var clipboardText = clipboard.wait_for_text ();
+
+                    if(clipboardText == "" || clipboardText == null)
+                        pasteMenuItem.set_sensitive(false);
+                    else
+                        pasteMenuItem.set_sensitive(true);
+
+                    rightClickMenu.show_all();
+
+                    rightClickMenu.popup(null, null, null, e.button, e.time);
+
                 }
 
                 return true;
             });
 
 
+            pasteMenuItem.activate.connect(() => {
 
+                print(clipboard.wait_for_text());
 
+            });
+
+            preferencesMenuItem.activate.connect(() => {
+
+                // Check if preferences window is already visible
+                if(canOpenPreferences) {
+ 
+                    canOpenPreferences = false;
+                    new PreferencesWindow();
+        
+                }
+            });
+
+            // Add widgets
+            rightClickMenu.append(pasteMenuItem);
+            rightClickMenu.append(preferencesMenuItem);
+            
             add(lowerOverlay);
         }
 
