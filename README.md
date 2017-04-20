@@ -15,7 +15,6 @@
 " target="_blank"><img src="http://img.youtube.com/vi/qbs2tcdxtWo/0.jpg" 
 alt="Komorebi Demo" width="240" height="180" border="10" /><br>Watch demo</a>
 </p>
----
 ## What is Komorebi?
 Komorebi is an awesome background manager for all Linux platforms.
 It provides fully customizeable backgrounds that can be tweaked at any time!
@@ -39,8 +38,6 @@ See screenshots below.
 3. `mkdir build && cd build`
 4. `cmake .. && sudo make install && ./komorebi`
 
-Note: If you are having issues building with glib.h, run `cmake ..` twice.
-
 ## Configuration
 
 You can simply configure/customize Komorebi by right-clicking anywhere on the wallpaper.
@@ -58,6 +55,20 @@ Alternatively, you can edit a single file located in your home directory ~/.Komo
 Making/Customizing a wallpaper for Komorebi is very easy, and can be done in minutes.
 
 ### View Tutorial: *[`Click here`](https://github.com/iabem97/komorebi/blob/master/Tutorial.md)*
+
+## Uninstall
+
+### If you installed a packaged version of Komorebi
+
+1. Open Terminal
+2. `sudo apt remove komorebi`
+
+### If you manually installed Komorebi
+
+1. Open Terminal
+2. `cd komorebi/build`
+3. `sudo make uninstall`
+
 
 ## Screenshots
 
