@@ -97,7 +97,7 @@ namespace Komorebi.OnScreen {
     			GTop.get_mem (out mem);
                     
     			var totalMemory = (float) (mem.total / 1024 / 1024) / 1000;
-    			var usedMemory = (float) (mem.used  / 1024/ 1024) / 1000;
+    			var usedMemory = (float) (mem.user  / 1024/ 1024) / 1000;
 
     			ramLabel.set_markup(@"<span color='%s' font='Lato Regular 10'>%.2f/%.2fGB</span>".printf(color, usedMemory, totalMemory));
                     
