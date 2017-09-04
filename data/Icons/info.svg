@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="info.svg"
+   inkscape:export-filename="/home/sam/dev/RESOURCES/gnome-icon-theme-symbolic/src/gnome-stencils.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   height="16"
+   id="svg7384"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="16.000002">
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>elementary Symbolic Icon Theme</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:bbox-nodes="true"
+     inkscape:bbox-paths="true"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:current-layer="layer12"
+     inkscape:cx="10.499378"
+     inkscape:cy="5.4590012"
+     gridtolerance="10"
+     inkscape:guide-bbox="true"
+     guidetolerance="10"
+     id="namedview88"
+     inkscape:object-nodes="true"
+     inkscape:object-paths="false"
+     objecttolerance="10"
+     pagecolor="#3a3b39"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     showborder="false"
+     showgrid="false"
+     showguides="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-global="true"
+     inkscape:snap-grids="true"
+     inkscape:snap-nodes="true"
+     inkscape:snap-others="false"
+     inkscape:snap-to-guides="true"
+     inkscape:window-height="1019"
+     inkscape:window-maximized="1"
+     inkscape:window-width="1920"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:zoom="32">
+    <inkscape:grid
+       dotted="false"
+       empspacing="4"
+       enabled="true"
+       id="grid4866"
+       originx="-311.99992px"
+       originy="-169px"
+       snapvisiblegridlinesonly="true"
+       spacingx="1px"
+       spacingy="1px"
+       type="xygrid"
+       visible="true" />
+    <inkscape:grid
+       color="#000000"
+       dotted="true"
+       empcolor="#000000"
+       empopacity="0.25098039"
+       empspacing="4"
+       enabled="true"
+       id="grid13609"
+       opacity="0.1254902"
+       originx="-311.99992px"
+       originy="-169px"
+       snapvisiblegridlinesonly="true"
+       spacingx="0.5px"
+       spacingy="0.5px"
+       type="xygrid"
+       visible="true" />
+  </sodipodi:namedview>
+  <title
+     id="title9167">elementary Symbolic Icon Theme</title>
+  <defs
+     id="defs7386">
+    <filter
+       color-interpolation-filters="sRGB"
+       id="filter7554">
+      <feBlend
+         id="feBlend7556"
+         in2="BackgroundImage"
+         mode="darken" />
+    </filter>
+    <filter
+       color-interpolation-filters="sRGB"
+       id="filter7554-7">
+      <feBlend
+         id="feBlend7556-6"
+         in2="BackgroundImage"
+         mode="darken" />
+    </filter>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer9"
+     label="status"
+     inkscape:label="status"
+     style="display:inline"
+     transform="translate(-553.00012,-48)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer10"
+     inkscape:label="devices"
+     style="display:inline"
+     transform="translate(-553.00012,-48)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer13"
+     inkscape:label="places"
+     style="display:inline"
+     transform="translate(-553.00012,-48)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer14"
+     inkscape:label="mimes"
+     transform="translate(-553.00012,-48)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer15"
+     inkscape:label="emblems"
+     style="display:inline"
+     transform="translate(-553.00012,-48)" />
+  <g
+     inkscape:groupmode="layer"
+     id="g71291"
+     inkscape:label="emotes"
+     style="display:inline"
+     transform="translate(-553.00012,-48)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer12"
+     inkscape:label="actions"
+     style="display:inline"
+     transform="translate(-553.00012,-48)">
+    <path
+       inkscape:connector-curvature="0"
+       d="m 561.00012,48 c -4.42352,0 -8,3.57648 -8,8 0,4.42352 3.57648,8 8,8 4.42352,0 8,-3.57648 8,-8 0,-4.42352 -3.57648,-8 -8,-8 z m 0,1 c 3.87058,0 7,3.12942 7,7 0,3.87058 -3.12942,7 -7,7 -3.87058,0 -7,-3.12942 -7,-7 0,-3.87058 3.12942,-7 7,-7 z"
+       id="path29603"
+       style="color:#bebebe;text-indent:0;text-transform:none;block-progression:tb;display:inline;overflow:visible;visibility:visible;opacity:0.9;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate"
+       sodipodi:nodetypes="ssssssssss" />
+    <g
+       style="font-style:normal;font-weight:normal;font-size:5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bebebe;fill-opacity:0.90196078;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="text4147">
+      <path
+         d="m 561.8889,54.304064 0,5.799375 -1.5525,0 0,-5.799375 1.5525,0 z m 0.18562,-1.648125 q 0,0.196875 -0.0788,0.365625 -0.0788,0.16875 -0.21375,0.298125 -0.12937,0.129375 -0.30937,0.2025 -0.17438,0.07313 -0.37688,0.07313 -0.19125,0 -0.36562,-0.07313 -0.16875,-0.07312 -0.29813,-0.2025 -0.12937,-0.129375 -0.20812,-0.298125 -0.0731,-0.16875 -0.0731,-0.365625 0,-0.196875 0.0731,-0.365625 0.0788,-0.174375 0.20812,-0.30375 0.12938,-0.129375 0.29813,-0.2025 0.17437,-0.07312 0.36562,-0.07312 0.2025,0 0.37688,0.07312 0.18,0.07312 0.30937,0.2025 0.135,0.129375 0.21375,0.30375 0.0788,0.16875 0.0788,0.365625 z"
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:11.25px;font-family:Lato;-inkscape-font-specification:'Lato Ultra-Bold';fill:#bebebe;fill-opacity:0.90196078"
+         id="path4152" />
+    </g>
+  </g>
+</svg>

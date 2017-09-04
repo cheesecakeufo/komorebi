@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="200"
+   height="200"
+   id="svg7384"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="done.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1470"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="-130.47892"
+     inkscape:cy="111.87203"
+     inkscape:window-x="0"
+     inkscape:window-y="56"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2"
+     showborder="true"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       type="xygrid"
+       id="grid3796"
+       originx="0"
+       originy="0"
+       spacingx="1.0666667"
+       spacingy="1.0666667" />
+  </sodipodi:namedview>
+  <title
+     id="title9167">Gnome Symbolic Icon Theme</title>
+  <defs
+     id="defs11">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient836">
+      <stop
+         style="stop-color:#62ffff;stop-opacity:1"
+         offset="0"
+         id="stop832" />
+      <stop
+         style="stop-color:#2d3eff;stop-opacity:1"
+         offset="1"
+         id="stop834" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3780">
+      <stop
+         id="stop3782"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:0;" />
+      <stop
+         id="stop3784"
+         offset="1"
+         style="stop-color:#999999;stop-opacity:0.39459458;" />
+    </linearGradient>
+    <g
+       clip-path="url(#clip1)"
+       id="surface5">
+      <path
+         id="path3000"
+         d="m 57.4875,20.6375 c 0.7125,1.783333 1.083333,3.758334 1.083333,5.8125 0,8.224999 -6.283333,14.895834 -14.033333,14.895834 -2.262501,0 -4.379166,-0.562501 -6.275,-1.575001 2.133334,5.35 7.1375,9.083333 12.95,9.083333 7.75,0 14.033334,-6.670833 14.033334,-14.895832 0,-5.825001 -3.166667,-10.866667 -7.758334,-13.320834 z m 0,0"
+         style="fill:#eeeeeb;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.06666672"
+         inkscape:connector-curvature="0" />
+    </g>
+    <clipPath
+       id="clip1">
+      <rect
+         id="rect2997"
+         height="96"
+         width="96"
+         x="0"
+         y="0" />
+    </clipPath>
+    <mask
+       id="mask0">
+      <g
+         id="g2992"
+         style="filter:url(#alpha)">
+        <rect
+           id="rect2994"
+           style="fill:#000000;fill-opacity:0.90196102;stroke:none"
+           height="96"
+           width="96"
+           y="0"
+           x="0" />
+      </g>
+    </mask>
+    <filter
+       height="1"
+       width="1"
+       y="0"
+       x="0"
+       filterUnits="objectBoundingBox"
+       id="alpha"
+       style="color-interpolation-filters:sRGB">
+      <feColorMatrix
+         id="feColorMatrix2989"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         in="SourceGraphic"
+         type="matrix" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient836"
+       id="linearGradient840"
+       gradientUnits="userSpaceOnUse"
+       x1="100.94469"
+       y1="94.090065"
+       x2="100.9977"
+       y2="-89.940849" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient836"
+       id="linearGradient856"
+       x1="101.13013"
+       y1="89.955185"
+       x2="100.6842"
+       y2="-90.044807"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient836"
+       id="linearGradient4512"
+       x1="104.99999"
+       y1="93.899986"
+       x2="101.00001"
+       y2="-91.100006"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient836"
+       id="linearGradient4515"
+       x1="94.499992"
+       y1="109.39998"
+       x2="100.50001"
+       y2="-94.600014"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gnome Symbolic Icon Theme</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer"
+     transform="translate(0,97.600012)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer#1"
+     transform="translate(0,97.600012)">
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:url(#linearGradient840);stroke-width:17.56600952;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3785"
+       cx="100"
+       cy="2.3999879"
+       r="91.216995" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:url(#linearGradient856);stroke-width:15.99871635;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 132.6215,-33.090245 83.055926,41.596717 70.664546,2.5882402"
+       id="path3011"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <ellipse
+       style="opacity:1;fill:none;fill-opacity:1;stroke:url(#linearGradient4512);stroke-width:15.32871819;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4504"
+       cx="100"
+       cy="2.3999891"
+       r="92.33564" />
+    <circle
+       style="opacity:1;fill:none;fill-opacity:1;stroke:url(#linearGradient4515);stroke-width:16.82756615;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4506"
+       cx="100"
+       cy="2.3999851"
+       r="91.58622" />
+  </g>
+</svg>

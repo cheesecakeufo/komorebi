@@ -1,0 +1,29 @@
+[Info]
+WallpaperType=video
+VideoFileName=video.mp4
+
+[DateTime]
+Visible=true
+Parallax=false
+
+MarginLeft=0
+MarginTop=0
+MarginBottom=0
+MarginRight=0
+
+RotationX=0
+RotationY=0
+RotationZ=0
+
+Position=center
+Alignment=center
+AlwaysOnTop=true
+
+Color=white
+Alpha=255
+
+ShadowColor=white
+ShadowAlpha=0
+
+TimeFont=Lato Light 50
+DateFont=Lato Light 40
