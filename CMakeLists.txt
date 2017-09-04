@@ -11,8 +11,7 @@ set (ARCHIVE_NAME komorebi-${VERSION})
 
 
 find_package(PkgConfig)
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38 gee-0.8 libwnck-3.0 clutter-gtk-1.0 clutter-1.0 clutter-gst-3.0)
-add_definitions(${DEPS_CFLAGS} -DWNCK_I_KNOW_THIS_IS_UNSTABLE)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38 gee-0.8 clutter-gtk-1.0 clutter-1.0 clutter-gst-3.0)
 
 
 link_directories(${DEPS_LIBRARY_DIRS})
@@ -49,7 +48,6 @@ vala_precompile(VALA_C
 PACKAGES
     gtk+-3.0
     glibtop
-    libwnck-3.0
     gee-0.8
     clutter-gtk-1.0
     clutter-gst-3.0
@@ -119,7 +117,7 @@ set(CPACK_PACKAGE_VERSION_MINOR 0)
 set(CPACK_PACKAGE_VERSION_PATCH 0)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Komorebi")
 
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common, libgee-0.8-dev, libwnck-3-0")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common, libgee-0.8-dev libclutter-gtk-1.0-0 libclutter-1.0-0 libclutter-gst-3.0-0")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_SECTION "system")
 

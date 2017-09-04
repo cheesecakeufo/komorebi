@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/iabem97/komorebi-staging/master/screenshots/komorebi-icon.png" width="130"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/komorebi-icon.png" width="130"></p>
 <h2 align="center">Komorebi - Linux Desktop Manager</h2>
 <p align="center">(n) sunlight filtering through trees.</p>
 
@@ -21,7 +21,7 @@ alt="Komorebi Demo" width="240" height="180" border="10" /><br>Watch demo</a>
 Komorebi is an awesome desktop manager for all Linux platforms.
 It provides fully customizeable image and video wallpapers that can be tweaked at any time!
 
-![s1](https://raw.githubusercontent.com/iabem97/komorebi-staging/master/screenshots/collage.jpg)
+![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/collage.jpg)
 
 
 ## How do I install Komorebi?
@@ -45,13 +45,13 @@ Two ways:
 ## Change Wallpaper & Desktop Preferences
 To change desktop preferences or your wallpaper, right click anywhere on the desktop to show the menu.
 
-![s1](https://raw.githubusercontent.com/iabem97/komorebi-staging/master/screenshots/preferences.jpg)
+![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/preferences.jpg)
 
 ## How do I create my own wallpaper?
 
 Komorebi provides a simple tool to create your own wallpapers! Simply, open your apps and search for 'Wallpaper Creator'
 
-![s1](https://raw.githubusercontent.com/iabem97/komorebi-staging/master/screenshots/wallpaper_creator.jpg)
+![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/wallpaper_creator.jpg)
 
 You can create either an image or a video wallpaper and you have many different options to customize your very own wallpaper!
 

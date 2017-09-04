@@ -94,14 +94,6 @@ namespace Komorebi.OnScreen {
             });
 
 
-            /*hideAllWindowsMenuItem.activate.connect(() => {
-
-                wnckScreen.force_update();
-
-                foreach(var window in wnckScreen.get_windows())
-                    window.minimize();
-            });*/
-
             changeWallpaperMenuItem.button_press_event.connect(() => {
 
                 if(showDesktopIcons)

@@ -73,9 +73,6 @@ namespace Komorebi.OnScreen {
         // Asset Actor
         AssetActor assetActor = new AssetActor();
 
-        // Wnck Screen
-        Wnck.Screen wnckScreen;
-
         // Current animation mode
         bool dateTimeBoxParallax = false;
 
@@ -101,7 +98,6 @@ namespace Komorebi.OnScreen {
 
             embed = new GtkClutter.Embed() {width_request = screenWidth, height_request = screenHeight};
             mainActor = embed.get_stage();
-            wnckScreen = Wnck.Screen.get_default();
             desktopPath = Environment.get_user_special_dir(UserDirectory.DESKTOP);
             desktopIcons = new DesktopIcons();
             bubbleMenu = new BubbleMenu();
