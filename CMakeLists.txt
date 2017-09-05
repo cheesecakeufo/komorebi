@@ -12,7 +12,7 @@ set (ARCHIVE_NAME komorebi-${VERSION})
 
 find_package(PkgConfig)
 pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38 gee-0.8 clutter-gtk-1.0 clutter-1.0 clutter-gst-3.0)
-
+add_definitions(${DEPS_CFLAGS})
 
 link_directories(${DEPS_LIBRARY_DIRS})
 find_package(Vala REQUIRED)

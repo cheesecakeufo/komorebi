@@ -108,7 +108,6 @@ namespace WallpaperCreator.OnScreen {
             // Signals
             closeButton.released.connect(() => { 
                 popover.show_all();
-                popover.popup();
             });
 
             addLayerButton.released.connect(() => {
@@ -175,7 +174,7 @@ namespace WallpaperCreator.OnScreen {
 
             });
 
-            cancelButton.released.connect(() => popover.popdown());
+            cancelButton.released.connect(() => popover.hide());
             yesButton.released.connect(() => Gtk.main_quit());
 
             // Add Widgets

@@ -11,8 +11,8 @@
 </p>
 
 <p align="center">
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=qbs2tcdxtWo
-" target="_blank"><img src="http://img.youtube.com/vi/qbs2tcdxtWo/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=NvfRy5qMsos
+" target="_blank"><img src="http://img.youtube.com/vi/NvfRy5qMsos/0.jpg" 
 alt="Komorebi Demo" width="240" height="180" border="10" /><br>Watch demo</a>
 </p>
 
