@@ -262,6 +262,7 @@ namespace Komorebi.Utilities {
 
 		if(wallpaperType == "video") {
 			videoFileName = wallpaperKeyFile.get_string("Info", "VideoFileName");
+			wallpaperParallax = assetVisible = false;
 			return;
 		}
 
