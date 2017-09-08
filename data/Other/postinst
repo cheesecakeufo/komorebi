@@ -1,14 +1,18 @@
 #!/bin/bash
 
 # A script that updates existing Komorebi wallpapers
-# with the new updated syntax
+# and add us to the start up with the new updated syntax
 
 echo "[INFO]: Removing old Komorebi properties file.." 
-users="$(ls -d -1 /home/*/)"
+users="$(ls -d -1 /home/*/ | xargs -n 1 basename)"
 
 for user in $users; do
 
-	rm -rf "$user/.Komorebi.prop"
+	rm -rf "/home/$user/.Komorebi.prop"
+	
+	mkdir -p "/home/$user/.config/autostart"
+	cp "/usr/share/applications/komorebi.desktop" "/home/$user/.config/autostart/komorebi.desktop"
+	chown  "$user:$user" "/home/$user/.config/autostart" -R
 	
 done
 

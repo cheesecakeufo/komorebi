@@ -5,8 +5,8 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 set (PKGDATADIR "${DATADIR}/komorebi")
 set (RELEASE_NAME "summit")
-set (VERSION "0.9")
-set (VERSION_INFO "Beta")
+set (VERSION "1.0")
+set (VERSION_INFO "Release")
 set (ARCHIVE_NAME komorebi-${VERSION})
 
 
@@ -75,7 +75,7 @@ OPTIONS
 
 )
 
-add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes  )
+add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
 add_executable(komorebi ${VALA_C})
 add_executable(komorebi-wallpaper-creator ${WALLPAPER_CREATOR})
 target_link_libraries(komorebi ${DEPS_LIBRARIES} -lm)
@@ -97,27 +97,26 @@ install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi)
 
 ######### Other ############
 install(FILES data/Other/komorebi.desktop DESTINATION /usr/share/applications/)
-install(FILES data/Other/komorebi.desktop DESTINATION $ENV{HOME}/.config/autostart)
-
 install(FILES data/Other/wallpapercreator.desktop DESTINATION /usr/share/applications/)
 
 ######### Run the upgrade script #########
-install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/data/Other/update_wallpapers.sh)")
+install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst.sh)")
 
 # Packaging configuration
 set(CPACK_GENERATOR "DEB")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Komorebi - an awesome desktop manager for Linux")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Komorebi - An awesome desktop manager for Linux")
 set(CPACK_PACKAGE_VENDOR "")
 set(CPACK_PACKAGE_CONTACT "Abraham Masri <imasrim114@gmail.com>")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_ICON screenshots/komorebi-icon.png)
-set(CPACK_PACKAGE_VERSION_MAJOR 1)
+set(CPACK_PACKAGE_VERSION_MAJOR 2)
 set(CPACK_PACKAGE_VERSION_MINOR 0)
 set(CPACK_PACKAGE_VERSION_PATCH 0)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Komorebi")
+set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst;")
 
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common, libgee-0.8-dev libclutter-gtk-1.0-0 libclutter-1.0-0 libclutter-gst-3.0-0")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common, libgee-0.8-2, libclutter-gtk-1.0-0, libclutter-1.0-0, libclutter-gst-3.0-0")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_SECTION "system")
 

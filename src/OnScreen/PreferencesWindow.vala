@@ -44,8 +44,8 @@ namespace Komorebi.OnScreen {
         Label aboutLabel = new Label("");
 
         // Gtk.CheckButton showSystemStatsButton = new Gtk.CheckButton.with_label ("Show RAM and CPU Usage");
-        Gtk.CheckButton twentyFourHoursButton = new Gtk.CheckButton.with_label ("Use 24-Hour Time");
-        Gtk.CheckButton showDesktopIconsButton = new Gtk.CheckButton.with_label ("Show Desktop Icons (Beta)");
+        Gtk.CheckButton twentyFourHoursButton = new Gtk.CheckButton.with_label ("Use 24-hour time");
+        Gtk.CheckButton showDesktopIconsButton = new Gtk.CheckButton.with_label ("Show desktop icons");
 
         Gtk.Box bottomPreferencesBox = new Box(Orientation.HORIZONTAL, 10);
 
@@ -186,6 +186,7 @@ namespace Komorebi.OnScreen {
 
             donateButton.released.connect(() => {
 
+                print("Thank you <3\n");
                 AppInfo.launch_default_for_uri("https://goo.gl/qzB5QY", null); // Thank you <3
                 destroy();
 
@@ -193,7 +194,7 @@ namespace Komorebi.OnScreen {
 
             reportButton.released.connect(() => {
 
-                AppInfo.launch_default_for_uri("https://github.com/iabem97/komorebi/issues", null);
+                AppInfo.launch_default_for_uri("https://goo.gl/aaJgN7", null);
                 destroy();
             });
 

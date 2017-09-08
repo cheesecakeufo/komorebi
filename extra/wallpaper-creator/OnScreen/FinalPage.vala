@@ -42,7 +42,7 @@ namespace WallpaperCreator.OnScreen {
             descLabel.justify = Justification.CENTER;
 
             titleLabel.set_markup("<span font='Lato 20'>Done</span>");
-            descLabel.set_markup("<span font='Lato Light 12'>Open 'Change Wallpaper' to choose your new wallpaper.</span>");
+            descLabel.set_markup("<span font='Lato Light 12'>Copy the wallpaper folder from your home directory to /System/Komorebi/Resources\nthen open 'Change Wallpaper' to choose your new wallpaper.</span>");
 
             closeButton.margin_top = 20;
             closeButton.halign = Align.CENTER;
@@ -66,9 +66,9 @@ namespace WallpaperCreator.OnScreen {
         private void createWallpaper() {
 
             // Create a new directory
-            wallpaperName = wallpaperName.replace(" ", "_").down();
+            wallpaperName = wallpaperName.replace(" ", "_").replace(".", "_").down();
 
-            var dirPath = @"$(Environment.get_home_dir())/.Resources/Komorebi/$(wallpaperName)";
+            var dirPath = @"$(Environment.get_home_dir())/$(wallpaperName)";
             var dirFile = File.new_for_path(dirPath).make_directory_with_parents();
             var configPath = dirPath + "/config";
             var configFile = File.new_for_path(configPath);
@@ -83,11 +83,15 @@ namespace WallpaperCreator.OnScreen {
                 var videoFileName = videoFileNameArray[videoFileNameArray.length - 1];
                 configKeyFile.set_string("Info", "VideoFileName", videoFileName);
 
-                // Move the video into our new dir
+                // Copy the video into our new dir
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + @"/$videoFileName"), FileCopyFlags.NONE);
+                
+                // Move the thumbnail
+                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/thumb.jpg"), FileCopyFlags.NONE);
+            
             } else {
 
-                // Move the wallpaper into our new dir
+                // Copy the wallpaper into our new dir
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
             }
 
@@ -122,6 +126,9 @@ namespace WallpaperCreator.OnScreen {
             if(wallpaperType != "video") {
 
                 configKeyFile.set_boolean("Wallpaper", "Parallax", wallpaperParallax);
+
+                if(assetPath == null || assetPath == "")
+                    showAsset = false;
 
                 configKeyFile.set_boolean("Asset", "Visible", showAsset);
                 configKeyFile.set_string("Asset", "AnimationMode", animationMode);

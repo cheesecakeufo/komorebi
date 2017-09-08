@@ -170,9 +170,12 @@ namespace Komorebi.OnScreen {
         /* Creates a new folder */
         public void createNewFolder () {
 
-            var iconNewFolder = new Icon.NewFolder();
-            append(iconNewFolder);
-            iconNewFolder.unDimIcon(true);
+            var untitledFolder = File.new_for_path(getUntitledFolderName());
+            untitledFolder.make_directory_async();
+
+            // var iconNewFolder = new Icon.NewFolder();
+            // append(iconNewFolder);
+            // iconNewFolder.unDimIcon(true);
 
         }
 
@@ -245,6 +248,16 @@ namespace Komorebi.OnScreen {
             set_easing_mode (Clutter.AnimationMode.EASE_IN_SINE);
             restore_easing_state ();
 
+        }
+
+        /* Returns a new Untitled Folder name */
+        private string getUntitledFolderName(int count = 0) {
+
+            string path = desktopPath + @"/New Folder($(count.to_string()))";
+            if(File.new_for_path(path).query_exists())
+                path = getUntitledFolderName(count + 1);
+
+            return path;
         }
 
     }

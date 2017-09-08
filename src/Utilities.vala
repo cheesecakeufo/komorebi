@@ -318,8 +318,8 @@ namespace Komorebi.Utilities {
 	/* A dirty way to check if gstreamer is installed */
 	public bool canPlayVideos() {
 
-		if(	File.new_for_path("/usr/lib/gstreamer-1.0/libgstlibav.so") ||
-			File.new_for_path("/usr/lib64/gstreamer-1.0/libgstlibav.so") ||
+		if(	File.new_for_path("/usr/lib/gstreamer-1.0/libgstlibav.so").query_exists() ||
+			File.new_for_path("/usr/lib64/gstreamer-1.0/libgstlibav.so").query_exists() ||
 			File.new_for_path("/usr/lib/i386-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists() ||
 		   	File.new_for_path("/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists())
 			return true;

@@ -27,7 +27,7 @@ namespace Komorebi {
         print("Welcome to Komorebi\n");
 
         if(args[1] == "--version" || args[1] == "version") {
-            print("Version: 1.0 - Summit\nCreated by: Abraham Masri @cheesecakefuo\n\n");
+            print("Version: 2.0 - Summit\nCreated by: Abraham Masri @cheesecakefuo\n\n");
             return;
         }
 

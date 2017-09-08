@@ -37,9 +37,14 @@ namespace WallpaperCreator.OnScreen {
         Label typeLabel = new Label("My wallpaper is");
         ComboBoxText typeComboBox = new ComboBoxText();
 
-        Label chooseFileLabel = new Label("Where is the image/video located?");
+        Label chooseFileLabel = new Label("Where is the image located?");
         FileChooserButton chooseFileButton = new FileChooserButton("Choose File", Gtk.FileChooserAction.OPEN);
 
+        Revealer revealer = new Revealer();
+
+        Box thumbnailBox = new Box(Orientation.VERTICAL, 5);
+        Label chooseThumbnailLabel = new Label("Where is the thumbnail located?");
+        FileChooserButton chooseThumbnailButton = new FileChooserButton("Choose Thumbnail", Gtk.FileChooserAction.OPEN);
 
         public InitialPage() {
 
@@ -75,6 +80,9 @@ namespace WallpaperCreator.OnScreen {
             chooseFileButton.set_filter (imageFilter);
             chooseFileButton.width_chars = 10;
 
+            chooseThumbnailButton.set_filter (imageFilter);
+            chooseThumbnailButton.width_chars = 10;
+            
             // Signals
             nameEntry.changed.connect(() => {
 
@@ -87,11 +95,15 @@ namespace WallpaperCreator.OnScreen {
             typeComboBox.changed.connect(() => {
                 wallpaperType = typeComboBox.get_active_id();
 
-                if(wallpaperType == "image")
+                if(wallpaperType == "image") {
                     chooseFileButton.set_filter (imageFilter);
-                else
+                    chooseFileLabel.label = "Where is the image located?";
+                    revealer.set_reveal_child(false);
+                } else {
                     chooseFileButton.set_filter (videoFilter);
-
+                    chooseFileLabel.label = "Where is the video located?";
+                    revealer.set_reveal_child(true);
+                }
 
             });
 
@@ -101,11 +113,21 @@ namespace WallpaperCreator.OnScreen {
             });
 
 
+            chooseThumbnailButton.file_set.connect (() => {
+
+                thumbnailPath = chooseThumbnailButton.get_file().get_path();
+            });
+
             titleBox.add(titleLabel);
             titleBox.add(aboutLabel);
 
             aboutGrid.attach(new Image.from_file("/System/Resources/Komorebi/wallpaper_creator.svg"), 0, 0, 1, 1);
             aboutGrid.attach(titleBox, 1, 0, 1, 1);
+
+            thumbnailBox.add(chooseThumbnailLabel);
+            thumbnailBox.add(chooseThumbnailButton);
+
+            revealer.add(thumbnailBox);
 
             add(aboutGrid);
             add(nameLabel);
@@ -116,6 +138,8 @@ namespace WallpaperCreator.OnScreen {
 
             add(chooseFileLabel);
             add(chooseFileButton);
+            
+            add(revealer);
         }
     }
 }

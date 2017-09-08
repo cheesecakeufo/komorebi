@@ -3,29 +3,23 @@ WallpaperType=image
 
 [DateTime]
 Visible=true
-Parallax=true
-
-MarginLeft=50
+Parallax=false
 MarginTop=0
-MarginBottom=0
 MarginRight=0
-
+MarginLeft=0
+MarginBottom=75
 RotationX=0
 RotationY=0
 RotationZ=0
-
-Position=center_left
-Alignment=start
-AlwaysOnTop=false
-
-Color=white
-Alpha=255
-
-ShadowColor=black
-ShadowAlpha=190
-
-TimeFont=Lato Hairline 60
-DateFont=Lato Hairline 50
+Position=center
+Alignment=center
+AlwaysOnTop=true
+Color=#164b71
+Alpha=167
+ShadowColor=#dd22dd22dd22
+ShadowAlpha=255
+TimeFont=Bubbler One Bold 46
+DateFont=Bubbler One 15
 
 [Wallpaper]
 Parallax=false
@@ -34,7 +28,5 @@ Parallax=false
 Visible=true
 AnimationMode=noanimation
 AnimationSpeed=100
-
 Width=0
 Height=0
-

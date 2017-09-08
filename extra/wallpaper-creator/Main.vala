@@ -21,6 +21,7 @@ namespace WallpaperCreator {
 
     string filePath;
     string assetPath;
+    string thumbnailPath;
 
     string wallpaperName;
     string wallpaperType; // image/video 
@@ -48,7 +49,7 @@ namespace WallpaperCreator {
     string timeFont;
     string dateFont;
 
-    bool showAsset;
+    bool showAsset = false;
     string animationMode;
     int animationSpeed;
 
@@ -57,7 +58,7 @@ namespace WallpaperCreator {
         print("Welcome to Komorebi Wallpaper Creator\n");
 
         if(args[1] == "--version" || args[1] == "version") {
-            print("Version: 0.6 - Summit\nCreated by: Abraham Masri @cheesecakefuo\n\n");
+            print("Version: 1.0 - Summit\nCreated by: Abraham Masri @cheesecakefuo\n\n");
             return;
         }
         Gtk.init (ref args);
@@ -67,7 +68,6 @@ namespace WallpaperCreator {
         new NewWallpaperWindow();
 
         var mainSettings = Gtk.Settings.get_default ();
-        mainSettings.set("gtk-xft-dpi", (int) (1042 * 100), null);
         mainSettings.set("gtk-xft-antialias", 1, null);
         mainSettings.set("gtk-xft-rgba" , "none", null);
         mainSettings.set("gtk-xft-hintstyle" , "slight", null);

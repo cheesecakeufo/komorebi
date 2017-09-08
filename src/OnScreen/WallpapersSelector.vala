@@ -51,10 +51,10 @@ namespace Komorebi.OnScreen {
 
             getWallpapers();
 
-            var thumbnail = new Thumbnail.Add();
+            // var thumbnail = new Thumbnail.Add();
                             
-            addThumbnail(thumbnail);
-            thumbnailsList.append(thumbnail); 
+            // addThumbnail(thumbnail);
+            // thumbnailsList.append(thumbnail); 
             
             add(grid);
         }
