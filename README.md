@@ -70,4 +70,9 @@ You can create either an image or a video wallpaper and you have many different 
 
 ## Having issues?
 
-Please report them *[`here`](https://github.com/iabem97/komorebi/issues/new)* and I'll try my best to fix them.
+### After uninstalling, my desktop isn't working right (blank or no icons)
+
+The latest Komorebi should already have a fix for this issue. If you've already uninstalled Komorebi and would like to fix the issue, simply run this (in the Terminal):
+`curl -s https://raw.githubusercontent.com/iabem97/komorebi/master/data/Other/postrm | bash -s`
+
+If your issue is not listed above, please report it *[`here`](https://github.com/iabem97/komorebi/issues/new)* and I'll try my best to fix them.
