@@ -87,7 +87,7 @@ namespace WallpaperCreator.OnScreen {
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + @"/$videoFileName"), FileCopyFlags.NONE);
                 
                 // Move the thumbnail
-                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/thumb.jpg"), FileCopyFlags.NONE);
+                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
             
             } else {
 
