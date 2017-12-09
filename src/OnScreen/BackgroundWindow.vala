@@ -45,9 +45,6 @@ namespace Komorebi.OnScreen {
     // Global - Clipboard
     Gtk.Clipboard clipboard;
 
-    // Global - Desktop icons
-    DesktopIcons desktopIcons;
-
     public static void initializeClipboard(Gdk.Screen screen) {
         clipboard = Gtk.Clipboard.get_for_display (screen.get_display (), Gdk.SELECTION_CLIPBOARD);
     }
@@ -71,11 +68,14 @@ namespace Komorebi.OnScreen {
         // Date and time box itself
         DateTimeBox dateTimeBox;
 
+        // Asset Actor
+        AssetActor assetActor;
+
         // Bubble menu
         public BubbleMenu bubbleMenu { get; private set; }
 
-        // Asset Actor
-        AssetActor assetActor;
+        // Desktop icons
+        public DesktopIcons desktopIcons { get; private set; }
 
         // Current animation mode
         bool dateTimeBoxParallax = false;

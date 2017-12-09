@@ -204,10 +204,13 @@ namespace Komorebi.OnScreen {
                 showDesktopIcons = showDesktopIconsButton.active;
                 updateConfigurationFile();
 
-                if(showDesktopIcons)
-                    desktopIcons.fadeIn();
-                else
-                    desktopIcons.fadeOut();
+                if (showDesktopIcons) {
+                    foreach (BackgroundWindow backgroundWindow in backgroundWindows)
+                        backgroundWindow.desktopIcons.fadeIn();
+                } else {
+                    foreach (BackgroundWindow backgroundWindow in backgroundWindows)
+                        backgroundWindow.desktopIcons.fadeOut();
+                }
             });
 
 			wallpapersSelector.wallpaperChanged.connect(() => {

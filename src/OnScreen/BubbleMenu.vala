@@ -87,12 +87,12 @@ namespace Komorebi.OnScreen {
         void signalsSetup () {
 
             newFolderMenuItem.button_press_event.connect(() => {
-                desktopIcons.createNewFolder();
+                parent.desktopIcons.createNewFolder();
                 return true;
             });
 
             pasteMenuItem.button_press_event.connect(() => {
-                desktopIcons.copyToDesktop(clipboard.wait_for_text());
+                parent.desktopIcons.copyToDesktop(clipboard.wait_for_text());
                 return true;
             });
 
@@ -100,7 +100,7 @@ namespace Komorebi.OnScreen {
             changeWallpaperMenuItem.button_press_event.connect(() => {
 
                 if(showDesktopIcons)
-                    desktopIcons.fadeOut();
+                    parent.desktopIcons.fadeOut();
 
                 fadeOut();
 
