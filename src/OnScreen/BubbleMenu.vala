@@ -186,7 +186,7 @@ namespace Komorebi.OnScreen {
             } else {
 
                 // Dim all icons
-                foreach (var icon in iconsList)
+                foreach (var icon in parent.desktopIcons.iconsList)
                     icon.dimIcon();
 
                 // Check if we have anything in the clipboard,
@@ -248,7 +248,7 @@ namespace Komorebi.OnScreen {
             remove_all_children();
 
             // Undim all icon
-            foreach (var icon in iconsList)
+            foreach (var icon in parent.desktopIcons.iconsList)
                 icon.unDimIcon();
 
             icon = null;

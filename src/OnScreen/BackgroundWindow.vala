@@ -103,7 +103,7 @@ namespace Komorebi.OnScreen {
             embed = new GtkClutter.Embed() {width_request = screenWidth, height_request = screenHeight};
             mainActor = embed.get_stage();
             desktopPath = Environment.get_user_special_dir(UserDirectory.DESKTOP);
-            desktopIcons = new DesktopIcons();
+            desktopIcons = monitorIndex == 0 ? new DesktopIcons(this) : null;
             bubbleMenu = new BubbleMenu(this);
             assetActor = new AssetActor(this);
             dateTimeBox = new DateTimeBox(this);
