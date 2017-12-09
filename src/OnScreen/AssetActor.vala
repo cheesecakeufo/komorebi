@@ -21,6 +21,8 @@ namespace Komorebi.OnScreen {
 
     public class AssetActor : Actor {
 
+        BackgroundWindow parent;
+
         // Image(Asset) and its pixbuf
         Image image = new Image();
         Gdk.Pixbuf pixbuf;
@@ -31,8 +33,8 @@ namespace Komorebi.OnScreen {
         string cloudsDirection = "right";
         string fadeType = "in";
 
-        public AssetActor () {
-
+        public AssetActor (BackgroundWindow parent) {
+            this.parent = parent;
             set_content(image);
         }
 
@@ -78,6 +80,7 @@ namespace Komorebi.OnScreen {
         }
 
         void setPosition() {
+            var mainActor = parent.mainActor;
 
             switch (assetPosition) {
 

@@ -42,7 +42,11 @@ namespace Komorebi.OnScreen {
         // Ability to drag
         Clutter.DragAction dragAction = new Clutter.DragAction();
 
-        public DateTimeBox () {
+        BackgroundWindow parent;
+
+        public DateTimeBox (BackgroundWindow parent) {
+
+            this.parent = parent;
 
             // Properties
             textContainerActor.layout_manager = boxLayout;
@@ -172,6 +176,7 @@ namespace Komorebi.OnScreen {
         }
 
         public void setPosition() {
+            var mainActor = parent.mainActor;
 
             switch (dateTimePosition) {
 

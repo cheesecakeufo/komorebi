@@ -31,17 +31,21 @@ namespace Komorebi.OnScreen {
     // File/Directory info Window
     InfoWindow infoWindow;
 
-    // List of icons (used to make things faster when reloading)
-    Gee.ArrayList<Icon> iconsList;
-
     public class DesktopIcons : ResponsiveGrid {
+
+        BackgroundWindow parent;
+        public BackgroundWindow window { get { return parent; } }
 
         /* Desktops path */
         string DesktopPath = Environment.get_user_special_dir(UserDirectory.DESKTOP);
 
         FileMonitor fileMonitor;
 
-        public DesktopIcons () {
+        // List of icons (used to make things faster when reloading)
+        public Gee.ArrayList<Icon> iconsList { get; private set; }
+
+        public DesktopIcons (BackgroundWindow parent) {
+            this.parent = parent;
 
             infoWindow = new InfoWindow();
             iconsList = new Gee.ArrayList<Icon>();
@@ -127,7 +131,7 @@ namespace Komorebi.OnScreen {
                     Path = _KeyFile.get_string(KeyFileDesktop.GROUP, KeyFileDesktop.KEY_EXEC);
 
 
-                    icon = new Icon(Name, IconPixbuf, Path, DFile.get_path(), true);
+                    icon = new Icon(this, Name, IconPixbuf, Path, DFile.get_path(), true);
 
 
 
@@ -151,7 +155,7 @@ namespace Komorebi.OnScreen {
                         IconPixbuf = new Gdk.Pixbuf.from_file_at_scale(IconPath, iconSize, iconSize, false);
 
 
-                    icon = new Icon(Name, IconPixbuf, "", DFile.get_path(), false);
+                    icon = new Icon(this, Name, IconPixbuf, "", DFile.get_path(), false);
                 }
 
 
@@ -163,7 +167,7 @@ namespace Komorebi.OnScreen {
         /* Adds trash icon */
         private void addTrashIcon() {
 
-            iconsList.add(new Icon.Trash());
+            iconsList.add(new Icon.Trash(this));
         }
 
 
@@ -173,7 +177,7 @@ namespace Komorebi.OnScreen {
             var untitledFolder = File.new_for_path(getUntitledFolderName());
             untitledFolder.make_directory_async();
 
-            // var iconNewFolder = new Icon.NewFolder();
+            // var iconNewFolder = new Icon.NewFolder(this);
             // append(iconNewFolder);
             // iconNewFolder.unDimIcon(true);
 

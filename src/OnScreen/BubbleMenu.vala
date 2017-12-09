@@ -27,6 +27,8 @@ namespace Komorebi.OnScreen {
 
     public class BubbleMenu : Actor {
 
+        BackgroundWindow parent;
+
         // Horizontal Box Layout
         BoxLayout horizontalBoxLayout = new BoxLayout() {orientation = Orientation.VERTICAL, spacing = 5};
 
@@ -63,7 +65,8 @@ namespace Komorebi.OnScreen {
         }
 
 
-        public BubbleMenu () {
+        public BubbleMenu (BackgroundWindow parent) {
+            this.parent = parent;
 
             // Desktop items
             newFolderMenuItem = new BubbleMenuItem("New Folder");
@@ -84,12 +87,12 @@ namespace Komorebi.OnScreen {
         void signalsSetup () {
 
             newFolderMenuItem.button_press_event.connect(() => {
-                desktopIcons.createNewFolder();
+                parent.desktopIcons.createNewFolder();
                 return true;
             });
 
             pasteMenuItem.button_press_event.connect(() => {
-                desktopIcons.copyToDesktop(clipboard.wait_for_text());
+                parent.desktopIcons.copyToDesktop(clipboard.wait_for_text());
                 return true;
             });
 
@@ -97,7 +100,7 @@ namespace Komorebi.OnScreen {
             changeWallpaperMenuItem.button_press_event.connect(() => {
 
                 if(showDesktopIcons)
-                    desktopIcons.fadeOut();
+                    parent.desktopIcons.fadeOut();
 
                 fadeOut();
 
@@ -183,7 +186,7 @@ namespace Komorebi.OnScreen {
             } else {
 
                 // Dim all icons
-                foreach (var icon in iconsList)
+                foreach (var icon in parent.desktopIcons.iconsList)
                     icon.dimIcon();
 
                 // Check if we have anything in the clipboard,
@@ -216,7 +219,7 @@ namespace Komorebi.OnScreen {
                 x -= width + 15;
             }
 
-            if((y + height) >= mainActor.height)
+            if((y + height) >= parent.mainActor.height)
                 y -= (height + 10);
 
             opacity = 0;
@@ -245,7 +248,7 @@ namespace Komorebi.OnScreen {
             remove_all_children();
 
             // Undim all icon
-            foreach (var icon in iconsList)
+            foreach (var icon in parent.desktopIcons.iconsList)
                 icon.unDimIcon();
 
             icon = null;
