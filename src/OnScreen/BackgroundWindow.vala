@@ -165,9 +165,8 @@ namespace Komorebi.OnScreen {
 
 			Rectangle rectangle;
 			var screen = Gdk.Screen.get_default ();
-            var display = screen.get_display ();
 
-            rectangle = display.get_monitor (monitorIndex).get_geometry ();
+            screen.get_monitor_geometry (monitorIndex, out rectangle);
 
 			screenHeight = rectangle.height;
 			screenWidth = rectangle.width;
