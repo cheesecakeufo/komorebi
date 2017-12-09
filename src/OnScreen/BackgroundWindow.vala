@@ -48,15 +48,16 @@ namespace Komorebi.OnScreen {
     // Global - Desktop icons
     DesktopIcons desktopIcons;
 
-    // Global - Main container
-    Clutter.Actor mainActor;
-
-    // Global - Bubble menu
-    BubbleMenu bubbleMenu;
+    public static void initializeClipboard(Gdk.Screen screen) {
+        clipboard = Gtk.Clipboard.get_for_display (screen.get_display (), Gdk.SELECTION_CLIPBOARD);
+    }
 
     public class BackgroundWindow : Gtk.Window {
 
         GtkClutter.Embed embed;
+
+        // Main container
+        public Clutter.Actor mainActor { get; private set; }
 
         // Video Wallpaper
         ClutterGst.Playback videoPlayback;
@@ -68,10 +69,13 @@ namespace Komorebi.OnScreen {
         Clutter.Image wallpaperImage = new Clutter.Image();
 
         // Date and time box itself
-        DateTimeBox dateTimeBox = new DateTimeBox();
+        DateTimeBox dateTimeBox;
+
+        // Bubble menu
+        public BubbleMenu bubbleMenu { get; private set; }
 
         // Asset Actor
-        AssetActor assetActor = new AssetActor();
+        AssetActor assetActor;
 
         // Current animation mode
         bool dateTimeBoxParallax = false;
@@ -84,7 +88,7 @@ namespace Komorebi.OnScreen {
         };
 
 
-        public BackgroundWindow () {
+        public BackgroundWindow (int monitorIndex) {
 
             title = "Desktop";
 
@@ -94,13 +98,15 @@ namespace Komorebi.OnScreen {
             wallpaperKeyFile = new KeyFile ();
 
             // Get current monitor size
-            getMonitorSize();
+            getMonitorSize(monitorIndex);
 
             embed = new GtkClutter.Embed() {width_request = screenWidth, height_request = screenHeight};
             mainActor = embed.get_stage();
             desktopPath = Environment.get_user_special_dir(UserDirectory.DESKTOP);
             desktopIcons = new DesktopIcons();
-            bubbleMenu = new BubbleMenu();
+            bubbleMenu = new BubbleMenu(this);
+            assetActor = new AssetActor(this);
+            dateTimeBox = new DateTimeBox(this);
 
             if(!disableVideo) {
                 videoPlayback = new ClutterGst.Playback ();
@@ -140,9 +146,7 @@ namespace Komorebi.OnScreen {
 
             wallpaperActor.set_size(screenWidth, screenHeight);
             assetActor.set_size(screenWidth, screenHeight);
-            clipboard = Gtk.Clipboard.get_for_display (get_display (), Gdk.SELECTION_CLIPBOARD);
             wallpaperActor.set_pivot_point (0.5f, 0.5f);
-
 
             // Add widgets
             mainActor.add_child(wallpaperActor);
@@ -153,30 +157,17 @@ namespace Komorebi.OnScreen {
 
             add(embed);
 
-            // Properties
-            readConfigurationFile();
-            initializeConfigFile();
-            signalsSetup();
-
+            initializeConfigFile(); 
+            signalsSetup();       
         }
 
-        public bool checkDesktopCompatible() {
-
-            // We're not supporting Wayland at the moment
-            // due to some restrictions
-            if(Environment.get_variable ("XDG_SESSION_DESKTOP").contains("wayland")) {
-                return false;
-            }
-
-            return true;
-        }
-
-        void getMonitorSize() {
+        void getMonitorSize(int monitorIndex) {
 
 			Rectangle rectangle;
 			var screen = Gdk.Screen.get_default ();
+            var display = screen.get_display ();
 
-            screen.get_monitor_geometry (screen.get_primary_monitor (), out rectangle);
+            rectangle = display.get_monitor (monitorIndex).get_geometry ();
 
 			screenHeight = rectangle.height;
 			screenWidth = rectangle.width;
@@ -272,8 +263,6 @@ namespace Komorebi.OnScreen {
         }
 
         public void initializeConfigFile () {
-
-            readWallpaperFile();
 
             setWallpaper();
 
@@ -377,6 +366,16 @@ namespace Komorebi.OnScreen {
             dateTimeBox.setPosition();
             desktopIcons.addIconsFromQueue();
 
+        }
+
+        public bool contains_point(int x, int y) {
+            int wl, wt, wr, wb;
+            get_position(out wl, out wt);
+            get_size(out wr, out wb);
+            wr += wl;
+            wb += wt;
+
+            return (x >= wl && y >= wt && x < wr && y < wb);
         }
     }
 }

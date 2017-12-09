@@ -27,6 +27,8 @@ namespace Komorebi.OnScreen {
 
     public class BubbleMenu : Actor {
 
+        BackgroundWindow parent;
+
         // Horizontal Box Layout
         BoxLayout horizontalBoxLayout = new BoxLayout() {orientation = Orientation.VERTICAL, spacing = 5};
 
@@ -63,7 +65,8 @@ namespace Komorebi.OnScreen {
         }
 
 
-        public BubbleMenu () {
+        public BubbleMenu (BackgroundWindow parent) {
+            this.parent = parent;
 
             // Desktop items
             newFolderMenuItem = new BubbleMenuItem("New Folder");
@@ -216,7 +219,7 @@ namespace Komorebi.OnScreen {
                 x -= width + 15;
             }
 
-            if((y + height) >= mainActor.height)
+            if((y + height) >= parent.mainActor.height)
                 y -= (height + 10);
 
             opacity = 0;

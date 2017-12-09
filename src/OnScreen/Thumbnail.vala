@@ -58,7 +58,11 @@ namespace Komorebi.OnScreen {
                 showBorder();
                 clicked();
                 
-                backgroundWindow.initializeConfigFile();
+                readWallpaperFile();
+
+                foreach (BackgroundWindow backgroundWindow in backgroundWindows) {
+                    backgroundWindow.initializeConfigFile();
+                }
                 updateConfigurationFile();
 
                 foreach(var thumbnail in thumbnailsList)

@@ -171,10 +171,20 @@ namespace Komorebi.OnScreen {
                             AppInfo.launch_default_for_uri (@"file://$filePath", null);
 
                         } else if(e.button == 3) { // Show the menu
+                            BubbleMenu bubbleMenu = null;
 
-                            bubbleMenu.fadeIn(e.x, e.y, MenuType.ICON);
-                            bubbleMenu.setIcon(this);
-                            backgroundWindow.dimWallpaper();
+                            foreach (BackgroundWindow backgroundWindow in backgroundWindows) {
+                                backgroundWindow.dimWallpaper();
+
+                                if (bubbleMenu == null && backgroundWindow.contains_point((int)e.x, (int)e.y)) {
+                                    bubbleMenu = backgroundWindow.bubbleMenu;
+                                }
+                            }
+
+                            if (bubbleMenu != null) {
+                                bubbleMenu.fadeIn(e.x, e.y, MenuType.ICON);
+                                bubbleMenu.setIcon(this);
+                            }
 
                             // Dim our text
                             titleText.opacity = 50;
