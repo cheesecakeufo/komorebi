@@ -54,11 +54,18 @@ namespace Komorebi.OnScreen {
             if(assetHeight <= 0)
                 assetHeight = screenHeight;
 
+            var assetPath = @"/System/Resources/Komorebi/$wallpaperName/assets.png";
+
+            // make sure the asset exists
+            if(!File.new_for_path(assetPath).query_exists()) {
+                print(@"[WARNING]: asset with path: $assetPath does not exist\n");
+                return;
+            }
+
             if(assetWidth != 0 && assetHeight != 0)
-                pixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$wallpaperName/assets.png",
-                                                            assetWidth, assetHeight, false);
+                pixbuf = new Gdk.Pixbuf.from_file_at_scale(assetPath, assetWidth, assetHeight, false);
             else
-                pixbuf = new Gdk.Pixbuf.from_file(@"/System/Resources/Komorebi/$wallpaperName/assets.png");
+                pixbuf = new Gdk.Pixbuf.from_file(assetPath);
 
             image.set_data (pixbuf.get_pixels(), pixbuf.has_alpha ? Cogl.PixelFormat.RGBA_8888 : Cogl.PixelFormat.RGB_888,
                             pixbuf.get_width(), pixbuf.get_height(),

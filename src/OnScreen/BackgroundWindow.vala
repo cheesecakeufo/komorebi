@@ -92,11 +92,6 @@ namespace Komorebi.OnScreen {
 
             title = "Desktop";
 
-            configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
-            configFile = File.new_for_path(configFilePath);
-            configKeyFile = new KeyFile ();
-            wallpaperKeyFile = new KeyFile ();
-
             // Get current monitor size
             getMonitorSize(monitorIndex);
 
@@ -152,7 +147,10 @@ namespace Komorebi.OnScreen {
             mainActor.add_child(wallpaperActor);
             mainActor.add_child(dateTimeBox);
             mainActor.add_child(assetActor);
-            mainActor.add_child(desktopIcons);
+
+            if(desktopIcons != null)
+                mainActor.add_child(desktopIcons);
+
             mainActor.add_child(bubbleMenu);
 
             add(embed);
@@ -192,9 +190,10 @@ namespace Komorebi.OnScreen {
                     if(bubbleMenu.opacity > 0)
                         return false;
 
-                    if(e.x >= desktopIcons.x && e.x <= (desktopIcons.x + desktopIcons.width) &&
-                       e.y >= desktopIcons.y && e.y <= (desktopIcons.y + desktopIcons.height))
-                        return false;
+                    if(desktopIcons != null)
+                        if(e.x >= desktopIcons.x && e.x <= (desktopIcons.x + desktopIcons.width) && 
+                            e.y >= desktopIcons.y && e.y <= (desktopIcons.y + desktopIcons.height))
+                            return false;
 
                     bubbleMenu.fadeIn(e.x, e.y, MenuType.DESKTOP);
                     dimWallpaper();
@@ -265,10 +264,13 @@ namespace Komorebi.OnScreen {
 
             setWallpaper();
 
-            if(!showDesktopIcons)
-                desktopIcons.fadeOut();
-            else
-                desktopIcons.fadeIn();
+            if(desktopIcons != null) {
+            
+                if(!showDesktopIcons)
+                    desktopIcons.fadeOut();
+                else
+                    desktopIcons.fadeIn();
+            }
 
             if(dateTimeVisible) {
             
@@ -350,10 +352,12 @@ namespace Komorebi.OnScreen {
                 assetActor.opacity = 255;
             dateTimeBox.fadeIn(200);
             
-            if(!showDesktopIcons)
-                desktopIcons.fadeOut();
-            else
-                desktopIcons.fadeIn();
+            if(desktopIcons != null) {
+                if(!showDesktopIcons)
+                    desktopIcons.fadeOut();
+                else
+                    desktopIcons.fadeIn();
+            }
 
             return true;
         }
@@ -363,7 +367,9 @@ namespace Komorebi.OnScreen {
 
             show_all();
             dateTimeBox.setPosition();
-            desktopIcons.addIconsFromQueue();
+
+            if(desktopIcons != null)
+                desktopIcons.addIconsFromQueue();
 
         }
 

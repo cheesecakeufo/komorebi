@@ -38,7 +38,7 @@ namespace Komorebi {
         print("Welcome to Komorebi\n");
 
         if(args[1] == "--version" || args[1] == "version") {
-            print("Version: 2.0 - Summit\nCreated by: Abraham Masri @cheesecakeufo\n\n");
+            print("Version: 2.1 - Summit\nCreated by: Abraham Masri @cheesecakeufo\n\n");
             return;
         }
 
@@ -66,9 +66,9 @@ namespace Komorebi {
         readWallpaperFile();
 
         backgroundWindows = new BackgroundWindow[monitorCount];
-        for (int i = 0; i < monitorCount; ++i) {
+        for (int i = 0; i < monitorCount; ++i)
             backgroundWindows[i] = new BackgroundWindow(i);
-        }
+
 
         var mainSettings = Gtk.Settings.get_default ();
         mainSettings.set("gtk-xft-dpi", (int) (1042 * 100), null);
@@ -76,9 +76,8 @@ namespace Komorebi {
         mainSettings.set("gtk-xft-rgba" , "none", null);
         mainSettings.set("gtk-xft-hintstyle" , "slight", null);
 
-        for (int i = 0; i < monitorCount; ++i) {
+        for (int i = 0; i < monitorCount; ++i)
             backgroundWindows[i].fadeIn();
-        }
 
         Clutter.main();
     }

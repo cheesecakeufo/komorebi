@@ -170,6 +170,15 @@ namespace Komorebi.Utilities {
 		timeTwentyFour = true;
 		showDesktopIcons = true;
 
+		if(configFilePath == null)
+			configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
+
+		if(configFile == null)
+        	configFile = File.new_for_path(configFilePath);
+
+        if(configKeyFile == null)
+			configKeyFile = new KeyFile ();
+
 		if(!configFile.query_exists()) {
 			print("No configuration file found. Creating one..\n");
 			updateConfigurationFile();
@@ -180,22 +189,22 @@ namespace Komorebi.Utilities {
 
 		configKeyFile.load_from_file(configFilePath, KeyFileFlags.NONE);
 
-		wallpaperName = configKeyFile.get_string ("KomorebiProperies", "WallpaperName");
-		showInfoBox = configKeyFile.get_boolean ("KomorebiProperies", "ShowInfoBox");
-		darkInfoBox = configKeyFile.get_boolean ("KomorebiProperies", "DarkInfoBox");
-		timeTwentyFour = configKeyFile.get_boolean ("KomorebiProperies", "TimeTwentyFour");
-		showDesktopIcons = configKeyFile.get_boolean ("KomorebiProperies", "ShowDesktopIcons");
+		wallpaperName = configKeyFile.get_string ("KomorebiProperties", "WallpaperName");
+		showInfoBox = configKeyFile.get_boolean ("KomorebiProperties", "ShowInfoBox");
+		darkInfoBox = configKeyFile.get_boolean ("KomorebiProperties", "DarkInfoBox");
+		timeTwentyFour = configKeyFile.get_boolean ("KomorebiProperties", "TimeTwentyFour");
+		showDesktopIcons = configKeyFile.get_boolean ("KomorebiProperties", "ShowDesktopIcons");
 		fixConflicts();
 	}
 
 	/* Updates the .prop file */
 	public void updateConfigurationFile () {
 
-		configKeyFile.set_string  ("KomorebiProperies", "WallpaperName", wallpaperName);
-		configKeyFile.set_boolean ("KomorebiProperies", "ShowInfoBox", showInfoBox);
-		configKeyFile.set_boolean ("KomorebiProperies", "DarkInfoBox", darkInfoBox);
-		configKeyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", timeTwentyFour);
-		configKeyFile.set_boolean ("KomorebiProperies", "ShowDesktopIcons", showDesktopIcons);
+		configKeyFile.set_string  ("KomorebiProperties", "WallpaperName", wallpaperName);
+		configKeyFile.set_boolean ("KomorebiProperties", "ShowInfoBox", showInfoBox);
+		configKeyFile.set_boolean ("KomorebiProperties", "DarkInfoBox", darkInfoBox);
+		configKeyFile.set_boolean ("KomorebiProperties", "TimeTwentyFour", timeTwentyFour);
+		configKeyFile.set_boolean ("KomorebiProperties", "ShowDesktopIcons", showDesktopIcons);
 
 		// Delete the file
 		if(configFile.query_exists())
@@ -226,6 +235,17 @@ namespace Komorebi.Utilities {
 	}
 
 	void readWallpaperFile () {
+
+		// make sure the wallpaper name is valid
+		if(wallpaperName == null) {
+
+			wallpaperName = "foggy_sunny_mountain";
+			print(@"[ERROR]: got a null wallpaperName. Setting to default: $wallpaperName\n");
+		}
+
+		// init the wallpaperKeyFile (if we haven't already)
+		if(wallpaperKeyFile == null)
+			wallpaperKeyFile = new KeyFile ();
 
 		// Read the config file
 	    wallpaperKeyFile.load_from_file(@"/System/Resources/Komorebi/$wallpaperName/config", KeyFileFlags.NONE);
