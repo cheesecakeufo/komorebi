@@ -84,7 +84,7 @@ namespace Komorebi.OnScreen {
         string gradientBackground = "";
 
         const TargetEntry[] targets = {
-        { "text/uri-list", 0, 0}
+            { "text/uri-list", 0, 0}
         };
 
 
