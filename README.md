@@ -36,11 +36,17 @@ Two ways:
 
 ### Manual Installing (advanced)
 
-1. You need `libgtop2-dev, libgtk-3-dev, gtk+-3.0 libgtop-2.0 glib-2.0>=2.38 gee-0.8 libwnck-3.0 clutter-gtk-1.0 clutter-1.0 clutter-gst-3.0 cmake valac`
-1. `git clone https://github.com/iabem97/komorebi.git`
-2. `cd komorebi`
-3. `mkdir build && cd build`
-4. `cmake .. && sudo make install && ./komorebi`
+1. Run the following:
+```
+sudo add-apt-repository ppa:gnome3-team/gnome3 -y
+sudo add-apt-repository ppa:vala-team -y
+sudo add-apt-repository ppa:gnome3-team/gnome3-staging -y
+sudo apt install cmake valac libgtk-3-dev libgtop2-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libclutter-gst-3.0-dev
+```
+2. `git clone https://github.com/iabem97/komorebi.git`
+3. `cd komorebi`
+4. `mkdir build && cd build`
+5. `cmake .. && sudo make install && ./komorebi`
 
 ## Change Wallpaper & Desktop Preferences
 To change desktop preferences or your wallpaper, right click anywhere on the desktop to show the menu.
@@ -75,4 +81,12 @@ You can create either an image or a video wallpaper and you have many different 
 The latest Komorebi should already have a fix for this issue. If you've already uninstalled Komorebi and would like to fix the issue, simply run this (in the Terminal):
 `curl -s https://raw.githubusercontent.com/iabem97/komorebi/master/data/Other/postrm | bash -s`
 
-If your issue is not listed above, please report it *[`here`](https://github.com/iabem97/komorebi/issues/new)* and I'll try my best to fix them.
+If your issue has not already been reported, please report it *[`here`](https://github.com/iabem97/komorebi/issues/new)* and I'll try my best to fix them.
+
+## Credits:
+
+Komorebi is made by Abraham Masri ([@cheesecakeufo](https://twitter.com/cheesecakeufo))
+
+### Thanks To:
+
+Pete Lewis ([@PJayB](https://github.com/PJayB)) for adding mult-monitor support
