@@ -104,6 +104,7 @@ namespace WallpaperCreator.OnScreen {
                     chooseFileButton.set_filter (imageFilter);
                     chooseFileLabel.label = "Where is the image located?";
                     locationEntry.placeholder_text = "/Users/cheesecakeufo/my_picture.jpg";
+                    locationEntry.set_sensitive(false);
                  
                     revealer.set_reveal_child(false);
                 
@@ -114,6 +115,7 @@ namespace WallpaperCreator.OnScreen {
                     chooseFileButton.set_filter (imageFilter);
                     chooseFileLabel.label = "What is the URL?";
                     locationEntry.placeholder_text = "https://sample.com/random/{{screen_width}}x{{screen_height}}";
+                    locationEntry.set_sensitive(true);
 
                     revealer.set_reveal_child(true);
                 
@@ -124,6 +126,7 @@ namespace WallpaperCreator.OnScreen {
                     chooseFileButton.set_filter (videoFilter);
                     chooseFileLabel.label = "Where is the video located?";
                     locationEntry.placeholder_text = "/Users/cheesecakeufo/my_video.mp4";
+                    locationEntry.set_sensitive(false);
                     
                     revealer.set_reveal_child(true);
                  
@@ -135,6 +138,7 @@ namespace WallpaperCreator.OnScreen {
             chooseFileButton.file_set.connect (() => {
 
                 filePath = chooseFileButton.get_file().get_path();
+
             });
 
 

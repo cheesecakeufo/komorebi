@@ -255,7 +255,7 @@ namespace Komorebi.OnScreen {
 
 			if(!canPlayVideos()) {
 
-				infoBar.get_content_area().add(new Label("gstreamer1.0-libav is missing. You won't be able to set video wallpapers without it :("));
+				infoBar.get_content_area().add(new Label("gstreamer1.0-libav is missing. You won't be able to set video wallpapers without it."));
 				wallpapersPage.add(infoBar);
 			}
 

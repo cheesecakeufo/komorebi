@@ -76,6 +76,7 @@ namespace WallpaperCreator.OnScreen {
             wallpaperName = wallpaperName.replace(" ", "_").replace(".", "_").down();
 
             var dirPath = @"$(Environment.get_home_dir())/$(wallpaperName)";
+            File.new_for_path(dirPath).make_directory_with_parents();
             var configPath = dirPath + "/config";
             var configFile = File.new_for_path(configPath);
 
@@ -107,7 +108,6 @@ namespace WallpaperCreator.OnScreen {
                 // Copy the wallpaper into our new dir
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
             }
-
 
             configKeyFile.set_boolean("DateTime", "Visible", showDateTime);
             configKeyFile.set_boolean("DateTime", "Parallax", dateTimeParallax);
