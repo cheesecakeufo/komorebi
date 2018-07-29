@@ -1,5 +1,5 @@
 <p align="center"><img src="https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/komorebi-icon.png" width="130"></p>
-<h2 align="center">Komorebi - Linux Desktop Manager</h2>
+<h2 align="center">Komorebi - Animated Wallpapers for Linux</h2>
 <p align="center">(n) sunlight filtering through trees.</p>
 
 
@@ -18,8 +18,8 @@ alt="Komorebi Demo" width="240" height="180" border="10" /><br>Watch demo</a>
 
 ## What is Komorebi?
 
-Komorebi is an awesome desktop manager for all Linux platforms.
-It provides fully customizeable image and video wallpapers that can be tweaked at any time!
+Komorebi is an awesome animated wallpapers manager for all Linux platforms.
+It provides fully customizeable image, video, and web page wallpapers that can be tweaked at any time!
 
 ![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/collage.jpg)
 
@@ -59,7 +59,7 @@ Komorebi provides a simple tool to create your own wallpapers! Simply, open your
 
 ![s1](https://raw.githubusercontent.com/iabem97/komorebi/master/screenshots/wallpaper_creator.jpg)
 
-You can create either an image or a video wallpaper and you have many different options to customize your very own wallpaper!
+You can use either an image, a video, or a web page as a wallpaper and you have many different options to customize your very own wallpaper!
 
 ## Uninstall
 
@@ -89,6 +89,11 @@ The latest Komorebi should already have a fix for this issue. If you've already 
 `curl -s https://raw.githubusercontent.com/iabem97/komorebi/master/data/Other/postrm | bash -s`
 
 If your issue has not already been reported, please report it *[`here`](https://github.com/iabem97/komorebi/issues/new)* and I'll try my best to fix them.
+
+## Status of Development
+
+Komorebi still receives updates but they are not as frequent due to my involvement in other open-source projects.
+
 
 ## Credits:
 

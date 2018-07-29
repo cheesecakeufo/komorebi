@@ -87,6 +87,8 @@ namespace WallpaperCreator.OnScreen {
             chooseThumbnailButton.set_filter (imageFilter);
             chooseThumbnailButton.width_chars = 10;
             
+            locationEntry.set_sensitive(false);
+
             // Signals
             nameEntry.changed.connect(() => {
 
