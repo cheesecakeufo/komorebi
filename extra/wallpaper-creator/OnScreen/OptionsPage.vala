@@ -108,7 +108,7 @@ namespace WallpaperCreator.OnScreen {
             scrolledWindow.hscrollbar_policy = PolicyType.NEVER;
 
             optionsBox.margin = 20;
-            optionsBox.margin_left = 0;
+            optionsBox.margin_start = 0;
             optionsBox.halign = Align.START;
             optionsBox.hexpand = true;
 
@@ -277,8 +277,8 @@ namespace WallpaperCreator.OnScreen {
 
             // Margins
             dateTimeBox.margin_top = marginTop;
-            dateTimeBox.margin_right = marginRight;
-            dateTimeBox.margin_left = marginLeft;
+            dateTimeBox.margin_end = marginRight;
+            dateTimeBox.margin_start = marginLeft;
             dateTimeBox.margin_bottom = marginBottom;
              
             setPosition();

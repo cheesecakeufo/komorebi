@@ -90,10 +90,6 @@ namespace Komorebi.OnScreen {
                 // Disable Parallax
                 dateTimeParallax = false;
 
-                // Animation stuff (if needed)
-                var moveToX = event_x;
-                var moveToY = event_y;
-
                 // Check if we're at the passing the edge of the screen
                 if(x < 0) {
                     moveTo(0);

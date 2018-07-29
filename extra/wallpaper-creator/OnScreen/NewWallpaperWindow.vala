@@ -83,11 +83,11 @@ namespace WallpaperCreator.OnScreen {
 
 			// Properties
 			closeButton.margin_top = 6;
-			closeButton.margin_left = 6;
+			closeButton.margin_start = 6;
 			closeButton.halign = Align.START;
 
 			addLayerButton.margin_top = 6;
-			addLayerButton.margin_left = 6;
+			addLayerButton.margin_start = 6;
 			addLayerButton.halign = Align.START;
 
 			nextButton.margin_top = 6;

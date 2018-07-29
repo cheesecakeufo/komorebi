@@ -77,68 +77,12 @@ namespace Komorebi.OnScreen {
             opacity = 255;
             remove_all_transitions();
 
-            // setPosition();
             setMargins();
 
             if(shouldAnimate())
                 animate();
             else
                 fadeIn();
-        }
-
-        void setPosition() {
-            var mainActor = parent.mainActor;
-
-            switch (assetPosition) {
-
-                case "top_right":
-                    x = 0;
-                    y = 0;
-                break;
-
-                case "top_center":
-                    x = (mainActor.width / 2) - (width / 2);
-                    y = 0;
-                break;
-
-                case "top_left":
-                    x = (mainActor.width / 2) - width;
-                    y = 0;
-                break;
-
-                case "center_right":
-                    x = 0;
-                    y = (mainActor.height / 2) - (height / 2);
-                break;
-
-                case "center":
-                    x = (mainActor.width / 2) - (width / 2);
-                    y = (mainActor.height / 2) - (height / 2);
-                break;
-
-                case "center_left":
-                    x = (mainActor.width / 2) - width;
-                    y = (mainActor.height / 2) - (height / 2);
-                break;
-
-                case "bottom_right":
-                    x = 0;
-                    y = (mainActor.height / 2) - height;
-                break;
-
-                case "bottom_center":
-                    x = (mainActor.width / 2) - (width / 2);
-                    y = (mainActor.height / 2) - height;
-                break;
-
-                case "bottom_left":
-                    x = (mainActor.width / 2) - width;
-                    y = (mainActor.height / 2) - height;
-                break;
-
-                default:
-                break;
-            }
         }
 
         void setMargins() {

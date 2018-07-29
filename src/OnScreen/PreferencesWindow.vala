@@ -140,7 +140,7 @@ namespace Komorebi.OnScreen {
 
 			// Properties
 			hideButton.margin_top = 6;
-			hideButton.margin_left = 6;
+			hideButton.margin_start = 6;
 			hideButton.halign = Align.START;
 
 			quitButton.margin_top = 6;
@@ -158,7 +158,7 @@ namespace Komorebi.OnScreen {
 			aboutGrid.row_spacing = 0;
 
 			titleBox.margin_top = 15;
-			titleBox.margin_left = 10;
+			titleBox.margin_start = 10;
 			titleLabel.halign = Align.START;
 
 			bottomPreferencesBox.margin_top = 10;

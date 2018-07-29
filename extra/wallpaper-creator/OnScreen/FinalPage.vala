@@ -76,7 +76,6 @@ namespace WallpaperCreator.OnScreen {
             wallpaperName = wallpaperName.replace(" ", "_").replace(".", "_").down();
 
             var dirPath = @"$(Environment.get_home_dir())/$(wallpaperName)";
-            var dirFile = File.new_for_path(dirPath).make_directory_with_parents();
             var configPath = dirPath + "/config";
             var configFile = File.new_for_path(configPath);
 

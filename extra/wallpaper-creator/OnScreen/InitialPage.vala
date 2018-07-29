@@ -63,7 +63,7 @@ namespace WallpaperCreator.OnScreen {
             aboutGrid.row_spacing = 0;
 
             titleBox.margin_top = 15;
-            titleBox.margin_left = 10;
+            titleBox.margin_start = 10;
             titleLabel.halign = Align.START;
 
             titleLabel.set_markup("<span font='Lato Light 30px' color='white'>Komorebi Wallpaper Creator</span>");
