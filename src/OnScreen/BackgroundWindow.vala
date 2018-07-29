@@ -262,6 +262,17 @@ namespace Komorebi.OnScreen {
 
 				Gtk.drag_finish (context, true, false, time);
 			});
+
+			// disable interactions with webView
+			webView.button_press_event.connect(() => {
+				return true;
+			});
+
+			webView.button_release_event.connect((e) => {
+
+				button_release_event(e);
+				return true;
+			});
 		}
 
 		public void initializeConfigFile () {

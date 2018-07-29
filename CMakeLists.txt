@@ -116,7 +116,7 @@ set(CPACK_PACKAGE_VERSION_PATCH 0)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Komorebi")
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst;${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postrm;")
 
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common, libgee-0.8-2, libclutter-gtk-1.0-0, libclutter-1.0-0, libclutter-gst-3.0-0, libwebkit2gtk-4.0")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgee-0.8-2, libclutter-gtk-1.0-0, libclutter-1.0-0, libclutter-gst-3.0-0, libwebkit2gtk-4.0")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_SECTION "system")
 

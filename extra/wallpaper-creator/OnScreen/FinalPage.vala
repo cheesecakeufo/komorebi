@@ -40,9 +40,15 @@ namespace WallpaperCreator.OnScreen {
             logo.margin_bottom = 30;
 
             descLabel.justify = Justification.CENTER;
+            descLabel.halign = Align.CENTER;
+            descLabel.hexpand = false;
+            descLabel.selectable = true;
 
             titleLabel.set_markup("<span font='Lato 20'>Done</span>");
-            descLabel.set_markup("<span font='Lato Light 12'>Copy the wallpaper folder from your home directory to /System/Komorebi/Resources\nthen open 'Change Wallpaper' to choose your new wallpaper.</span>");
+
+            var mv_command = @"sudo mv $(Environment.get_home_dir())/$(wallpaperName.replace(" ", "_").replace(".", "_").down()) /System/Resources/Komorebi";
+
+            descLabel.set_markup(@"<span font='Lato Light 12'>Open 'Terminal' then paste the following:\n<b>$mv_command</b>\nOnce done, you can change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
 
             closeButton.margin_top = 20;
             closeButton.halign = Align.CENTER;

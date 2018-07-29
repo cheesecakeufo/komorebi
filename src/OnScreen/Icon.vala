@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012-2017 Abraham Masri
+//  Copyright (C) 2017-2018 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -156,6 +156,8 @@ namespace Komorebi.OnScreen {
 
             button_release_event.connect ((e) => {
 
+                if(!showDesktopIcons)
+                    return true;
 
                 save_easing_state ();
                 set_easing_duration (90);

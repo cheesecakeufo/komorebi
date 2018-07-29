@@ -50,8 +50,8 @@ namespace Komorebi.OnScreen {
             infoWindow = new InfoWindow();
             iconsList = new Gee.ArrayList<Icon>();
 
-            margin_top = 30;
-            margin_left = 30;
+            margin_top = 60;
+            margin_left = 120;
             y_expand = true;
             iconSize = 64;
 
