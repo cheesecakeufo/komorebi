@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2015-2017 Abraham Masri <imasrim114@gmail.com>
+//  Copyright (C) 2015-2018 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify it
 //  under the terms of the GNU Lesser General Public License version 3, as published
@@ -230,8 +230,12 @@ namespace Komorebi.OnScreen {
 
         public bool shouldAnimate () {
 
-            if(wallpaperType == "video" || assetAnimationMode == "noanimation") {
+            if(wallpaperType == "video" ||
+                wallpaperType == "web_page" ||
+                assetAnimationMode == "noanimation") {
+                
                 if(assetAnimationTimeout > 0) {
+                
                     Source.remove(assetAnimationTimeout);
                     assetAnimationTimeout = 0;
                 }

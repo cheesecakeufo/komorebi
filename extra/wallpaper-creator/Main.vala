@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2016-2017 Abraham Masri
+//  Copyright (C) 2017-2018 Abraham Masri
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,9 +22,10 @@ namespace WallpaperCreator {
     string filePath;
     string assetPath;
     string thumbnailPath;
+    string webPageUrl;
 
     string wallpaperName;
-    string wallpaperType; // image/video 
+    string wallpaperType; // image/video/web_page
     bool wallpaperParallax;
 
     // Properties
@@ -58,7 +59,7 @@ namespace WallpaperCreator {
         print("Welcome to Komorebi Wallpaper Creator\n");
 
         if(args[1] == "--version" || args[1] == "version") {
-            print("Version: 1.0 - Summit\nCreated by: Abraham Masri @cheesecakefuo\n\n");
+            print("Version: 1.1 - Summit\nCreated by: Abraham Masri @cheesecakefuo\n\n");
             return;
         }
         Gtk.init (ref args);

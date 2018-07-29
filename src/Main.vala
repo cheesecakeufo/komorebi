@@ -48,21 +48,25 @@ namespace Komorebi {
             return;
         }
 
-        disableVideo = ("--disable-video" in args);
-
         GtkClutter.init (ref args);
         Gtk.init (ref args);
 
-        if(!disableVideo)
+        readConfigurationFile();
+
+        if(OnScreen.enableVideoWallpapers) {
+
+            print("[INFO]: loading Gst\n");
             Gst.init (ref args);
+        }
 
         Gtk.Settings.get_default().gtk_application_prefer_dark_theme = true;
 
         var screen = Gdk.Screen.get_default ();
         int monitorCount = screen.get_n_monitors();
 
+
         initializeClipboard(screen);
-        readConfigurationFile();
+
         readWallpaperFile();
 
         backgroundWindows = new BackgroundWindow[monitorCount];
@@ -71,7 +75,7 @@ namespace Komorebi {
 
 
         var mainSettings = Gtk.Settings.get_default ();
-        mainSettings.set("gtk-xft-dpi", (int) (1042 * 100), null);
+        // mainSettings.set("gtk-xft-dpi", (int) (1042 * 100), null);
         mainSettings.set("gtk-xft-antialias", 1, null);
         mainSettings.set("gtk-xft-rgba" , "none", null);
         mainSettings.set("gtk-xft-hintstyle" , "slight", null);

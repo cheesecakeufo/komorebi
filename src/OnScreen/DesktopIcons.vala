@@ -182,10 +182,6 @@ namespace Komorebi.OnScreen {
             var untitledFolder = File.new_for_path(getUntitledFolderName());
             untitledFolder.make_directory_async();
 
-            // var iconNewFolder = new Icon.NewFolder(this);
-            // append(iconNewFolder);
-            // iconNewFolder.unDimIcon(true);
-
         }
 
         /* Pastes a file from a given path to desktop */

@@ -49,6 +49,7 @@ namespace WallpaperCreator.OnScreen {
 
             // Signals
             closeButton.released.connect(() => {
+
                 print("My job is done. Good bye!\n");
                 Gtk.main_quit();
             });
@@ -86,8 +87,15 @@ namespace WallpaperCreator.OnScreen {
                 // Copy the video into our new dir
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + @"/$videoFileName"), FileCopyFlags.NONE);
                 
+
+            } else if (wallpaperType == "web_page")
+                configKeyFile.set_string("Info", "WebPageUrl", webPageUrl);
+
+
+            if(wallpaperType == "video" || wallpaperType == "web_page") {
+
                 // Move the thumbnail
-                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/thumb.jpg"), FileCopyFlags.NONE);
+                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
             
             } else {
 
@@ -123,7 +131,7 @@ namespace WallpaperCreator.OnScreen {
             configKeyFile.set_string("DateTime", "DateFont", dateFont);
 
 
-            if(wallpaperType != "video") {
+            if(wallpaperType == "image") {
 
                 configKeyFile.set_boolean("Wallpaper", "Parallax", wallpaperParallax);
 

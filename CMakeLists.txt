@@ -5,13 +5,13 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 set (PKGDATADIR "${DATADIR}/komorebi")
 set (RELEASE_NAME "summit")
-set (VERSION "1.0")
+set (VERSION "2.1")
 set (VERSION_INFO "Release")
 set (ARCHIVE_NAME komorebi-${VERSION})
 
 
 find_package(PkgConfig)
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 libgtop-2.0 glib-2.0>=2.38 gee-0.8 clutter-gtk-1.0 clutter-1.0 clutter-gst-3.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 glib-2.0>=2.38 gee-0.8 webkit2gtk-4.0 clutter-gtk-1.0 clutter-1.0 clutter-gst-3.0)
 add_definitions(${DEPS_CFLAGS})
 
 link_directories(${DEPS_LIBRARY_DIRS})
@@ -29,7 +29,6 @@ vala_precompile(VALA_C
 
     src/OnScreen/BackgroundWindow.vala
     src/OnScreen/DateTimeBox.vala
-    src/OnScreen/InfoBox.vala
     src/OnScreen/DesktopIcons.vala
     src/OnScreen/ResponsiveGrid.vala
     src/OnScreen/Icon.vala
@@ -47,10 +46,10 @@ vala_precompile(VALA_C
 
 PACKAGES
     gtk+-3.0
-    glibtop
     gee-0.8
     clutter-gtk-1.0
     clutter-gst-3.0
+    webkit2gtk-4.0
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
    	--disable-warnings
@@ -66,9 +65,10 @@ vala_precompile(WALLPAPER_CREATOR
 
 
 PACKAGES
-    gtk+-3.0
     gee-0.8
+    gtk+-3.0
     gstreamer-1.0
+    webkit2gtk-4.0
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
     --disable-warnings
@@ -106,17 +106,17 @@ install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/data/Other/pos
 set(CPACK_GENERATOR "DEB")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Komorebi - An awesome desktop manager for Linux")
 set(CPACK_PACKAGE_VENDOR "")
-set(CPACK_PACKAGE_CONTACT "Abraham Masri <imasrim114@gmail.com>")
+set(CPACK_PACKAGE_CONTACT "Abraham Masri @cheesecakeufo")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_ICON screenshots/komorebi-icon.png)
 set(CPACK_PACKAGE_VERSION_MAJOR 2)
-set(CPACK_PACKAGE_VERSION_MINOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 1)
 set(CPACK_PACKAGE_VERSION_PATCH 0)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Komorebi")
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst;${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postrm;")
 
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common, libgee-0.8-2, libclutter-gtk-1.0-0, libclutter-1.0-0, libclutter-gst-3.0-0")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgtop2-common, libgee-0.8-2, libclutter-gtk-1.0-0, libclutter-1.0-0, libclutter-gst-3.0-0, libwebkit2gtk-4.0")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_SECTION "system")
 

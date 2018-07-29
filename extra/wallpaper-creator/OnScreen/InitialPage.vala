@@ -38,6 +38,8 @@ namespace WallpaperCreator.OnScreen {
         ComboBoxText typeComboBox = new ComboBoxText();
 
         Label chooseFileLabel = new Label("Where is the image located?");
+        Box locationBox = new Box(Orientation.HORIZONTAL, 10);
+        Entry locationEntry = new Entry() { placeholder_text = "/Users/cheesecakeufo/my_picture.jpg" };
         FileChooserButton chooseFileButton = new FileChooserButton("Choose File", Gtk.FileChooserAction.OPEN);
 
         Revealer revealer = new Revealer();
@@ -55,7 +57,6 @@ namespace WallpaperCreator.OnScreen {
             halign = Align.CENTER;
             valign = Align.CENTER;
 
-
             aboutGrid.halign = Align.CENTER;
             aboutGrid.margin_bottom = 30;
             aboutGrid.column_spacing = 0;
@@ -65,11 +66,14 @@ namespace WallpaperCreator.OnScreen {
             titleBox.margin_left = 10;
             titleLabel.halign = Align.START;
 
-            titleLabel.set_markup("<span font='Lato Light 30px' color='white'>Wallpaper Creator</span>");
-            aboutLabel.set_markup("<span font='Lato Light 15px' color='white'>for Komorebi by Abraham Masri @cheesecakeufo</span>");
+            titleLabel.set_markup("<span font='Lato Light 30px' color='white'>Komorebi Wallpaper Creator</span>");
+            aboutLabel.set_markup("<span font='Lato Light 15px' color='white'>by Abraham Masri @cheesecakeufo</span>");
+
+            aboutLabel.halign = Align.START;
 
             typeComboBox.append("image", "An image");
             typeComboBox.append("video", "A video");
+            typeComboBox.append("web_page", "A web page");
             typeComboBox.active = 0;
 
             wallpaperType = "image";
@@ -96,13 +100,34 @@ namespace WallpaperCreator.OnScreen {
                 wallpaperType = typeComboBox.get_active_id();
 
                 if(wallpaperType == "image") {
+
                     chooseFileButton.set_filter (imageFilter);
                     chooseFileLabel.label = "Where is the image located?";
+                    locationEntry.placeholder_text = "/Users/cheesecakeufo/my_picture.jpg";
+                 
                     revealer.set_reveal_child(false);
+                
+                    chooseFileButton.show();
+
+                } else if(wallpaperType == "web_page") {
+
+                    chooseFileButton.set_filter (imageFilter);
+                    chooseFileLabel.label = "What is the URL?";
+                    locationEntry.placeholder_text = "https://sample.com/random/{{screen_width}}x{{screen_height}}";
+
+                    revealer.set_reveal_child(true);
+                
+                    chooseFileButton.hide();
+
                 } else {
+
                     chooseFileButton.set_filter (videoFilter);
                     chooseFileLabel.label = "Where is the video located?";
+                    locationEntry.placeholder_text = "/Users/cheesecakeufo/my_video.mp4";
+                    
                     revealer.set_reveal_child(true);
+                 
+                    chooseFileButton.show();
                 }
 
             });
@@ -118,6 +143,14 @@ namespace WallpaperCreator.OnScreen {
                 thumbnailPath = chooseThumbnailButton.get_file().get_path();
             });
 
+            locationEntry.changed.connect(() => {
+
+                if(locationEntry.text.length <= 0 || !locationEntry.text.contains("http"))
+                    webPageUrl = null;
+                else
+                    webPageUrl = locationEntry.text;
+            });
+
             titleBox.add(titleLabel);
             titleBox.add(aboutLabel);
 
@@ -129,6 +162,9 @@ namespace WallpaperCreator.OnScreen {
 
             revealer.add(thumbnailBox);
 
+            locationBox.pack_start(locationEntry);
+            locationBox.add(chooseFileButton);
+
             add(aboutGrid);
             add(nameLabel);
             add(nameEntry);
@@ -137,7 +173,7 @@ namespace WallpaperCreator.OnScreen {
             add(typeComboBox);
 
             add(chooseFileLabel);
-            add(chooseFileButton);
+            add(locationBox);
             
             add(revealer);
         }

@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2016-2017 Abraham Masri
+//  Copyright (C) 2017-2018 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -412,7 +412,7 @@ namespace WallpaperCreator.OnScreen {
         private void setDateTimeLabel(string color = "white", string timeFont = "Lato Light 30",
                                       string dateFont = "Lato Light 20") {
 
-            timeLabel.set_markup(@"<span color='$color' font='$timeFont'>12:04 AM</span>");
+            timeLabel.set_markup(@"<span color='$color' font='$timeFont'>10:21 PM</span>");
             dateLabel.set_markup(@"<span color='$color' font='$dateFont'>Sunday, August 22</span>");
         }
 

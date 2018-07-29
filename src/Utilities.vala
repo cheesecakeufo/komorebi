@@ -33,8 +33,6 @@ namespace Komorebi.Utilities {
 	File configFile;
 	KeyFile configKeyFile;
 
-	bool disableVideo;
-
 	// Screen variables
 	int screenHeight;
 	int screenWidth;
@@ -73,6 +71,7 @@ namespace Komorebi.Utilities {
 
 	string wallpaperType;
 	string videoFileName;
+	string webPageUrl;
 
 	bool wallpaperParallax;
 
@@ -166,9 +165,9 @@ namespace Komorebi.Utilities {
 
 		// Default values
 		wallpaperName = "foggy_sunny_mountain";
-		showInfoBox = true;
 		timeTwentyFour = true;
 		showDesktopIcons = true;
+		enableVideoWallpapers = true;
 
 		if(configFilePath == null)
 			configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
@@ -194,10 +193,9 @@ namespace Komorebi.Utilities {
 		// make sure the config file has the required values
 		if(!configKeyFile.has_group(key_file_group) ||
 			!configKeyFile.has_key(key_file_group, "WallpaperName") ||
-			!configKeyFile.has_key(key_file_group, "ShowInfoBox") ||
-			!configKeyFile.has_key(key_file_group, "DarkInfoBox") ||
 			!configKeyFile.has_key(key_file_group, "TimeTwentyFour") ||
-			!configKeyFile.has_key(key_file_group, "ShowDesktopIcons")) {
+			!configKeyFile.has_key(key_file_group, "ShowDesktopIcons") ||
+			!configKeyFile.has_key(key_file_group, "EnableVideoWallpapers")) {
 			
 			print("[WARNING]: invalid configuration file found. Fixing..\n");
 			updateConfigurationFile();
@@ -206,21 +204,21 @@ namespace Komorebi.Utilities {
 
 
 		wallpaperName = configKeyFile.get_string (key_file_group, "WallpaperName");
-		showInfoBox = configKeyFile.get_boolean (key_file_group, "ShowInfoBox");
-		darkInfoBox = configKeyFile.get_boolean (key_file_group, "DarkInfoBox");
 		timeTwentyFour = configKeyFile.get_boolean (key_file_group, "TimeTwentyFour");
 		showDesktopIcons = configKeyFile.get_boolean (key_file_group, "ShowDesktopIcons");
+		enableVideoWallpapers = configKeyFile.get_boolean (key_file_group, "EnableVideoWallpapers");
 		fixConflicts();
 	}
 
 	/* Updates the .prop file */
 	public void updateConfigurationFile () {
 
-		configKeyFile.set_string  ("KomorebiProperties", "WallpaperName", wallpaperName);
-		configKeyFile.set_boolean ("KomorebiProperties", "ShowInfoBox", showInfoBox);
-		configKeyFile.set_boolean ("KomorebiProperties", "DarkInfoBox", darkInfoBox);
-		configKeyFile.set_boolean ("KomorebiProperties", "TimeTwentyFour", timeTwentyFour);
-		configKeyFile.set_boolean ("KomorebiProperties", "ShowDesktopIcons", showDesktopIcons);
+		var key_file_group = "KomorebiProperties";
+
+		configKeyFile.set_string  (key_file_group, "WallpaperName", wallpaperName);
+		configKeyFile.set_boolean (key_file_group, "TimeTwentyFour", timeTwentyFour);
+		configKeyFile.set_boolean (key_file_group, "ShowDesktopIcons", showDesktopIcons);
+		configKeyFile.set_boolean (key_file_group, "EnableVideoWallpapers", enableVideoWallpapers);
 
 		// Delete the file
 		if(configFile.query_exists())
@@ -252,11 +250,19 @@ namespace Komorebi.Utilities {
 
 	void readWallpaperFile () {
 
-		// make sure the wallpaper name is valid
-		if(wallpaperName == null) {
+		// check if the wallpaper exists
+		// also, make sure the wallpaper name is valid
+		var wallpaperPath = @"/System/Resources/Komorebi/$wallpaperName";
+		var wallpaperConfigPath = @"$wallpaperPath/config";
+
+		if(wallpaperName == null || !File.new_for_path(wallpaperPath).query_exists() ||
+			!File.new_for_path(wallpaperConfigPath).query_exists()) {
 
 			wallpaperName = "foggy_sunny_mountain";
-			print(@"[ERROR]: got a null wallpaperName. Setting to default: $wallpaperName\n");
+			wallpaperPath = @"/System/Resources/Komorebi/$wallpaperName";
+			wallpaperConfigPath = @"$wallpaperPath/config";
+
+			print(@"[ERROR]: got an invalid wallpaper. Setting to default: $wallpaperName\n");
 		}
 
 		// init the wallpaperKeyFile (if we haven't already)
@@ -264,7 +270,7 @@ namespace Komorebi.Utilities {
 			wallpaperKeyFile = new KeyFile ();
 
 		// Read the config file
-		wallpaperKeyFile.load_from_file(@"/System/Resources/Komorebi/$wallpaperName/config", KeyFileFlags.NONE);
+		wallpaperKeyFile.load_from_file(wallpaperConfigPath, KeyFileFlags.NONE);
 
 		// Wallpaper Info
 		wallpaperType = wallpaperKeyFile.get_string("Info", "WallpaperType");
@@ -302,6 +308,13 @@ namespace Komorebi.Utilities {
 			return;
 		}
 
+		if(wallpaperType == "web_page") {
+			webPageUrl = wallpaperKeyFile.get_string("Info", "WebPageUrl");
+			wallpaperParallax = assetVisible = false;
+
+			return;
+		}
+
 		// Wallpaper base image
 		wallpaperParallax = wallpaperKeyFile.get_boolean("Wallpaper", "Parallax");
 
@@ -315,8 +328,8 @@ namespace Komorebi.Utilities {
 		assetHeight = wallpaperKeyFile.get_integer ("Asset", "Height");
 
 		// Set GNOME's wallpaper to this
-		var wallpaperPath = @"/System/Resources/Komorebi/$wallpaperName/wallpaper.jpg";
-		new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperPath));
+		var wallpaperJpgPath = @"/System/Resources/Komorebi/$wallpaperName/wallpaper.jpg";
+		new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperJpgPath));
 		new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 	}
 

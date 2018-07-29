@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2015-2016 Abraham Masri <imasrim114@gmail.com>
+//  Copyright (C) 2015-2016 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify it
 //  under the terms of the GNU Lesser General Public License version 3, as published
@@ -19,239 +19,252 @@ using Komorebi.Utilities;
 
 namespace Komorebi.OnScreen {
 
-    public enum MenuType {
-        DESKTOP,
-        ICON
+	public enum MenuType {
+		DESKTOP,
+		ICON
 
-    }
+	}
 
-    public class BubbleMenu : Actor {
+	public class BubbleMenu : Actor {
 
-        BackgroundWindow parent;
+		BackgroundWindow parent;
 
-        // Horizontal Box Layout
-        BoxLayout horizontalBoxLayout = new BoxLayout() {orientation = Orientation.VERTICAL, spacing = 5};
+		// Horizontal Box Layout
+		BoxLayout horizontalBoxLayout = new BoxLayout() {orientation = Orientation.VERTICAL, spacing = 5};
 
-        // Bubble items (Desktop)
-        BubbleMenuItem newFolderMenuItem;
-        BubbleMenuItem pasteMenuItem;
-        /*BubbleMenuItem hideAllWindowsMenuItem*/
-        BubbleMenuItem changeWallpaperMenuItem;
-        BubbleMenuItem preferencesMenuItem;
+		// Bubble items (Desktop)
+		BubbleMenuItem newFolderMenuItem;
+		BubbleMenuItem refreshMenuItem;
+		BubbleMenuItem pasteMenuItem;
+		/*BubbleMenuItem hideAllWindowsMenuItem*/
+		BubbleMenuItem changeWallpaperMenuItem;
+		BubbleMenuItem preferencesMenuItem;
 
-        // Menu Items (Icon)
-        BubbleMenuItem moveToTrashMenuItem;
-        BubbleMenuItem copyMenuItem;
-        BubbleMenuItem makeAliasMenuItem;
-        BubbleMenuItem getInfoMenuItem;
+		// Menu Items (Icon)
+		BubbleMenuItem moveToTrashMenuItem;
+		BubbleMenuItem copyMenuItem;
+		BubbleMenuItem makeAliasMenuItem;
+		BubbleMenuItem getInfoMenuItem;
 
-        // Current icon (when right clicked)
-        OnScreen.Icon icon;
+		// Current icon (when right clicked)
+		OnScreen.Icon icon;
 
-        // Type of this menu
-        MenuType menuType;
+		// Type of this menu
+		MenuType menuType;
 
-        construct {
+		construct {
 
-            // Properties
-            opacity = 0;
+			// Properties
+			opacity = 0;
 
-            layout_manager = horizontalBoxLayout;
-            margin_top = 5;
-            margin_right = 5;
-            margin_left = 20;
-            margin_bottom = 5;
+			layout_manager = horizontalBoxLayout;
+			margin_top = 5;
+			margin_right = 5;
+			margin_left = 20;
+			margin_bottom = 5;
 
-        }
+		}
 
 
-        public BubbleMenu (BackgroundWindow parent) {
-            this.parent = parent;
+		public BubbleMenu (BackgroundWindow parent) {
+			this.parent = parent;
 
-            // Desktop items
-            newFolderMenuItem = new BubbleMenuItem("New Folder");
-            pasteMenuItem = new BubbleMenuItem("Paste");
-            changeWallpaperMenuItem = new BubbleMenuItem("Change Wallpaper");
-            preferencesMenuItem = new BubbleMenuItem("Desktop Preferences");
+			// Desktop items
+			newFolderMenuItem = new BubbleMenuItem("New Folder");
+			refreshMenuItem = new BubbleMenuItem("Refresh Wallpaper");
+			pasteMenuItem = new BubbleMenuItem("Paste");
+			changeWallpaperMenuItem = new BubbleMenuItem("Change Wallpaper");
+			preferencesMenuItem = new BubbleMenuItem("Desktop Preferences");
 
-            // icon items
-            moveToTrashMenuItem = new BubbleMenuItem("Move to Trash");
-            copyMenuItem = new BubbleMenuItem("Copy Path");
-            makeAliasMenuItem = new BubbleMenuItem("Make Alias");
-            getInfoMenuItem = new BubbleMenuItem("Get Info");
+			// icon items
+			moveToTrashMenuItem = new BubbleMenuItem("Move to Trash");
+			copyMenuItem = new BubbleMenuItem("Copy Path");
+			makeAliasMenuItem = new BubbleMenuItem("Make Alias");
+			getInfoMenuItem = new BubbleMenuItem("Get Info");
 
-            // Signals
-            signalsSetup();
-        }
+			// Signals
+			signalsSetup();
+		}
 
-        void signalsSetup () {
+		void signalsSetup () {
 
-            newFolderMenuItem.button_press_event.connect(() => {
-                parent.desktopIcons.createNewFolder();
-                return true;
-            });
+			newFolderMenuItem.button_press_event.connect(() => {
+				parent.desktopIcons.createNewFolder();
+				return true;
+			});
 
-            pasteMenuItem.button_press_event.connect(() => {
-                parent.desktopIcons.copyToDesktop(clipboard.wait_for_text());
-                return true;
-            });
+			pasteMenuItem.button_press_event.connect(() => {
+				parent.desktopIcons.copyToDesktop(clipboard.wait_for_text());
+				return true;
+			});
 
 
-            changeWallpaperMenuItem.button_press_event.connect(() => {
+			refreshMenuItem.button_press_event.connect(() => {
 
-                if(showDesktopIcons)
-                    parent.desktopIcons.fadeOut();
+				this.parent.wallpaperFromUrl(webPageUrl);
 
-                fadeOut();
+				return true;
+			});
 
-                // Check if preferences window is already visible
-                if(canOpenPreferences) {
+			changeWallpaperMenuItem.button_press_event.connect(() => {
 
-                    canOpenPreferences = false;
-                    new PreferencesWindow("wallpapers");
+				if(showDesktopIcons)
+					parent.desktopIcons.fadeOut();
 
-                }
+				fadeOut();
 
-                return true;
-            });
+				// Check if preferences window is already visible
+				if(canOpenPreferences) {
 
-            preferencesMenuItem.button_press_event.connect(() => {
+					canOpenPreferences = false;
+					new PreferencesWindow("wallpapers");
 
-                // Check if preferences window is already visible
-                if(canOpenPreferences) {
+				}
 
-                    canOpenPreferences = false;
-                    new PreferencesWindow();
+				return true;
+			});
 
-                }
-                return true;
-            });
+			preferencesMenuItem.button_press_event.connect(() => {
 
+				// Check if preferences window is already visible
+				if(canOpenPreferences) {
 
-            // Icon items
-            copyMenuItem.button_press_event.connect(() => {
+					canOpenPreferences = false;
+					new PreferencesWindow();
 
-                // Copy file/folder
-                clipboard.set_text(icon.filePath, icon.filePath.length);
-                clipboard.store();
+				}
+				return true;
+			});
 
-                return true;
-            });
 
-            moveToTrashMenuItem.button_press_event.connect(() => {
+			// Icon items
+			copyMenuItem.button_press_event.connect(() => {
 
-                icon.trash();
+				// Copy file/folder
+				clipboard.set_text(icon.filePath, icon.filePath.length);
+				clipboard.store();
 
-                // Move file/folder to trash
-                var sourceFile = File.new_for_path(icon.filePath);
+				return true;
+			});
 
-                try {
-                    sourceFile.trash();
-                } catch (Error e) {
+			moveToTrashMenuItem.button_press_event.connect(() => {
 
-                    print ("Error deleting %s: %s\n", icon.titleName, e.message);
-                }
+				icon.trash();
 
-                return true;
-            });
+				// Move file/folder to trash
+				var sourceFile = File.new_for_path(icon.filePath);
 
-            getInfoMenuItem.button_press_event.connect(() => {
+				try {
+					sourceFile.trash();
+				} catch (Error e) {
 
-                // Display a window with file/directory info
-                infoWindow.setInfoFromPath(icon.filePath);
-                infoWindow.show_all();
+					print ("Error deleting %s: %s\n", icon.titleName, e.message);
+				}
 
-                return true;
-            });
+				return true;
+			});
 
-        }
+			getInfoMenuItem.button_press_event.connect(() => {
 
-        public void setIcon (OnScreen.Icon icon) {
+				// Display a window with file/directory info
+				infoWindow.setInfoFromPath(icon.filePath);
+				infoWindow.show_all();
 
-            this.icon = icon;
+				return true;
+			});
 
-        }
+		}
 
-        public void fadeIn (double x, double y, MenuType menuType) {
+		public void setIcon (OnScreen.Icon icon) {
 
-            this.menuType = menuType;
+			this.icon = icon;
 
-            if(menuType == MenuType.ICON) {
+		}
 
-                add_child(moveToTrashMenuItem);
-                add_child(copyMenuItem);
-                // add_child(makeAliasMenuItem);
-                add_child(getInfoMenuItem);
+		public void fadeIn (double x, double y, MenuType menuType) {
 
-            } else {
+			this.menuType = menuType;
 
-                // Dim all icons
-                foreach (var icon in parent.desktopIcons.iconsList)
-                    icon.dimIcon();
+			if(menuType == MenuType.ICON) {
 
-                // Check if we have anything in the clipboard,
-                // if not, disable the 'Paste' menu item
-                var clipboardText = clipboard.wait_for_text ();
+				add_child(moveToTrashMenuItem);
+				add_child(copyMenuItem);
+				// add_child(makeAliasMenuItem);
+				add_child(getInfoMenuItem);
 
-                if(clipboardText == "" || clipboardText == null) {
-                    pasteMenuItem.opacity = 10;
-                    pasteMenuItem.set_reactive(false);
-                } else {
-                    pasteMenuItem.opacity = 255;
-                    pasteMenuItem.set_reactive(true);
-                }
+			} else {
 
-                // Hide 'New Folder' and 'Paste' item if we're not showing icons
-                if(showDesktopIcons) {
-                    add_child(newFolderMenuItem);
-                    add_child(pasteMenuItem);
-                }
+				// Dim all icons
+				foreach (var icon in parent.desktopIcons.iconsList)
+					icon.dimIcon();
 
-                add_child(changeWallpaperMenuItem);
-                add_child(preferencesMenuItem);
+				// Check if we have anything in the clipboard,
+				// if not, disable the 'Paste' menu item
+				var clipboardText = clipboard.wait_for_text ();
 
-            }
+				if(clipboardText == "" || clipboardText == null) {
+					pasteMenuItem.opacity = 10;
+					pasteMenuItem.set_reactive(false);
+				} else {
+					pasteMenuItem.opacity = 255;
+					pasteMenuItem.set_reactive(true);
+				}
 
-            // Make sure we don't display off the screen
-            if(x + 15 < 0) {
-                x = 0;
-            } else if (x >= screenWidth - width) {
-                x -= width + 15;
-            }
+				// Hide 'New Folder' and 'Paste' item if we're not showing icons
+				if(showDesktopIcons) {
+					add_child(newFolderMenuItem);
+					add_child(pasteMenuItem);
+				}
 
-            if((y + height) >= parent.mainActor.height)
-                y -= (height + 10);
+				// If we have a web page wallpaper, show the 'refresh wallpaper' menu item
+				if(wallpaperType == "web_page")
+					add_child(refreshMenuItem);
 
-            opacity = 0;
-            this.x = (float)x;
-            this.y = (float)y;
+				add_child(changeWallpaperMenuItem);
+				add_child(preferencesMenuItem);
 
-            save_easing_state ();
-            set_easing_duration (90);
-            this.x += 15;
-            this.y += 15;
-            opacity = 255;
-            set_easing_mode (Clutter.AnimationMode.EASE_IN_SINE);
-            restore_easing_state ();
-        }
+			}
 
-        public void fadeOut () {
+			// Make sure we don't display off the screen
+			if(x + 15 < 0) {
+				x = 0;
+			} else if (x >= screenWidth - width) {
+				x -= width + 15;
+			}
 
-            save_easing_state ();
-            set_easing_duration (90);
-            scale_x = 0.9f;
-            scale_y = 0.9f;
-            opacity = 0;
-            set_easing_mode (Clutter.AnimationMode.EASE_IN_SINE);
-            restore_easing_state ();
+			if((y + height) >= parent.mainActor.height)
+				y -= (height + 10);
 
-            remove_all_children();
+			opacity = 0;
+			this.x = (float)x;
+			this.y = (float)y;
 
-            // Undim all icon
-            foreach (var icon in parent.desktopIcons.iconsList)
-                icon.unDimIcon();
+			save_easing_state ();
+			set_easing_duration (90);
+			this.x += 15;
+			this.y += 15;
+			opacity = 255;
+			set_easing_mode (Clutter.AnimationMode.EASE_IN_SINE);
+			restore_easing_state ();
+		}
 
-            icon = null;
-        }
-    }
+		public void fadeOut () {
+
+			save_easing_state ();
+			set_easing_duration (90);
+			scale_x = 0.9f;
+			scale_y = 0.9f;
+			opacity = 0;
+			set_easing_mode (Clutter.AnimationMode.EASE_IN_SINE);
+			restore_easing_state ();
+
+			remove_all_children();
+
+			// Undim all icon
+			foreach (var icon in parent.desktopIcons.iconsList)
+				icon.unDimIcon();
+
+			icon = null;
+		}
+	}
 }
