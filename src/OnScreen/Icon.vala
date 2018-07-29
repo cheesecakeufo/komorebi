@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012-2017 Abraham Masri
+//  Copyright (C) 2017-2018 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,8 @@ namespace Komorebi.OnScreen {
     }
 
     public class Icon : Clutter.Actor {
+
+        DesktopIcons parent;
 
         /* Path of the file */
         public string filePath = "";
@@ -87,9 +89,9 @@ namespace Komorebi.OnScreen {
 
         }
 
-        public Icon (string name, Pixbuf pixbuf, string execPath, string filePath,
+        public Icon (DesktopIcons parent, string name, Pixbuf pixbuf, string execPath, string filePath,
                      bool isExecutable = false) {
-
+            this.parent = parent;
             this.filePath = filePath;
             this.execPath = execPath;
             this.titleName = name;
@@ -106,8 +108,8 @@ namespace Komorebi.OnScreen {
 
         }
 
-        public Icon.Trash () {
-
+        public Icon.Trash (DesktopIcons parent) {
+            this.parent = parent;
             this.titleName = "Trash";
             var pixbuf = Utilities.getIconFrom("user-trash", 64);
 
@@ -122,7 +124,8 @@ namespace Komorebi.OnScreen {
 
         }
 
-        public Icon.NewFolder () {
+        public Icon.NewFolder (DesktopIcons parent) {
+            this.parent = parent;
 
             var pixbuf = Utilities.getIconFrom("folder", 64);
 
@@ -153,6 +156,8 @@ namespace Komorebi.OnScreen {
 
             button_release_event.connect ((e) => {
 
+                if(!showDesktopIcons)
+                    return true;
 
                 save_easing_state ();
                 set_easing_duration (90);
@@ -171,16 +176,19 @@ namespace Komorebi.OnScreen {
                             AppInfo.launch_default_for_uri (@"file://$filePath", null);
 
                         } else if(e.button == 3) { // Show the menu
+                            BackgroundWindow backgroundWindow = parent.window;
+                            BubbleMenu bubbleMenu = backgroundWindow.bubbleMenu;
+
+                            backgroundWindow.dimWallpaper();
 
                             bubbleMenu.fadeIn(e.x, e.y, MenuType.ICON);
                             bubbleMenu.setIcon(this);
-                            backgroundWindow.dimWallpaper();
 
                             // Dim our text
                             titleText.opacity = 50;
 
                             // Dim other icons
-                            foreach (var icon in iconsList) {
+                            foreach (var icon in parent.iconsList) {
                                 if(icon.filePath != this.filePath)
                                     icon.dimIcon();
                             }

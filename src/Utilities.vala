@@ -33,8 +33,6 @@ namespace Komorebi.Utilities {
 	File configFile;
 	KeyFile configKeyFile;
 
-	bool disableVideo;
-
 	// Screen variables
 	int screenHeight;
 	int screenWidth;
@@ -73,6 +71,7 @@ namespace Komorebi.Utilities {
 
 	string wallpaperType;
 	string videoFileName;
+	string webPageUrl;
 
 	bool wallpaperParallax;
 
@@ -130,9 +129,9 @@ namespace Komorebi.Utilities {
 
 	}
 
-    /* TAKEN FROM ACIS --- Until Acis is public */
-    /* Applies CSS theming for specified GTK+ Widget */
-    public void applyCSS (Widget[] widgets, string CSS) {
+	/* TAKEN FROM ACIS --- Until Acis is public */
+	/* Applies CSS theming for specified GTK+ Widget */
+	public void applyCSS (Widget[] widgets, string CSS) {
 
 		var Provider = new Gtk.CssProvider ();
 		Provider.load_from_data (CSS, -1);
@@ -150,25 +149,34 @@ namespace Komorebi.Utilities {
 		foreach(var widget in widgets)
 			widget.set_visual (widget.get_screen ().get_rgba_visual () ?? widget.get_screen ().get_system_visual ());
 
-    }
+	}
 
-    /* Formats the date and time into a human read-able version */
-    public string formatDateTime (DateTime dateTime) {
+	/* Formats the date and time into a human read-able version */
+	public string formatDateTime (DateTime dateTime) {
 
-    	if (OnScreen.timeTwentyFour)
-    		return dateTime.format("%m/%d/%Y %H:%M");
+		if (OnScreen.timeTwentyFour)
+			return dateTime.format("%m/%d/%Y %H:%M");
 
-    	return dateTime.format("%m/%d/%Y %l:%M %p");
-    }
+		return dateTime.format("%m/%d/%Y %l:%M %p");
+	}
 
 	/* Reads the .prop file */
 	public void readConfigurationFile () {
 
 		// Default values
 		wallpaperName = "foggy_sunny_mountain";
-		showInfoBox = true;
 		timeTwentyFour = true;
 		showDesktopIcons = true;
+		enableVideoWallpapers = true;
+
+		if(configFilePath == null)
+			configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
+
+		if(configFile == null)
+			configFile = File.new_for_path(configFilePath);
+
+		if(configKeyFile == null)
+			configKeyFile = new KeyFile ();
 
 		if(!configFile.query_exists()) {
 			print("No configuration file found. Creating one..\n");
@@ -180,22 +188,37 @@ namespace Komorebi.Utilities {
 
 		configKeyFile.load_from_file(configFilePath, KeyFileFlags.NONE);
 
-		wallpaperName = configKeyFile.get_string ("KomorebiProperies", "WallpaperName");
-		showInfoBox = configKeyFile.get_boolean ("KomorebiProperies", "ShowInfoBox");
-		darkInfoBox = configKeyFile.get_boolean ("KomorebiProperies", "DarkInfoBox");
-		timeTwentyFour = configKeyFile.get_boolean ("KomorebiProperies", "TimeTwentyFour");
-		showDesktopIcons = configKeyFile.get_boolean ("KomorebiProperies", "ShowDesktopIcons");
+		var key_file_group = "KomorebiProperties";
+
+		// make sure the config file has the required values
+		if(!configKeyFile.has_group(key_file_group) ||
+			!configKeyFile.has_key(key_file_group, "WallpaperName") ||
+			!configKeyFile.has_key(key_file_group, "TimeTwentyFour") ||
+			!configKeyFile.has_key(key_file_group, "ShowDesktopIcons") ||
+			!configKeyFile.has_key(key_file_group, "EnableVideoWallpapers")) {
+			
+			print("[WARNING]: invalid configuration file found. Fixing..\n");
+			updateConfigurationFile();
+			return;
+		}
+
+
+		wallpaperName = configKeyFile.get_string (key_file_group, "WallpaperName");
+		timeTwentyFour = configKeyFile.get_boolean (key_file_group, "TimeTwentyFour");
+		showDesktopIcons = configKeyFile.get_boolean (key_file_group, "ShowDesktopIcons");
+		enableVideoWallpapers = configKeyFile.get_boolean (key_file_group, "EnableVideoWallpapers");
 		fixConflicts();
 	}
 
 	/* Updates the .prop file */
 	public void updateConfigurationFile () {
 
-		configKeyFile.set_string  ("KomorebiProperies", "WallpaperName", wallpaperName);
-		configKeyFile.set_boolean ("KomorebiProperies", "ShowInfoBox", showInfoBox);
-		configKeyFile.set_boolean ("KomorebiProperies", "DarkInfoBox", darkInfoBox);
-		configKeyFile.set_boolean ("KomorebiProperies", "TimeTwentyFour", timeTwentyFour);
-		configKeyFile.set_boolean ("KomorebiProperies", "ShowDesktopIcons", showDesktopIcons);
+		var key_file_group = "KomorebiProperties";
+
+		configKeyFile.set_string  (key_file_group, "WallpaperName", wallpaperName);
+		configKeyFile.set_boolean (key_file_group, "TimeTwentyFour", timeTwentyFour);
+		configKeyFile.set_boolean (key_file_group, "ShowDesktopIcons", showDesktopIcons);
+		configKeyFile.set_boolean (key_file_group, "EnableVideoWallpapers", enableVideoWallpapers);
 
 		// Delete the file
 		if(configFile.query_exists())
@@ -227,42 +250,68 @@ namespace Komorebi.Utilities {
 
 	void readWallpaperFile () {
 
+		// check if the wallpaper exists
+		// also, make sure the wallpaper name is valid
+		var wallpaperPath = @"/System/Resources/Komorebi/$wallpaperName";
+		var wallpaperConfigPath = @"$wallpaperPath/config";
+
+		if(wallpaperName == null || !File.new_for_path(wallpaperPath).query_exists() ||
+			!File.new_for_path(wallpaperConfigPath).query_exists()) {
+
+			wallpaperName = "foggy_sunny_mountain";
+			wallpaperPath = @"/System/Resources/Komorebi/$wallpaperName";
+			wallpaperConfigPath = @"$wallpaperPath/config";
+
+			print(@"[ERROR]: got an invalid wallpaper. Setting to default: $wallpaperName\n");
+		}
+
+		// init the wallpaperKeyFile (if we haven't already)
+		if(wallpaperKeyFile == null)
+			wallpaperKeyFile = new KeyFile ();
+
 		// Read the config file
-	    wallpaperKeyFile.load_from_file(@"/System/Resources/Komorebi/$wallpaperName/config", KeyFileFlags.NONE);
+		wallpaperKeyFile.load_from_file(wallpaperConfigPath, KeyFileFlags.NONE);
 
 		// Wallpaper Info
 		wallpaperType = wallpaperKeyFile.get_string("Info", "WallpaperType");
 
 		// DateTime
 		dateTimeVisible = wallpaperKeyFile.get_boolean ("DateTime", "Visible");
-	    dateTimeParallax = wallpaperKeyFile.get_boolean ("DateTime", "Parallax");
+		dateTimeParallax = wallpaperKeyFile.get_boolean ("DateTime", "Parallax");
 
-	    dateTimeMarginLeft = wallpaperKeyFile.get_integer ("DateTime", "MarginLeft");
-	    dateTimeMarginTop = wallpaperKeyFile.get_integer ("DateTime", "MarginTop");
-	    dateTimeMarginBottom = wallpaperKeyFile.get_integer ("DateTime", "MarginBottom");
-	    dateTimeMarginRight = wallpaperKeyFile.get_integer ("DateTime", "MarginRight");
+		dateTimeMarginLeft = wallpaperKeyFile.get_integer ("DateTime", "MarginLeft");
+		dateTimeMarginTop = wallpaperKeyFile.get_integer ("DateTime", "MarginTop");
+		dateTimeMarginBottom = wallpaperKeyFile.get_integer ("DateTime", "MarginBottom");
+		dateTimeMarginRight = wallpaperKeyFile.get_integer ("DateTime", "MarginRight");
 
-	    dateTimeRotationX = wallpaperKeyFile.get_double ("DateTime", "RotationX");
-	    dateTimeRotationY = wallpaperKeyFile.get_double ("DateTime", "RotationY");
-	    dateTimeRotationZ = wallpaperKeyFile.get_double ("DateTime", "RotationZ");
+		dateTimeRotationX = wallpaperKeyFile.get_double ("DateTime", "RotationX");
+		dateTimeRotationY = wallpaperKeyFile.get_double ("DateTime", "RotationY");
+		dateTimeRotationZ = wallpaperKeyFile.get_double ("DateTime", "RotationZ");
 
-	    dateTimePosition = wallpaperKeyFile.get_string ("DateTime", "Position");
-	    dateTimeAlignment = wallpaperKeyFile.get_string ("DateTime", "Alignment");
-	    dateTimeAlwaysOnTop = wallpaperKeyFile.get_boolean ("DateTime", "AlwaysOnTop");
+		dateTimePosition = wallpaperKeyFile.get_string ("DateTime", "Position");
+		dateTimeAlignment = wallpaperKeyFile.get_string ("DateTime", "Alignment");
+		dateTimeAlwaysOnTop = wallpaperKeyFile.get_boolean ("DateTime", "AlwaysOnTop");
 
-	    dateTimeColor = wallpaperKeyFile.get_string ("DateTime", "Color");
-	    dateTimeAlpha = wallpaperKeyFile.get_integer ("DateTime", "Alpha");
+		dateTimeColor = wallpaperKeyFile.get_string ("DateTime", "Color");
+		dateTimeAlpha = wallpaperKeyFile.get_integer ("DateTime", "Alpha");
 
-	    dateTimeShadowColor = wallpaperKeyFile.get_string ("DateTime", "ShadowColor");
-	    dateTimeShadowAlpha = wallpaperKeyFile.get_integer ("DateTime", "ShadowAlpha");
+		dateTimeShadowColor = wallpaperKeyFile.get_string ("DateTime", "ShadowColor");
+		dateTimeShadowAlpha = wallpaperKeyFile.get_integer ("DateTime", "ShadowAlpha");
 
-	    dateTimeTimeFont = wallpaperKeyFile.get_string ("DateTime", "TimeFont");
-	    dateTimeDateFont = wallpaperKeyFile.get_string ("DateTime", "DateFont");
+		dateTimeTimeFont = wallpaperKeyFile.get_string ("DateTime", "TimeFont");
+		dateTimeDateFont = wallpaperKeyFile.get_string ("DateTime", "DateFont");
 
 
 		if(wallpaperType == "video") {
 			videoFileName = wallpaperKeyFile.get_string("Info", "VideoFileName");
 			wallpaperParallax = assetVisible = false;
+			return;
+		}
+
+		if(wallpaperType == "web_page") {
+			webPageUrl = wallpaperKeyFile.get_string("Info", "WebPageUrl");
+			wallpaperParallax = assetVisible = false;
+
 			return;
 		}
 
@@ -279,8 +328,8 @@ namespace Komorebi.Utilities {
 		assetHeight = wallpaperKeyFile.get_integer ("Asset", "Height");
 
 		// Set GNOME's wallpaper to this
-		var wallpaperPath = @"/System/Resources/Komorebi/$wallpaperName/wallpaper.jpg";
-		new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperPath));
+		var wallpaperJpgPath = @"/System/Resources/Komorebi/$wallpaperName/wallpaper.jpg";
+		new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperJpgPath));
 		new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 	}
 
@@ -321,7 +370,7 @@ namespace Komorebi.Utilities {
 		if(	File.new_for_path("/usr/lib/gstreamer-1.0/libgstlibav.so").query_exists() ||
 			File.new_for_path("/usr/lib64/gstreamer-1.0/libgstlibav.so").query_exists() ||
 			File.new_for_path("/usr/lib/i386-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists() ||
-		   	File.new_for_path("/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists())
+			File.new_for_path("/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists())
 			return true;
 
 		return false;

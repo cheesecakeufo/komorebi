@@ -4,22 +4,22 @@ WallpaperType=image
 [DateTime]
 Visible=true
 Parallax=false
-MarginTop=0
-MarginRight=0
+MarginTop=40
+MarginRight=120
 MarginLeft=0
-MarginBottom=75
-RotationX=0
-RotationY=0
-RotationZ=0
-Position=center
-Alignment=center
+MarginBottom=0
+RotationX=10
+RotationY=-55
+RotationZ=-14
+Position=center_right
+Alignment=start
 AlwaysOnTop=true
-Color=#164b71
-Alpha=167
-ShadowColor=#dd22dd22dd22
+Color=#edd400
+Alpha=255
+ShadowColor=red
 ShadowAlpha=255
-TimeFont=Bubbler One Bold 46
-DateFont=Bubbler One 15
+TimeFont=Lato Bold 120
+DateFont=Lato Medium 0
 
 [Wallpaper]
 Parallax=false
@@ -28,7 +28,5 @@ Parallax=false
 Visible=false
 AnimationMode=noanimation
 AnimationSpeed=100
-
 Width=0
 Height=0
-

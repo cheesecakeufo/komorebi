@@ -40,15 +40,22 @@ namespace WallpaperCreator.OnScreen {
             logo.margin_bottom = 30;
 
             descLabel.justify = Justification.CENTER;
+            descLabel.halign = Align.CENTER;
+            descLabel.hexpand = false;
+            descLabel.selectable = true;
 
             titleLabel.set_markup("<span font='Lato 20'>Done</span>");
-            descLabel.set_markup("<span font='Lato Light 12'>Copy the wallpaper folder from your home directory to /System/Komorebi/Resources\nthen open 'Change Wallpaper' to choose your new wallpaper.</span>");
+
+            var mv_command = @"sudo mv $(Environment.get_home_dir())/$(wallpaperName.replace(" ", "_").replace(".", "_").down()) /System/Resources/Komorebi";
+
+            descLabel.set_markup(@"<span font='Lato Light 12'>Open 'Terminal' then paste the following:\n<b>$mv_command</b>\nOnce done, you can change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
 
             closeButton.margin_top = 20;
             closeButton.halign = Align.CENTER;
 
             // Signals
             closeButton.released.connect(() => {
+
                 print("My job is done. Good bye!\n");
                 Gtk.main_quit();
             });
@@ -69,7 +76,7 @@ namespace WallpaperCreator.OnScreen {
             wallpaperName = wallpaperName.replace(" ", "_").replace(".", "_").down();
 
             var dirPath = @"$(Environment.get_home_dir())/$(wallpaperName)";
-            var dirFile = File.new_for_path(dirPath).make_directory_with_parents();
+            File.new_for_path(dirPath).make_directory_with_parents();
             var configPath = dirPath + "/config";
             var configFile = File.new_for_path(configPath);
 
@@ -86,15 +93,21 @@ namespace WallpaperCreator.OnScreen {
                 // Copy the video into our new dir
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + @"/$videoFileName"), FileCopyFlags.NONE);
                 
+
+            } else if (wallpaperType == "web_page")
+                configKeyFile.set_string("Info", "WebPageUrl", webPageUrl);
+
+
+            if(wallpaperType == "video" || wallpaperType == "web_page") {
+
                 // Move the thumbnail
-                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/thumb.jpg"), FileCopyFlags.NONE);
+                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
             
             } else {
 
                 // Copy the wallpaper into our new dir
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
             }
-
 
             configKeyFile.set_boolean("DateTime", "Visible", showDateTime);
             configKeyFile.set_boolean("DateTime", "Parallax", dateTimeParallax);
@@ -123,7 +136,7 @@ namespace WallpaperCreator.OnScreen {
             configKeyFile.set_string("DateTime", "DateFont", dateFont);
 
 
-            if(wallpaperType != "video") {
+            if(wallpaperType == "image") {
 
                 configKeyFile.set_boolean("Wallpaper", "Parallax", wallpaperParallax);
 

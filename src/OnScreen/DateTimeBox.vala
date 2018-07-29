@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2015-2016 Abraham Masri <imasrim114@gmail.com>
+//  Copyright (C) 2015-2016 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify it
 //  under the terms of the GNU Lesser General Public License version 3, as published
@@ -42,7 +42,11 @@ namespace Komorebi.OnScreen {
         // Ability to drag
         Clutter.DragAction dragAction = new Clutter.DragAction();
 
-        public DateTimeBox () {
+        BackgroundWindow parent;
+
+        public DateTimeBox (BackgroundWindow parent) {
+
+            this.parent = parent;
 
             // Properties
             textContainerActor.layout_manager = boxLayout;
@@ -85,10 +89,6 @@ namespace Komorebi.OnScreen {
 
                 // Disable Parallax
                 dateTimeParallax = false;
-
-                // Animation stuff (if needed)
-                var moveToX = event_x;
-                var moveToY = event_y;
 
                 // Check if we're at the passing the edge of the screen
                 if(x < 0) {
@@ -172,6 +172,7 @@ namespace Komorebi.OnScreen {
         }
 
         public void setPosition() {
+            var mainActor = parent.mainActor;
 
             switch (dateTimePosition) {
 

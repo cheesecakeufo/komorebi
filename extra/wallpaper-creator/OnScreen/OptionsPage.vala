@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2016-2017 Abraham Masri
+//  Copyright (C) 2017-2018 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -108,7 +108,7 @@ namespace WallpaperCreator.OnScreen {
             scrolledWindow.hscrollbar_policy = PolicyType.NEVER;
 
             optionsBox.margin = 20;
-            optionsBox.margin_left = 0;
+            optionsBox.margin_start = 0;
             optionsBox.halign = Align.START;
             optionsBox.hexpand = true;
 
@@ -277,8 +277,8 @@ namespace WallpaperCreator.OnScreen {
 
             // Margins
             dateTimeBox.margin_top = marginTop;
-            dateTimeBox.margin_right = marginRight;
-            dateTimeBox.margin_left = marginLeft;
+            dateTimeBox.margin_end = marginRight;
+            dateTimeBox.margin_start = marginLeft;
             dateTimeBox.margin_bottom = marginBottom;
              
             setPosition();
@@ -412,7 +412,7 @@ namespace WallpaperCreator.OnScreen {
         private void setDateTimeLabel(string color = "white", string timeFont = "Lato Light 30",
                                       string dateFont = "Lato Light 20") {
 
-            timeLabel.set_markup(@"<span color='$color' font='$timeFont'>12:04 AM</span>");
+            timeLabel.set_markup(@"<span color='$color' font='$timeFont'>10:21 PM</span>");
             dateLabel.set_markup(@"<span color='$color' font='$dateFont'>Sunday, August 22</span>");
         }
 

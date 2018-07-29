@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2015-2017 Abraham Masri <imasrim114@gmail.com>
+//  Copyright (C) 2015-2018 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify it
 //  under the terms of the GNU Lesser General Public License version 3, as published
@@ -21,6 +21,8 @@ namespace Komorebi.OnScreen {
 
     public class AssetActor : Actor {
 
+        BackgroundWindow parent;
+
         // Image(Asset) and its pixbuf
         Image image = new Image();
         Gdk.Pixbuf pixbuf;
@@ -31,8 +33,8 @@ namespace Komorebi.OnScreen {
         string cloudsDirection = "right";
         string fadeType = "in";
 
-        public AssetActor () {
-
+        public AssetActor (BackgroundWindow parent) {
+            this.parent = parent;
             set_content(image);
         }
 
@@ -52,11 +54,18 @@ namespace Komorebi.OnScreen {
             if(assetHeight <= 0)
                 assetHeight = screenHeight;
 
+            var assetPath = @"/System/Resources/Komorebi/$wallpaperName/assets.png";
+
+            // make sure the asset exists
+            if(!File.new_for_path(assetPath).query_exists()) {
+                print(@"[WARNING]: asset with path: $assetPath does not exist\n");
+                return;
+            }
+
             if(assetWidth != 0 && assetHeight != 0)
-                pixbuf = new Gdk.Pixbuf.from_file_at_scale(@"/System/Resources/Komorebi/$wallpaperName/assets.png",
-                                                            assetWidth, assetHeight, false);
+                pixbuf = new Gdk.Pixbuf.from_file_at_scale(assetPath, assetWidth, assetHeight, false);
             else
-                pixbuf = new Gdk.Pixbuf.from_file(@"/System/Resources/Komorebi/$wallpaperName/assets.png");
+                pixbuf = new Gdk.Pixbuf.from_file(assetPath);
 
             image.set_data (pixbuf.get_pixels(), pixbuf.has_alpha ? Cogl.PixelFormat.RGBA_8888 : Cogl.PixelFormat.RGB_888,
                             pixbuf.get_width(), pixbuf.get_height(),
@@ -68,67 +77,12 @@ namespace Komorebi.OnScreen {
             opacity = 255;
             remove_all_transitions();
 
-            // setPosition();
             setMargins();
 
             if(shouldAnimate())
                 animate();
             else
                 fadeIn();
-        }
-
-        void setPosition() {
-
-            switch (assetPosition) {
-
-                case "top_right":
-                    x = 0;
-                    y = 0;
-                break;
-
-                case "top_center":
-                    x = (mainActor.width / 2) - (width / 2);
-                    y = 0;
-                break;
-
-                case "top_left":
-                    x = (mainActor.width / 2) - width;
-                    y = 0;
-                break;
-
-                case "center_right":
-                    x = 0;
-                    y = (mainActor.height / 2) - (height / 2);
-                break;
-
-                case "center":
-                    x = (mainActor.width / 2) - (width / 2);
-                    y = (mainActor.height / 2) - (height / 2);
-                break;
-
-                case "center_left":
-                    x = (mainActor.width / 2) - width;
-                    y = (mainActor.height / 2) - (height / 2);
-                break;
-
-                case "bottom_right":
-                    x = 0;
-                    y = (mainActor.height / 2) - height;
-                break;
-
-                case "bottom_center":
-                    x = (mainActor.width / 2) - (width / 2);
-                    y = (mainActor.height / 2) - height;
-                break;
-
-                case "bottom_left":
-                    x = (mainActor.width / 2) - width;
-                    y = (mainActor.height / 2) - height;
-                break;
-
-                default:
-                break;
-            }
         }
 
         void setMargins() {
@@ -220,8 +174,12 @@ namespace Komorebi.OnScreen {
 
         public bool shouldAnimate () {
 
-            if(wallpaperType == "video" || assetAnimationMode == "noanimation") {
+            if(wallpaperType == "video" ||
+                wallpaperType == "web_page" ||
+                assetAnimationMode == "noanimation") {
+                
                 if(assetAnimationTimeout > 0) {
+                
                     Source.remove(assetAnimationTimeout);
                     assetAnimationTimeout = 0;
                 }
