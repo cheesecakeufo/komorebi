@@ -74,7 +74,7 @@ You can use either an image, a video, or a web page as a wallpaper and you have 
 2. `cd komorebi/build`
 3. `sudo make uninstall`
 
-## Having issues?
+## Questions? Issues?
 
 ### Komorebi is slow. What can I do about it?
 
@@ -89,6 +89,13 @@ The latest Komorebi should already have a fix for this issue. If you've already 
 `curl -s https://raw.githubusercontent.com/iabem97/komorebi/master/data/Other/postrm | bash -s`
 
 If your issue has not already been reported, please report it *[`here`](https://github.com/iabem97/komorebi/issues/new)* and I'll try my best to fix them.
+
+### Why does Komorebi install files in a macOS-like structure?
+
+Komorebi was originally intended to run on an unreleased OS project. Since many people already use Komorebi, an update could potentially break Komorebi and custom-made wallpapers.
+
+It is possible to change the file structure with code changes and a `postinst` script but I'd rather keep it as is for now or if you have the time to make one, feel free to do so and submit a PR!
+
 
 ## Status of Development
 
