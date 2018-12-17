@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "[INFO] Ignore any errors"
+echo "[*] Resetting desktop configuration"
+gsettings set org.gnome.desktop.background show-desktop-icons true || true
+gsettings set org.nemo.desktop show-desktop-icons true || true

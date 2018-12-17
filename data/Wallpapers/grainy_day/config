@@ -1,0 +1,32 @@
+[Info]
+WallpaperType=image
+
+[DateTime]
+Visible=true
+Parallax=false
+MarginTop=0
+MarginRight=0
+MarginLeft=60
+MarginBottom=0
+RotationX=0
+RotationY=0
+RotationZ=0
+Position=center_left
+Alignment=start
+AlwaysOnTop=true
+Color=#2e3436
+Alpha=255
+ShadowColor=#2e3436
+ShadowAlpha=255
+TimeFont=VT323 20
+DateFont=VT323 20
+
+[Wallpaper]
+Parallax=false
+
+[Asset]
+Visible=false
+AnimationMode=noanimation
+AnimationSpeed=100
+Width=0
+Height=0

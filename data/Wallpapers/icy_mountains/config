@@ -1,0 +1,34 @@
+[Info]
+WallpaperType=image
+
+[DateTime]
+Visible=true
+Parallax=false
+MarginTop=0
+MarginRight=0
+MarginLeft=0
+MarginBottom=75
+RotationX=0
+RotationY=0
+RotationZ=0
+Position=center
+Alignment=center
+AlwaysOnTop=true
+Color=#164b71
+Alpha=167
+ShadowColor=#dd22dd22dd22
+ShadowAlpha=255
+TimeFont=Bubbler One Bold 46
+DateFont=Bubbler One 15
+
+[Wallpaper]
+Parallax=false
+
+[Asset]
+Visible=false
+AnimationMode=noanimation
+AnimationSpeed=100
+
+Width=0
+Height=0
+

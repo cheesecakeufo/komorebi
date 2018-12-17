@@ -1,0 +1,32 @@
+[Info]
+WallpaperType=image
+
+[DateTime]
+Visible=true
+Parallax=false
+MarginTop=0
+MarginRight=0
+MarginLeft=0
+MarginBottom=0
+RotationX=0
+RotationY=0
+RotationZ=0
+Position=center
+Alignment=center
+AlwaysOnTop=true
+Color=#dd22dd22dd22
+Alpha=120
+ShadowColor=#dd22dd22dd22
+ShadowAlpha=255
+TimeFont=Lato Light 100
+DateFont=Lato Light 20
+
+[Wallpaper]
+Parallax=false
+
+[Asset]
+Visible=true
+AnimationMode=light
+AnimationSpeed=200
+Width=0
+Height=0

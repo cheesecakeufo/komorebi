@@ -1,0 +1,199 @@
+#!/bin/bash
+
+# A script that updates existing Komorebi wallpapers
+# and add us to the start up with the new updated syntax
+
+echo "[INFO]: Removing old Komorebi properties file.." 
+users="$(ls -d -1 /home/*/ | xargs -n 1 basename)"
+
+for user in $users; do
+
+	rm -rf "/home/$user/.Komorebi.prop"
+	
+	mkdir -p "/home/$user/.config/autostart"
+	cp "/usr/share/applications/komorebi.desktop" "/home/$user/.config/autostart/komorebi.desktop"
+	chown  "$user:$user" "/home/$user/.config/autostart" -R
+	
+done
+
+echo "[INFO]: Updating existing Komorebi Wallpapers.."
+
+wallpapers=$(ls -d -1 /System/Resources/Komorebi/*/)
+
+for wallpaper in $wallpapers; do
+
+	configtemplate="[Info]
+WallpaperType=image
+
+[DateTime]
+Visible=true
+Parallax=DATETIMEPARALLAX
+
+MarginLeft=MARGINLEFT
+MarginTop=MARGINTOP
+MarginBottom=MARGINBOTTOM
+MarginRight=MARGINRIGHT
+
+RotationX=0
+RotationY=0
+RotationZ=0
+
+Position=POSITION
+Alignment=ALIGNMENT
+AlwaysOnTop=DATETIMEALWAYSONTOP
+
+Color=TIMECOLOR
+Alpha=255
+
+ShadowColor=black
+ShadowAlpha=190
+
+TimeFont=TIMEFONT
+DateFont=DATEFONT
+
+[Wallpaper]
+Parallax=WALLPAPERPARALLAX
+
+[Asset]
+Visible=ASSETVISIBLE
+AnimationMode=ANIMATIONMODE
+AnimationSpeed=ANIMATIONSPEED
+
+Width=0
+Height=0
+"
+
+	
+	# Skip wallpapers with videos (cause they're new)
+	if [ -e $wallpaper"video.mp4" ]; then
+		continue
+	fi
+
+	if [ -e $wallpaper"wallpaper.jpg" ]; then
+		continue
+	fi
+
+	# Remove incompatible wallpapers
+	if [ "$wallpaper" == "blue_pink_gradient" ]; then
+		continue
+	fi
+
+	if [ "$wallpaper" == "dark_night_gradient" ]; then
+		continue
+	fi
+
+	echo "Updating $wallpaper"
+	oldfile=$wallpaper"bg.jpg"
+	mv $oldfile $wallpaper"wallpaper.jpg" 2>/dev/null
+	rm -rf $wallpaper"thumb.jpg"
+
+	entirecontent="" 
+
+	halign=""
+	valign=""
+
+
+	while read -r line
+	do
+    	entirecontent+=$line
+
+
+    	if [[ $line =~ "=" ]]; then
+
+    		IFS='=' read -r -a array <<< "$line"
+
+    		key="${array[0]}"
+    		value="${array[1]}"
+
+	    	if [ "$key" == "DateTimeBoxParallax" ]; then
+	    		configtemplate=${configtemplate/DATETIMEPARALLAX/$value}
+
+	    	elif [ "$key" == "AnimationMode" ]; then
+
+	    		if [ "$value" == "parallax-bg" ]; then
+	    			configtemplate=${configtemplate/WALLPAPERPARALLAX/"true"}
+	    			configtemplate=${configtemplate/ANIMATIONMODE/"noanimation"}
+	    		else
+	    			configtemplate=${configtemplate/WALLPAPERPARALLAX/"false"}
+	    			configtemplate=${configtemplate/ANIMATIONMODE/$value}
+	    		fi
+
+	    	elif [ "$key" == "AnimationSpeed" ]; then
+	    		configtemplate=${configtemplate/ANIMATIONSPEED/$value}
+
+	    	elif [ "$key" == "DateTimeBoxMarginLeft" ]; then
+	    		configtemplate=${configtemplate/MARGINLEFT/$value}
+
+	    	elif [ "$key" == "DateTimeBoxMarginTop" ]; then
+	    		configtemplate=${configtemplate/MARGINTOP/$value}
+
+	    	elif [ "$key" == "DateTimeBoxMarginBottom" ]; then
+	    		configtemplate=${configtemplate/MARGINBOTTOM/$value}
+
+	    	elif [ "$key" == "DateTimeBoxMarginRight" ]; then
+	    		configtemplate=${configtemplate/MARGINRIGHT/$value}
+	    	
+	    	elif [ "$key" == "TimeLabelAlignment" ]; then
+	    		configtemplate=${configtemplate/ALIGNMENT/$value}
+
+	    	elif [ "$key" == "DateTimeBoxHAlign" ]; then
+	    		halign=$value
+
+	    	elif [ "$key" == "DateTimeBoxVAlign" ]; then
+	    		valign=$value
+	    	
+	    	elif [ "$key" == "DateTimeColor" ]; then
+	    		configtemplate=${configtemplate/TIMECOLOR/$value}
+	    	
+	    	elif [ "$key" == "TimeLabelFont" ]; then
+	    		configtemplate=${configtemplate/TIMEFONT/$value}
+	    	
+	    	elif [ "$key" == "DateLabelFont" ]; then
+	    		configtemplate=${configtemplate/DATEFONT/$value}
+	    	
+	    	elif [ "$key" == "DateTimeBoxOnTop" ]; then
+	    		configtemplate=${configtemplate/DATETIMEALWAYSONTOP/$value}
+	    	fi
+    	fi
+	done < $wallpaper"config"
+
+
+	if [ -e $wallpaper"assets.png" ]; then
+    	configtemplate=${configtemplate/ASSETVISIBLE/"true"}
+	else
+    	configtemplate=${configtemplate/ASSETVISIBLE/"false"}
+   	fi
+
+
+	if [[ $halign =~ "start" ]] && [[ $valign =~ "start" ]]; then
+    	configtemplate=${configtemplate/POSITION/"top_left"}
+
+    elif [[ $halign =~ "start" ]] && [[ $valign =~ "center" ]]; then
+    	configtemplate=${configtemplate/POSITION/"center_left"}
+
+    elif [[ $halign =~ "start" ]] && [[ $valign =~ "end" ]]; then
+    	configtemplate=${configtemplate/POSITION/"bottom_left"}
+
+    elif [[ $halign =~ "center" ]] && [[ $valign =~ "start" ]]; then
+    	configtemplate=${configtemplate/POSITION/"top_center"}
+
+    elif [[ $halign =~ "center" ]] && [[ $valign =~ "center" ]]; then
+    	configtemplate=${configtemplate/POSITION/"center"}
+
+    elif [[ $halign =~ "center" ]] && [[ $valign =~ "end" ]]; then
+    	configtemplate=${configtemplate/POSITION/"bottom_center"}
+
+    elif [[ $halign =~ "end" ]] && [[ $valign =~ "start" ]]; then
+    	configtemplate=${configtemplate/POSITION/"top_right"}
+
+    elif [[ $halign =~ "end" ]] && [[ $valign =~ "center" ]]; then
+    	configtemplate=${configtemplate/POSITION/"center_right"}
+
+    elif [[ $halign =~ "end" ]] && [[ $valign =~ "end" ]]; then
+    	configtemplate=${configtemplate/POSITION/"bottom_right"}    	
+    fi
+
+
+    echo "$configtemplate" >$wallpaper"config"
+
+done	
