@@ -40,6 +40,9 @@ namespace Komorebi.OnScreen {
 	// Global - Mute Playback of video
 	bool mutePlayback;
 
+	// Global - Pause Playback when unfocused
+	bool pausePlayback;
+
 	// Global - Whether we can open preferences window
 	bool canOpenPreferences = true;
 
@@ -62,7 +65,7 @@ namespace Komorebi.OnScreen {
 		public Clutter.Actor mainActor { get; private set; }
 
 		// Video Wallpaper
-		ClutterGst.Playback videoPlayback;
+		public ClutterGst.Playback videoPlayback { get; private set; }
 		ClutterGst.Content videoContent;
 
 		// Wallpaper pixbuf & image
@@ -115,16 +118,14 @@ namespace Komorebi.OnScreen {
 				videoPlayback.set_seek_flags (ClutterGst.SeekFlags.ACCURATE);
 
 				videoContent.player = videoPlayback;
-				if (mutePlayback) {
+        if (mutePlayback) {
 					muteVolume();
 				}
 				videoPlayback.notify["progress"].connect(() => {
-
 					if(videoPlayback.progress >= 1.0 && wallpaperType == "video") {
 						videoPlayback.progress = 0.0;
 						videoPlayback.playing = true;
 					}
-
 				});
 			}
 
@@ -245,6 +246,9 @@ namespace Komorebi.OnScreen {
 
 			focus_out_event.connect(() => {
 
+				if (pausePlayback) {
+					videoPlayback.playing = false;
+				}
 				// Hide the bubble menu
 				if(bubbleMenu.opacity > 0) {
 					bubbleMenu.fadeOut();
@@ -252,6 +256,13 @@ namespace Komorebi.OnScreen {
 					return true;
 				}
 
+				return true;
+			});
+
+			focus_in_event.connect(() => {
+				if (pausePlayback) {
+					videoPlayback.playing = true;
+				}
 				return true;
 			});
 
