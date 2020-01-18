@@ -46,6 +46,7 @@ namespace Komorebi.OnScreen {
 		Gtk.CheckButton twentyFourHoursButton = new Gtk.CheckButton.with_label ("Use 24-hour time");
 		Gtk.CheckButton showDesktopIconsButton = new Gtk.CheckButton.with_label ("Show desktop icons");
 		Gtk.CheckButton enableVideoWallpapersButton = new Gtk.CheckButton.with_label ("Enable Video Wallpapers (Restarting Komorebi is required)");
+		Gtk.CheckButton pausePlaybackButton = new Gtk.CheckButton.with_label ("Pause Video playback on un-focus");
 
 		Gtk.Box bottomPreferencesBox = new Box(Orientation.HORIZONTAL, 10);
 
@@ -135,6 +136,7 @@ namespace Komorebi.OnScreen {
 			twentyFourHoursButton.active = timeTwentyFour;
 			showDesktopIconsButton.active = showDesktopIcons;
 			enableVideoWallpapersButton.active = enableVideoWallpapers;
+			pausePlaybackButton.active = pausePlayback;
 
 			setWallpaperNameLabel();
 
@@ -227,6 +229,20 @@ namespace Komorebi.OnScreen {
 
 			});
 
+			pausePlaybackButton.toggled.connect(() => {
+				pausePlayback = pausePlaybackButton.active;
+				if (!pausePlayback) {
+					foreach (BackgroundWindow backgroundWindow in backgroundWindows) {
+						backgroundWindow.videoPlayback.playing = true;
+					}
+				} else {
+					foreach (BackgroundWindow backgroundWindow in backgroundWindows) {
+						backgroundWindow.videoPlayback.playing = false;
+					}
+				}
+				updateConfigurationFile();
+			});
+
 			wallpapersSelector.wallpaperChanged.connect(() => {
 				setWallpaperNameLabel();
 			});
@@ -248,6 +264,7 @@ namespace Komorebi.OnScreen {
 			preferencesPage.add(twentyFourHoursButton);
 			preferencesPage.add(showDesktopIconsButton);
 			preferencesPage.add(enableVideoWallpapersButton);
+			preferencesPage.add(pausePlaybackButton);
 			preferencesPage.pack_end(bottomPreferencesBox);
 
 			bottomWallpapersBox.add(new Image.from_file("/System/Resources/Komorebi/info.svg"));
