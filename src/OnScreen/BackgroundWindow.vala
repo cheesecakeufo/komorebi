@@ -37,6 +37,9 @@ namespace Komorebi.OnScreen {
 	// Global - Enable Video Wallpapers
 	bool enableVideoWallpapers;
 
+	// Global - Mute Playback of video
+	bool mutePlayback;
+
 	// Global - Pause Playback when unfocused
 	bool pausePlayback;
 
@@ -115,6 +118,9 @@ namespace Komorebi.OnScreen {
 				videoPlayback.set_seek_flags (ClutterGst.SeekFlags.ACCURATE);
 
 				videoContent.player = videoPlayback;
+        if (mutePlayback) {
+					muteVolume();
+				}
 				videoPlayback.notify["progress"].connect(() => {
 					if(videoPlayback.progress >= 1.0 && wallpaperType == "video") {
 						videoPlayback.progress = 0.0;
@@ -163,6 +169,14 @@ namespace Komorebi.OnScreen {
 
 		}
 
+		public void muteVolume() {
+			videoContent.get_player().set_audio_volume(0.0);
+		}
+
+		public void unmuteVolume() {
+			videoContent.get_player().set_audio_volume(1.0);
+		}
+		
 		void getMonitorSize(int monitorIndex) {
 
 			Rectangle rectangle;

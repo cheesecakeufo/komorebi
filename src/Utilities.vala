@@ -168,6 +168,7 @@ namespace Komorebi.Utilities {
 		timeTwentyFour = true;
 		showDesktopIcons = true;
 		enableVideoWallpapers = true;
+		mutePlayback = false;
 		pausePlayback = true;
 
 		if(configFilePath == null)
@@ -197,7 +198,7 @@ namespace Komorebi.Utilities {
 			!configKeyFile.has_key(key_file_group, "TimeTwentyFour") ||
 			!configKeyFile.has_key(key_file_group, "ShowDesktopIcons") ||
 			!configKeyFile.has_key(key_file_group, "EnableVideoWallpapers")) {
-			
+
 			print("[WARNING]: invalid configuration file found. Fixing..\n");
 			updateConfigurationFile();
 			return;
@@ -208,11 +209,16 @@ namespace Komorebi.Utilities {
 		timeTwentyFour = configKeyFile.get_boolean (key_file_group, "TimeTwentyFour");
 		showDesktopIcons = configKeyFile.get_boolean (key_file_group, "ShowDesktopIcons");
 		enableVideoWallpapers = configKeyFile.get_boolean (key_file_group, "EnableVideoWallpapers");
+    if (configKeyFile.has_key(key_file_group, "MutePlayback")) {
+			mutePlayback = configKeyFile.get_boolean(key_file_group, "MutePlayback");
+		} else {
+			mutePlayback = false;
+    }
 		if (configKeyFile.has_key(key_file_group, "PausePlayback")) {
 			pausePlayback = configKeyFile.get_boolean(key_file_group, "PausePlayback");
 		} else {
 			pausePlayback = true;
-		}
+    }
 		fixConflicts();
 	}
 
@@ -225,6 +231,7 @@ namespace Komorebi.Utilities {
 		configKeyFile.set_boolean (key_file_group, "TimeTwentyFour", timeTwentyFour);
 		configKeyFile.set_boolean (key_file_group, "ShowDesktopIcons", showDesktopIcons);
 		configKeyFile.set_boolean (key_file_group, "EnableVideoWallpapers", enableVideoWallpapers);
+		configKeyFile.set_boolean(key_file_group, "MutePlayback", mutePlayback);
 		configKeyFile.set_boolean(key_file_group, "PausePlayback", pausePlayback);
 
 		// Delete the file
