@@ -85,7 +85,7 @@ Height=0
 	echo "Updating $wallpaper"
 	oldfile=$wallpaper"bg.jpg"
 	mv $oldfile $wallpaper"wallpaper.jpg" 2>/dev/null
-	rm -rf $wallpaper"thumb.jpg"
+	rm -rf $wallpaper"wallpaper.jpg"
 
 	entirecontent="" 
 
