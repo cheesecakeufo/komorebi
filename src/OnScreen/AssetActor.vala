@@ -54,7 +54,7 @@ namespace Komorebi.OnScreen {
             if(assetHeight <= 0)
                 assetHeight = screenHeight;
 
-            var assetPath = @"/System/Resources/Komorebi/$wallpaperName/assets.png";
+            var assetPath = @"/usr/share/komorebi/$wallpaperName/assets.png";
 
             // make sure the asset exists
             if(!File.new_for_path(assetPath).query_exists()) {

@@ -160,7 +160,7 @@ namespace WallpaperCreator.OnScreen {
             titleBox.add(titleLabel);
             titleBox.add(aboutLabel);
 
-            aboutGrid.attach(new Image.from_file("/System/Resources/Komorebi/wallpaper_creator.svg"), 0, 0, 1, 1);
+            aboutGrid.attach(new Image.from_file("/usr/share/komorebi/wallpaper_creator.svg"), 0, 0, 1, 1);
             aboutGrid.attach(titleBox, 1, 0, 1, 1);
 
             thumbnailBox.add(chooseThumbnailLabel);

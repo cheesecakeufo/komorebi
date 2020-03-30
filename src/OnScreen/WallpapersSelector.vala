@@ -24,7 +24,7 @@ namespace Komorebi.OnScreen {
 
 	public class WallpapersSelector : ScrolledWindow {
 
-		public string path = "/System/Resources/Komorebi/";
+		public string path = "/usr/share/komorebi/";
 
 		Gtk.Grid grid = new Grid();
 
@@ -68,7 +68,7 @@ namespace Komorebi.OnScreen {
 			foreach(var thumbnail in thumbnailsList)
 				thumbnailsList.remove(thumbnail);
 
-			File wallpapersFolder = File.new_for_path("/System/Resources/Komorebi");
+			File wallpapersFolder = File.new_for_path("/usr/share/komorebi");
 
 			try {
 
@@ -98,7 +98,7 @@ namespace Komorebi.OnScreen {
 					}
 
 			} catch {
-				print("Could not read directory '/System/Resources/Komorebi/'");
+				print("Could not read directory '/usr/share/komorebi/'");
 			}
 		}
 
