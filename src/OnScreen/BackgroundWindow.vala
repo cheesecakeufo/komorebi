@@ -118,7 +118,7 @@ namespace Komorebi.OnScreen {
 				videoPlayback.set_seek_flags (ClutterGst.SeekFlags.ACCURATE);
 
 				videoContent.player = videoPlayback;
-        if (mutePlayback) {
+				if (mutePlayback) {
 					muteVolume();
 				}
 				videoPlayback.notify["progress"].connect(() => {
@@ -208,7 +208,7 @@ namespace Komorebi.OnScreen {
 					if(bubbleMenu.opacity > 0)
 						return false;
 
-					if(desktopIcons != null)
+					if(desktopIcons != null && showDesktopIcons)
 						if(e.x >= desktopIcons.x && e.x <= (desktopIcons.x + desktopIcons.width) && 
 							e.y >= desktopIcons.y && e.y <= (desktopIcons.y + desktopIcons.height))
 							return false;
