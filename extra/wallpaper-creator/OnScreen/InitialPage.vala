@@ -39,7 +39,7 @@ namespace WallpaperCreator.OnScreen {
 
         Label chooseFileLabel = new Label("Where is the image located?");
         Box locationBox = new Box(Orientation.HORIZONTAL, 10);
-        Entry locationEntry = new Entry() { placeholder_text = "/Users/cheesecakeufo/my_picture.jpg" };
+        Entry locationEntry = new Entry() { placeholder_text = "~/Pictures/my_picture.jpg" };
         FileChooserButton chooseFileButton = new FileChooserButton("Choose File", Gtk.FileChooserAction.OPEN);
 
         Revealer revealer = new Revealer();
@@ -161,7 +161,7 @@ namespace WallpaperCreator.OnScreen {
             titleBox.add(titleLabel);
             titleBox.add(aboutLabel);
 
-            aboutGrid.attach(new Image.from_file("/System/Resources/Komorebi/wallpaper_creator.svg"), 0, 0, 1, 1);
+            aboutGrid.attach(new Image.from_file("/usr/share/pixmaps/komorebi/wallpaper_creator.svg"), 0, 0, 1, 1);
             aboutGrid.attach(titleBox, 1, 0, 1, 1);
 
             thumbnailBox.add(chooseThumbnailLabel);

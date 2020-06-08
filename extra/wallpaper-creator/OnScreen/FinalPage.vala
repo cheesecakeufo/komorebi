@@ -21,7 +21,7 @@ namespace WallpaperCreator.OnScreen {
 
     public class FinalPage : Box {
 
-        Image logo = new Image.from_file("/System/Resources/Komorebi/done.svg");
+        Image logo = new Image.from_file("/usr/share/pixmaps/komorebi/done.svg");
 
         Label titleLabel = new Label("");
         Label descLabel = new Label("");
@@ -46,7 +46,7 @@ namespace WallpaperCreator.OnScreen {
 
             titleLabel.set_markup("<span font='Lato 20'>Done</span>");
 
-            var mv_command = @"sudo mv $(Environment.get_home_dir())/$(wallpaperName.replace(" ", "_").replace(".", "_").down()) /System/Resources/Komorebi";
+            var mv_command = @"sudo mv $(Environment.get_home_dir())/$(wallpaperName.replace(" ", "_").replace(".", "_").down()) /usr/share/komorebi";
 
             descLabel.set_markup(@"<span font='Lato Light 12'>Open 'Terminal' then paste the following:\n<b>$mv_command</b>\nOnce done, you can change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
 

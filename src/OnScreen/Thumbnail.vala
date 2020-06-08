@@ -25,7 +25,7 @@ namespace Komorebi.OnScreen {
 
 		Overlay overlay = new Overlay();
 		Image thumbnailImage = new Image();
-		Image borderImage = new Image.from_file("/System/Resources/Komorebi/thumbnail_border.svg");
+		Image borderImage = new Image.from_file("/usr/share/pixmaps/komorebi/thumbnail_border.svg");
 		Revealer revealer = new Revealer();
 
 		// Signaled when clicked
@@ -80,7 +80,7 @@ namespace Komorebi.OnScreen {
 
 		public Thumbnail.Add() {
 
-			thumbnailImage.pixbuf = new Gdk.Pixbuf.from_file_at_scale("/System/Resources/Komorebi/thumbnail_add.svg", 150, 100, false);
+			thumbnailImage.pixbuf = new Gdk.Pixbuf.from_file_at_scale("/usr/share/pixmaps/komorebi/thumbnail_add.svg", 150, 100, false);
 
 		}
 

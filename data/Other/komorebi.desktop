@@ -2,8 +2,8 @@
 Name=Komorebi
 Comment=An awesome wallpapers manager
 Keywords=wallpaper;settings; preferences;
-Icon=/System/Resources/Komorebi/komorebi.svg
-Exec=/System/Applications/komorebi
+Icon=/usr/share/pixmaps/komorebi/komorebi.svg
+Exec=/usr/bin/komorebi
 Terminal=false
 Type=Application
 StartupNotify=true
