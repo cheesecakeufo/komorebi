@@ -151,7 +151,8 @@ namespace WallpaperCreator.OnScreen {
 
             locationEntry.changed.connect(() => {
 
-                if(locationEntry.text.length <= 0 || !locationEntry.text.contains("http"))
+                if(locationEntry.text.length <= 0 || !(locationEntry.text.contains("://")
+                && (locationEntry.text.has_prefix("http") || locationEntry.text.has_prefix("file"))))
                     webPageUrl = null;
                 else
                     webPageUrl = locationEntry.text;
