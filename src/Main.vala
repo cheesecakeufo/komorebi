@@ -27,7 +27,7 @@ namespace Komorebi {
         // We're not supporting Wayland at the moment
         // due to some restrictions
         if(Environment.get_variable ("XDG_SESSION_TYPE").contains("wayland") ||
-            Environment.get_variable ("WAYLAND_DISPLAY").length > 0) {
+            Environment.get_variable ("WAYLAND_DISPLAY") != null) {
             return false;
         }
 
