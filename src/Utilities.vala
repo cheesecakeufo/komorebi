@@ -389,4 +389,14 @@ namespace Komorebi.Utilities {
 
 		return false;
 	}
+
+	/* A quick way to find a given arg from the args list */
+	public bool hasArg(string arg, string[] args) {
+		foreach(string s in args) {
+			if(s == arg)
+				return true;
+		}
+
+		return false;
+	}
 }

@@ -38,7 +38,7 @@ namespace Komorebi {
 
         print("Welcome to Komorebi\n");
 
-        if(args[1] == "--version" || args[1] == "version") {
+        if(hasArg("--version", args) || hasArg("version", args)) {
             print("Version: 2.1 - Summit\nCreated by: Abraham Masri @cheesecakeufo\n\n");
             return;
         }
@@ -63,7 +63,7 @@ namespace Komorebi {
         Gtk.Settings.get_default().gtk_application_prefer_dark_theme = true;
 
         var screen = Gdk.Screen.get_default ();
-        int monitorCount = screen.get_n_monitors();
+        int monitorCount = hasArg("--single-screen", args) ? 1 : screen.get_n_monitors();
 
 
         initializeClipboard(screen);
