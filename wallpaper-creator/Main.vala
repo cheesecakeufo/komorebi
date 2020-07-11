@@ -59,7 +59,7 @@ namespace WallpaperCreator {
         print("Welcome to Komorebi Wallpaper Creator\n");
 
         if(args[1] == "--version" || args[1] == "version") {
-            print("Version: 1.1 - Summit\nCreated by: Abraham Masri @cheesecakefuo\n\n");
+            print("Version: 1.2\nMaintained by: Komorebi Team\n\n");
             return;
         }
         Gtk.init (ref args);

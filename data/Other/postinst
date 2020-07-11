@@ -18,7 +18,7 @@ done
 
 echo "[INFO]: Updating existing Komorebi Wallpapers.."
 
-wallpapers=$(ls -d -1 /usr/share/komorebi/Wallpapers/*/)
+wallpapers=$(ls -d -1 /usr/share/komorebi/*/)
 
 for wallpaper in $wallpapers; do
 
