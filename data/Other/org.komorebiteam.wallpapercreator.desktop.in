@@ -2,8 +2,8 @@
 Name=Wallpaper Creator
 Comment=Create wallpapers for Komorebi
 Keywords=wallpaper; settings; preferences;
-Icon=/usr/share/pixmaps/komorebi/wallpaper_creator.svg
-Exec=/usr/bin/komorebi-wallpaper-creator
+Icon=@datadir@/pixmaps/@projectname@/wallpaper_creator.svg
+Exec=@bindir@/@projectname@-wallpaper-creator
 Terminal=false
 Type=Application
 StartupNotify=true

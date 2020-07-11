@@ -11,14 +11,14 @@ for user in $users; do
 	rm -rf "/home/$user/.Komorebi.prop"
 	
 	mkdir -p "/home/$user/.config/autostart"
-	cp "/usr/share/applications/komorebi.desktop" "/home/$user/.config/autostart/komorebi.desktop"
+	cp "/usr/share/applications/org.komorebiteam.komorebi.desktop" "/home/$user/.config/autostart/komorebi.desktop"
 	chown  "$user:$user" "/home/$user/.config/autostart" -R
 	
 done
 
 echo "[INFO]: Updating existing Komorebi Wallpapers.."
 
-wallpapers=$(ls -d -1 /usr/share/komorebi/*/)
+wallpapers=$(ls -d -1 /usr/share/komorebi/Wallpapers/*/)
 
 for wallpaper in $wallpapers; do
 

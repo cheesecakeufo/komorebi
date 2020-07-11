@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2020 Komorebi Team https://github.com/Komorebi-Fork/ -->
+<component type="desktop-application">
+  <id>org.komorebiteam.komorebi</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Komorebi</name>
+  <summary>Animated Wallpapers for Linux</summary>
+
+  <description>
+    <p>
+      Komorebi is an awesome animated wallpapers manager for all Linux platforms. 
+      It provides fully customizeable image, video, and web page wallpapers that can be tweaked at any time!
+    </p>
+  </description>
+
+  <launchable type="desktop-id">org.komorebiteam.komorebi.desktop</launchable>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Example wallpaper</caption>
+      <image>https://raw.githubusercontent.com/cheesecakeufo/komorebi/master/screenshots/collage.jpg</image>
+    </screenshot>
+  </screenshots>
+
+  <url type="homepage">https://github.com/Komorebi-Fork/</url>
+  <project_group>Komorebi Team</project_group>
+
+   <releases>
+    <release version="2.2.0" date="2020-07-xx">
+      <description>
+        <p>New Maintainers; Build system changed to Meson; Bugfixes.</p>
+      </description>
+    </release>
+  </releases>
+</component>
