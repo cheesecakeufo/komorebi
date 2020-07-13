@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright (C) 2012-2017 Abraham Masri
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 
-// 
+//
+//
 // Copied from ManagerForKedos - Abraham Masri
-// 
+//
 
 using Gtk;
 using Gdk;
@@ -46,7 +46,7 @@ namespace Komorebi.OnScreen {
                          background-image: none;
                          border: none;
                          border-color: @transparent;
-                         box-shadow: inset 1px 2px rgba(0,0,0,0); 
+                         box-shadow: inset 1px 2px rgba(0,0,0,0);
                          border-radius: 3px;
                          color: white;
                          text-shadow:0px 2px 3px rgba(0,0,0,0.9);

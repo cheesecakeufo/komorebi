@@ -7,12 +7,12 @@
 <p align="center">
 	<a href="http://www.kernel.org"><img alt="Platform (GNU/Linux)" src="https://img.shields.io/badge/platform-GNU/Linux-blue.svg"></a>
 	<a href="https://github.com/sindresorhus/awesome"><img alt="Awesome" src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg"></a>
-	<a href="https://travis-ci.org/Komorebi-Fork/komorebi"><img alt="Build Status" src="https://travis-ci.org/phw/peek.svg?branch=master"></a>
+	<a href="https://travis-ci.org/Komorebi-Fork/komorebi"><img alt="Build Status" src="https://travis-ci.org/Komorebi-Fork/komorebi.svg?branch=master"></a>
 </p>
 
 <p align="center">
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=NvfRy5qMsos
-" target="_blank"><img src="http://img.youtube.com/vi/NvfRy5qMsos/0.jpg" 
+" target="_blank"><img src="http://img.youtube.com/vi/NvfRy5qMsos/0.jpg"
 alt="Komorebi Demo" width="240" height="180" border="10" /><br>Watch demo</a>
 </p>
 

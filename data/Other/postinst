@@ -3,17 +3,17 @@
 # A script that updates existing Komorebi wallpapers
 # and add us to the start up with the new updated syntax
 
-echo "[INFO]: Removing old Komorebi properties file.." 
+echo "[INFO]: Removing old Komorebi properties file.."
 users="$(ls -d -1 /home/*/ | xargs -n 1 basename)"
 
 for user in $users; do
 
 	rm -rf "/home/$user/.Komorebi.prop"
-	
+
 	mkdir -p "/home/$user/.config/autostart"
 	cp "/usr/share/applications/org.komorebiteam.komorebi.desktop" "/home/$user/.config/autostart/komorebi.desktop"
 	chown  "$user:$user" "/home/$user/.config/autostart" -R
-	
+
 done
 
 echo "[INFO]: Updating existing Komorebi Wallpapers.."
@@ -63,7 +63,7 @@ Width=0
 Height=0
 "
 
-	
+
 	# Skip wallpapers with videos (cause they're new)
 	if [ -e $wallpaper"video.mp4" ]; then
 		continue
@@ -87,7 +87,7 @@ Height=0
 	mv $oldfile $wallpaper"wallpaper.jpg" 2>/dev/null
 	rm -rf $wallpaper"thumb.jpg"
 
-	entirecontent="" 
+	entirecontent=""
 
 	halign=""
 	valign=""
@@ -132,7 +132,7 @@ Height=0
 
 	    	elif [ "$key" == "DateTimeBoxMarginRight" ]; then
 	    		configtemplate=${configtemplate/MARGINRIGHT/$value}
-	    	
+
 	    	elif [ "$key" == "TimeLabelAlignment" ]; then
 	    		configtemplate=${configtemplate/ALIGNMENT/$value}
 
@@ -141,16 +141,16 @@ Height=0
 
 	    	elif [ "$key" == "DateTimeBoxVAlign" ]; then
 	    		valign=$value
-	    	
+
 	    	elif [ "$key" == "DateTimeColor" ]; then
 	    		configtemplate=${configtemplate/TIMECOLOR/$value}
-	    	
+
 	    	elif [ "$key" == "TimeLabelFont" ]; then
 	    		configtemplate=${configtemplate/TIMEFONT/$value}
-	    	
+
 	    	elif [ "$key" == "DateLabelFont" ]; then
 	    		configtemplate=${configtemplate/DATEFONT/$value}
-	    	
+
 	    	elif [ "$key" == "DateTimeBoxOnTop" ]; then
 	    		configtemplate=${configtemplate/DATETIMEALWAYSONTOP/$value}
 	    	fi
@@ -190,10 +190,10 @@ Height=0
     	configtemplate=${configtemplate/POSITION/"center_right"}
 
     elif [[ $halign =~ "end" ]] && [[ $valign =~ "end" ]]; then
-    	configtemplate=${configtemplate/POSITION/"bottom_right"}    	
+    	configtemplate=${configtemplate/POSITION/"bottom_right"}
     fi
 
 
     echo "$configtemplate" >$wallpaper"config"
 
-done	
+done
