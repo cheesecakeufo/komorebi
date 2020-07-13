@@ -11,6 +11,9 @@ i18n = import('i18n')
 po_dir = meson.source_root() / 'po'
 gettext_package = meson.project_name()
 add_project_arguments('-DGETTEXT_PACKAGE=' + gettext_package, language: 'c')
+i18n.gettext(meson.project_name(),
+    args: '--directory=' + meson.source_root()
+)
 
 prefix = get_option('prefix') # should be /usr
 bindir = get_option('bindir') # should be bin
@@ -26,7 +29,6 @@ dependencies = [
       dependency('clutter-gtk-1.0'),
       dependency('clutter-1.0'),
       dependency('clutter-gst-3.0'),
-
 ]
 
 subdir('src')
