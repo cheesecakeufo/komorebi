@@ -158,6 +158,21 @@ namespace Komorebi.Utilities {
 		return dateTime.format("%m/%d/%Y %l:%M %p");
 	}
 
+	/* Returns the path for hosting configuration files and wallpapers */
+	public string getConfigDir() {
+
+		string basePath = Environment.get_variable ("XDG_CONFIG_HOME");
+
+		if(basePath == null) {
+			basePath = GLib.Path.build_filename(Environment.get_home_dir(), ".config");
+
+			if(basePath == null)
+				basePath = Environment.get_home_dir();
+		}
+
+		return GLib.Path.build_filename(basePath, "komorebi");
+	}
+
 	/* Reads the .prop file */
 	public void readConfigurationFile () {
 
@@ -170,7 +185,7 @@ namespace Komorebi.Utilities {
 		pausePlayback = true;
 
 		if(configFilePath == null)
-			configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
+			configFilePath = GLib.Path.build_filename(getConfigDir(), "komorebi.prop");
 
 		if(configFile == null)
 			configFile = File.new_for_path(configFilePath);
@@ -179,9 +194,12 @@ namespace Komorebi.Utilities {
 			configKeyFile = new KeyFile ();
 
 		if(!configFile.query_exists()) {
-			print("No configuration file found. Creating one..\n");
-			updateConfigurationFile();
-			return;
+			bootstrapConfigPath();
+			if(!configFile.query_exists()) {
+				print("No configuration file found. Creating one..\n");
+				updateConfigurationFile();
+				return;
+			}
 		}
 
 		print("Reading config file..\n");
@@ -218,6 +236,23 @@ namespace Komorebi.Utilities {
 			pausePlayback = true;
     }
 		fixConflicts();
+	}
+
+	/* Bootstraps the base configuration path if it doesn't exist, and detects older versions of this app */
+	public void bootstrapConfigPath() {
+		File configPath = File.new_for_path(getConfigDir());
+		if(!configPath.query_exists())
+			configPath.make_directory_with_parents();
+
+		// If it can find an older config file, copy it to the new directory
+		File oldConfigFile = File.new_build_filename(Environment.get_home_dir(), ".Komorebi.prop");
+		if(oldConfigFile.query_exists()) {
+			print("Found config file from old version, converting it to new one...\n");
+			File destinationPath = File.new_build_filename(getConfigDir(), "komorebi.prop");
+			oldConfigFile.copy(destinationPath, FileCopyFlags.NONE);
+		}
+
+		configFile = File.new_for_path(configFilePath);
 	}
 
 	/* Updates the .prop file */
