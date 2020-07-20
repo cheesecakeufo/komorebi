@@ -16,6 +16,7 @@
 //
 
 using Gtk;
+using Komorebi;
 
 namespace WallpaperCreator.OnScreen {
 
@@ -44,13 +45,13 @@ namespace WallpaperCreator.OnScreen {
             descLabel.hexpand = false;
             descLabel.selectable = true;
 
+            wallpaperName = wallpaperName.replace(" ", "_").replace(".", "_").down();
+
             titleLabel.set_markup("<span font='Lato 20'>Done</span>");
 
-            string package_datadir = Config.package_datadir;
+            var wallpaperPath = GLib.Path.build_filename(Paths.getConfigDir(), "wallpapers", wallpaperName);
 
-            var mv_command = @"sudo mv $(Environment.get_home_dir())/$(wallpaperName.replace(" ", "_").replace(".", "_").down()) $package_datadir";
-
-            descLabel.set_markup(@"<span font='Lato Light 12'>Open 'Terminal' then paste the following:\n<b>$mv_command</b>\nOnce done, you can change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
+            descLabel.set_markup(@"<span font='Lato Light 12'>Your wallpaper was copied to:\n<b>$wallpaperPath</b>\nYou can now change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
 
             closeButton.margin_top = 20;
             closeButton.halign = Align.CENTER;
@@ -75,11 +76,9 @@ namespace WallpaperCreator.OnScreen {
         private void createWallpaper() {
 
             // Create a new directory
-            wallpaperName = wallpaperName.replace(" ", "_").replace(".", "_").down();
-
-            var dirPath = @"$(Environment.get_home_dir())/$(wallpaperName)";
+            var dirPath = GLib.Path.build_filename(Paths.getConfigDir(), "wallpapers", wallpaperName);
             File.new_for_path(dirPath).make_directory_with_parents();
-            var configPath = dirPath + "/config";
+            var configPath = GLib.Path.build_filename(dirPath, "config");
             var configFile = File.new_for_path(configPath);
 
             var configKeyFile = new KeyFile();
@@ -93,8 +92,8 @@ namespace WallpaperCreator.OnScreen {
                 configKeyFile.set_string("Info", "VideoFileName", videoFileName);
 
                 // Copy the video into our new dir
-                File.new_for_path(filePath).copy(File.new_for_path(dirPath + @"/$videoFileName"), FileCopyFlags.NONE);
-
+                File.new_for_path(filePath).copy(File.new_build_filename(dirPath, videoFileName), FileCopyFlags.NONE);
+                
 
             } else if (wallpaperType == "web_page")
                 configKeyFile.set_string("Info", "WebPageUrl", webPageUrl);
@@ -103,12 +102,12 @@ namespace WallpaperCreator.OnScreen {
             if(wallpaperType == "video" || wallpaperType == "web_page") {
 
                 // Move the thumbnail
-                File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
-
+                File.new_for_path(thumbnailPath).copy(File.new_build_filename(dirPath, "wallpaper.jpg"), FileCopyFlags.NONE);
+            
             } else {
 
                 // Copy the wallpaper into our new dir
-                File.new_for_path(filePath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
+                File.new_for_path(filePath).copy(File.new_build_filename(dirPath, "wallpaper.jpg"), FileCopyFlags.NONE);
             }
 
             configKeyFile.set_boolean("DateTime", "Visible", showDateTime);
@@ -154,7 +153,7 @@ namespace WallpaperCreator.OnScreen {
 
                 if(assetPath != null) {
                     // Move the asset into our new dir
-                    File.new_for_path(assetPath).copy(File.new_for_path(dirPath + "/assets.png"), FileCopyFlags.NONE);
+                    File.new_for_path(assetPath).copy(File.new_build_filename(dirPath, "assets.png"), FileCopyFlags.NONE);
                 }
             }
 

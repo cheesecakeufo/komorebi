@@ -46,6 +46,11 @@ dependencies = [
       dependency('clutter-gst-3.0'),
 ]
 
+main_sources = []
+wallpaper_sources = []
+
+wallpaper_sources += files('src/Paths.vala')
+
 subdir('src')
 subdir('wallpaper-creator')
 subdir('data')
@@ -53,3 +58,13 @@ subdir('data')
 # Postinst script needs work. Let's not run it blindly.
 # Frankly, I doubt that there's many (any?) users that have yet to update wallpapers to the new format, so maybe do away with it?
 #meson.add_install_script('data/Other/postinst')
+
+executable(meson.project_name(), main_sources, komorebiconfiguration, komorebiresources,
+    dependencies: dependencies,
+    install: true
+)
+
+executable(meson.project_name() + '-wallpaper-creator', wallpaper_sources, komorebiconfiguration, komorebiresources,
+    dependencies: dependencies,
+    install: true
+)

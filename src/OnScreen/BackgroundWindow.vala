@@ -387,8 +387,7 @@ namespace Komorebi.OnScreen {
 
 			wallpaperActor.set_content(wallpaperImage);
 
-			wallpaperPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"$wallpaperPath/wallpaper.jpg",
-																scaleWidth, scaleHeight, false);
+			wallpaperPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"$wallpaperPath/wallpaper.jpg", scaleWidth, scaleHeight, false);
 
 			wallpaperImage.set_data (wallpaperPixbuf.get_pixels(), Cogl.PixelFormat.RGB_888,
 							 wallpaperPixbuf.get_width(), wallpaperPixbuf.get_height(),

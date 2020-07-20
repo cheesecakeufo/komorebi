@@ -1,4 +1,4 @@
-sources = files(
+main_sources += files(
     'Main.vala',
     'OnScreen/BackgroundWindow.vala',
     'OnScreen/DateTimeBox.vala',
@@ -15,9 +15,4 @@ sources = files(
     'OnScreen/PreferencesWindow.vala',
     'Paths.vala',
     'Utilities.vala'
-)
-
-executable(meson.project_name(), sources, komorebiconfiguration, komorebiresources,
-    dependencies: dependencies,
-    install: true
 )
