@@ -173,7 +173,10 @@ namespace Komorebi.OnScreen {
                         if(e.button == 1) {
 
                             // TODO: Replace event with 2BUTTON_PRESS
-                            AppInfo.launch_default_for_uri (@"file://$filePath", null);
+                            if(isExecutable)
+                                AppInfo.create_from_commandline(execPath, null, AppInfoCreateFlags.NONE).launch(null, null);
+                            else
+                                AppInfo.launch_default_for_uri (@"file://$filePath", null);
 
                         } else if(e.button == 3) { // Show the menu
                             BackgroundWindow backgroundWindow = parent.window;
