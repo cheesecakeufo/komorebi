@@ -70,37 +70,39 @@ namespace Komorebi.OnScreen {
 			foreach(var thumbnail in thumbnailsList)
 				thumbnailsList.remove(thumbnail);
 
-			File wallpapersFolder = File.new_for_path(package_datadir);
+			foreach(var path in Komorebi.Paths.getWallpaperPaths()) {
+				File wallpapersFolder = File.new_for_path(path);
 
-			try {
+				try {
 
-				var enumerator = wallpapersFolder.enumerate_children ("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+					var enumerator = wallpapersFolder.enumerate_children ("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
 
-				FileInfo info;
+					FileInfo info;
 
-				while ((info = enumerator.next_file ()) != null)
-					if (info.get_file_type () == FileType.DIRECTORY) {
+					while ((info = enumerator.next_file ()) != null)
+						if (info.get_file_type () == FileType.DIRECTORY) {
 
-						var name = info.get_name();
-						var fullPath = path + name;
+							var name = info.get_name();
+							var fullPath = GLib.Path.build_filename(path, name);
 
-						// Check if we have a valid wallpaper
-						if (File.new_for_path(fullPath + "/wallpaper.jpg").query_exists() &&
-							File.new_for_path(fullPath + "/config").query_exists()) {
+							// Check if we have a valid wallpaper
+							if (File.new_build_filename(fullPath, "wallpaper.jpg").query_exists() &&
+								File.new_build_filename(fullPath, "config").query_exists()) {
 
-							var thumbnail = new Thumbnail(path, name);
+								var thumbnail = new Thumbnail(path, name);
 
-							// Signals
-							thumbnail.clicked.connect(() => wallpaperChanged());
+								// Signals
+								thumbnail.clicked.connect(() => wallpaperChanged());
 
-							addThumbnail(thumbnail);
-							thumbnailsList.append(thumbnail);
-						} else
-							print(@"[WARNING]: Found an invalid wallpaper with name: $name \n");
-					}
+								addThumbnail(thumbnail);
+								thumbnailsList.append(thumbnail);
+							} else
+								print(@"[WARNING]: Found an invalid wallpaper with name: $name \n");
+						}
 
-			} catch {
-				print(@"Could not read directory '$package_datadir'");
+				} catch {
+					print(@"Could not read directory '$path'");
+				}
 			}
 		}
 

@@ -13,6 +13,7 @@ sources = files(
     'OnScreen/BubbleMenuItem.vala',
     'OnScreen/AssetActor.vala',
     'OnScreen/PreferencesWindow.vala',
+    'Paths.vala',
     'Utilities.vala'
 )
 

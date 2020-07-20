@@ -24,6 +24,7 @@ using GLib;
 using Cairo;
 
 using Komorebi.OnScreen;
+using Komorebi.Paths;
 
 namespace Komorebi.Utilities {
 
@@ -68,7 +69,7 @@ namespace Komorebi.Utilities {
 
 	// Wallpaper variables
 	KeyFile wallpaperKeyFile;
-
+	string wallpaperPath;
 	string wallpaperType;
 	string videoFileName;
 	string webPageUrl;
@@ -158,21 +159,6 @@ namespace Komorebi.Utilities {
 		return dateTime.format("%m/%d/%Y %l:%M %p");
 	}
 
-	/* Returns the path for hosting configuration files and wallpapers */
-	public string getConfigDir() {
-
-		string basePath = Environment.get_variable ("XDG_CONFIG_HOME");
-
-		if(basePath == null) {
-			basePath = GLib.Path.build_filename(Environment.get_home_dir(), ".config");
-
-			if(basePath == null)
-				basePath = Environment.get_home_dir();
-		}
-
-		return GLib.Path.build_filename(basePath, "komorebi");
-	}
-
 	/* Reads the .prop file */
 	public void readConfigurationFile () {
 
@@ -240,7 +226,7 @@ namespace Komorebi.Utilities {
 
 	/* Bootstraps the base configuration path if it doesn't exist, and detects older versions of this app */
 	public void bootstrapConfigPath() {
-		File configPath = File.new_for_path(getConfigDir());
+		File configPath = File.new_build_filename(getConfigDir(), "wallpapers");
 		if(!configPath.query_exists())
 			configPath.make_directory_with_parents();
 
@@ -299,15 +285,27 @@ namespace Komorebi.Utilities {
 
 		// check if the wallpaper exists
 		// also, make sure the wallpaper name is valid
-		string package_datadir = Config.package_datadir;
-		var wallpaperPath = @"$package_datadir/$wallpaperName";
-		var wallpaperConfigPath = @"$wallpaperPath/config";
+		string wallpaperConfigPath = "";
+		bool wallpaperFound = false;
 
-		if(wallpaperName == null || !File.new_for_path(wallpaperPath).query_exists() ||
-			!File.new_for_path(wallpaperConfigPath).query_exists()) {
+		// Populates the wallpaper path list
+		getWallpaperPaths();
 
+		for(int i = 0; i < wallpaperPaths.length; i++) {
+			wallpaperPath = @"$(wallpaperPaths[i])/$wallpaperName";
+			wallpaperConfigPath = @"$wallpaperPath/config";
+
+			if(wallpaperName == null || !File.new_for_path(wallpaperPath).query_exists() ||
+				!File.new_for_path(wallpaperConfigPath).query_exists())
+				continue;
+
+			wallpaperFound = true;
+			break;
+		}
+
+		if(!wallpaperFound) {
 			wallpaperName = "foggy_sunny_mountain";
-			wallpaperPath = @"$package_datadir/$wallpaperName";
+			wallpaperPath = @"$(Config.package_datadir)/$wallpaperName";
 			wallpaperConfigPath = @"$wallpaperPath/config";
 
 			print(@"[ERROR]: got an invalid wallpaper. Setting to default: $wallpaperName\n");
@@ -376,7 +374,7 @@ namespace Komorebi.Utilities {
 		assetHeight = wallpaperKeyFile.get_integer ("Asset", "Height");
 
 		// Set GNOME's wallpaper to this
-		var wallpaperJpgPath = @"$package_datadir/$wallpaperName/wallpaper.jpg";
+		var wallpaperJpgPath = GLib.Path.build_filename(wallpaperPath, "wallpaper.jpg");
 		new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperJpgPath));
 		new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 	}

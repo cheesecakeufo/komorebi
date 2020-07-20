@@ -48,7 +48,7 @@ namespace Komorebi.OnScreen {
 
 			this.name = name;
 
-			thumbnailImage.pixbuf = new Gdk.Pixbuf.from_file_at_scale(path + name + "/wallpaper.jpg", 150, 100, false);
+			thumbnailImage.pixbuf = new Gdk.Pixbuf.from_file_at_scale(GLib.Path.build_filename(path, name, "wallpaper.jpg"), 150, 100, false);
 
 			// Signals
 			button_release_event.connect(() => {

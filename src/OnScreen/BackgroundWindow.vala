@@ -351,7 +351,7 @@ namespace Komorebi.OnScreen {
 
 				if(wallpaperType == "video") {
 
-					var videoPath = @"file://$package_datadir/$wallpaperName/$videoFileName";
+					var videoPath = @"file:///$wallpaperPath/$videoFileName";
 					videoPlayback.uri = videoPath;
 					videoPlayback.playing = true;
 
@@ -387,7 +387,7 @@ namespace Komorebi.OnScreen {
 
 			wallpaperActor.set_content(wallpaperImage);
 
-			wallpaperPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"$package_datadir/$wallpaperName/wallpaper.jpg",
+			wallpaperPixbuf = new Gdk.Pixbuf.from_file_at_scale(@"$wallpaperPath/wallpaper.jpg",
 																scaleWidth, scaleHeight, false);
 
 			wallpaperImage.set_data (wallpaperPixbuf.get_pixels(), Cogl.PixelFormat.RGB_888,
