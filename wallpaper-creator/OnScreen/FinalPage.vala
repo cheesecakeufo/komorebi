@@ -21,7 +21,7 @@ namespace WallpaperCreator.OnScreen {
 
     public class FinalPage : Box {
 
-        Image logo = new Image.from_file("/usr/share/pixmaps/komorebi/done.svg");
+        Image logo = new Image.from_resource("/org/komorebi-team/komorebi/done.svg");
 
         Label titleLabel = new Label("");
         Label descLabel = new Label("");
@@ -92,7 +92,7 @@ namespace WallpaperCreator.OnScreen {
 
                 // Copy the video into our new dir
                 File.new_for_path(filePath).copy(File.new_for_path(dirPath + @"/$videoFileName"), FileCopyFlags.NONE);
-                
+
 
             } else if (wallpaperType == "web_page")
                 configKeyFile.set_string("Info", "WebPageUrl", webPageUrl);
@@ -102,7 +102,7 @@ namespace WallpaperCreator.OnScreen {
 
                 // Move the thumbnail
                 File.new_for_path(thumbnailPath).copy(File.new_for_path(dirPath + "/wallpaper.jpg"), FileCopyFlags.NONE);
-            
+
             } else {
 
                 // Copy the wallpaper into our new dir

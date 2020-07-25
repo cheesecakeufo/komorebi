@@ -137,7 +137,7 @@ namespace Komorebi.OnScreen {
 			twentyFourHoursButton.active = timeTwentyFour;
 			showDesktopIconsButton.active = showDesktopIcons;
 			enableVideoWallpapersButton.active = enableVideoWallpapers;
-      mutePlaybackButton.active = mutePlayback;
+      		mutePlaybackButton.active = mutePlayback;
 			pausePlaybackButton.active = pausePlayback;
 
 			setWallpaperNameLabel();
@@ -211,7 +211,7 @@ namespace Komorebi.OnScreen {
 
 			});
 
-			showDesktopIconsButton.toggled.connect (() => { 
+			showDesktopIconsButton.toggled.connect (() => {
 				showDesktopIcons = showDesktopIconsButton.active;
 				updateConfigurationFile();
 
@@ -230,7 +230,7 @@ namespace Komorebi.OnScreen {
 				updateConfigurationFile();
 
 			});
-      
+
       mutePlaybackButton.toggled.connect(() => {
 				mutePlayback = mutePlaybackButton.active;
 				if (mutePlayback) {
@@ -244,7 +244,7 @@ namespace Komorebi.OnScreen {
 				}
 				updateConfigurationFile();
 			});
-      
+
 			pausePlaybackButton.toggled.connect(() => {
 				pausePlayback = pausePlaybackButton.active;
 				if (!pausePlayback) {
@@ -270,7 +270,7 @@ namespace Komorebi.OnScreen {
 			titleBox.add(titleLabel);
 			titleBox.add(aboutLabel);
 
-			aboutGrid.attach(new Image.from_file("/usr/share/pixmaps/komorebi/komorebi.svg"), 0, 0, 1, 1);
+			aboutGrid.attach(new Image.from_resource("/org/komorebi-team/komorebi/komorebi.svg"), 0, 0, 1, 1);
 			aboutGrid.attach(titleBox, 1, 0, 1, 1);
 
 			bottomPreferencesBox.pack_start(donateButton);
@@ -280,11 +280,11 @@ namespace Komorebi.OnScreen {
 			preferencesPage.add(twentyFourHoursButton);
 			preferencesPage.add(showDesktopIconsButton);
 			preferencesPage.add(enableVideoWallpapersButton);
-      preferencesPage.add(mutePlaybackButton);
+      		preferencesPage.add(mutePlaybackButton);
 			preferencesPage.add(pausePlaybackButton);
 			preferencesPage.pack_end(bottomPreferencesBox);
 
-			bottomWallpapersBox.add(new Image.from_file("/usr/share/pixmaps/komorebi/info.svg"));
+			bottomWallpapersBox.add(new Image.from_resource("/org/komorebi-team/komorebi/info.svg"));
 			bottomWallpapersBox.add(currentWallpaperLabel);
 
 			if(!canPlayVideos()) {

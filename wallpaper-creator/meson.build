@@ -5,4 +5,4 @@ sources = files('Main.vala',
     'OnScreen/FinalPage.vala'
 )
 
-executable(meson.project_name() + '-wallpaper-creator', sources, dependencies: dependencies, install: true)
+executable(meson.project_name() + '-wallpaper-creator', sources, komorebiresources, dependencies: dependencies, install: true)

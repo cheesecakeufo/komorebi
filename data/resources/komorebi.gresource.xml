@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/org/komorebi-team/komorebi">
+        <file>add_bubble_item.svg</file>
+        <file>blank.svg</file>
+        <file>blank_backup.svg</file>
+        <file>close_btn.svg</file>
+        <file>done.svg</file>
+        <file>info.svg</file>
+        <file>komorebi.svg</file>
+        <file>thumbnail_add.svg</file>
+        <file>thumbnail_border.svg</file>
+        <file>wallpaper_creator.svg</file>
+    </gresource>
+</gresources>

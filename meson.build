@@ -14,10 +14,20 @@ add_project_arguments('-DGETTEXT_PACKAGE=' + gettext_package, language: 'c')
 i18n.gettext(meson.project_name(),
     args: '--directory=' + meson.source_root()
 )
-
 prefix = get_option('prefix') # should be /usr
 bindir = get_option('bindir') # should be bin
+# pkgdatadir = join_paths(datadir, meson.project_name())
 datadir = get_option('datadir') # should be /usr/share
+
+# Compile resources (images, etc,) so that they're built into the app.
+# TODO: Generate separate resource bundles for Komorebi & Wallpaper Creator;
+# There's enough overlap that I'm not going to do it right now, but it'd be more elegant.
+gnome = import('gnome')
+komorebiresources = gnome.compile_resources(
+    'as-resources', 'data/resources/komorebi.gresource.xml',
+    source_dir: 'data/resources',
+    c_name: 'as'
+)
 
 
 dependencies = [

@@ -67,7 +67,7 @@ namespace WallpaperCreator.OnScreen {
 
         Label dateTimeShadowColorLabel = new Label("Shadow Color and Alpha:");
         Box dateTimeShadowColorBox = new Box(Orientation.HORIZONTAL, 10);
-        ColorButton dateTimeShadowColorButton = new ColorButton.with_rgba({222, 222, 222, 255});    
+        ColorButton dateTimeShadowColorButton = new ColorButton.with_rgba({222, 222, 222, 255});
         SpinButton dateTimeShadowAlphaEntry = new SpinButton.with_range(0, 255, 1) { value = 255 };
 
         Label timeFontLabel = new Label("Time Font:");
@@ -219,7 +219,7 @@ namespace WallpaperCreator.OnScreen {
 
             optionsBox.add(dateTimeColorBox);
 
-            // Date time shadow 
+            // Date time shadow
             optionsBox.add(dateTimeShadowColorLabel);
 
             dateTimeShadowColorBox.add(dateTimeShadowColorButton);
@@ -234,7 +234,7 @@ namespace WallpaperCreator.OnScreen {
             // Date Font
             optionsBox.add(dateFontLabel);
             optionsBox.add(dateFontButton);
-       
+
 
 
             if(wallpaperType == "image") {
@@ -266,7 +266,7 @@ namespace WallpaperCreator.OnScreen {
 
             showDateTime = dateTimeVisibleComboBox.get_active_id() == "show";
             dateTimeParallax = dateTimeParallaxComboBox.get_active_id() == "enable";
-            
+
             marginTop = dateTimeMarginTopEntry.text.to_int();
             marginRight = dateTimeMarginRightEntry.text.to_int();
             marginLeft = dateTimeMarginLeftEntry.text.to_int();
@@ -280,7 +280,7 @@ namespace WallpaperCreator.OnScreen {
             dateTimeBox.margin_end = marginRight;
             dateTimeBox.margin_start = marginLeft;
             dateTimeBox.margin_bottom = marginBottom;
-             
+
             setPosition();
             setAlignment();
 
@@ -398,6 +398,11 @@ namespace WallpaperCreator.OnScreen {
             wallpaperImage.pixbuf = new Pixbuf.from_file_at_scale(path, 600, 400, true);
         }
 
+        public void setBlank() {
+
+            wallpaperImage.pixbuf = new Pixbuf.from_resource_at_scale("/org/komorebi-team/komorebi/blank.svg", 600, 400, true);
+        }
+
         public void setAsset(string path) {
 
             assetImage.pixbuf = new Pixbuf.from_file_at_scale(path, 600, 400, true);
@@ -418,6 +423,6 @@ namespace WallpaperCreator.OnScreen {
 
         private string rgbaToHex(RGBA rgba) {
             return "#%02x%02x%02x".printf((int)(rgba.red*255), (int)(rgba.green*255), (int)(rgba.blue*255));
-        }  
+        }
     }
 }

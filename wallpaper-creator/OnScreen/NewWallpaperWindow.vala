@@ -40,7 +40,7 @@ namespace WallpaperCreator.OnScreen {
 		Button yesButton = new Button.with_label("Yes");
 
 		Gtk.Box mainBox = new Box(Orientation.VERTICAL, 0);
-			
+
 		// Used as a display for errors
 		Gtk.Revealer revealer = new Revealer();
 		Gtk.InfoBar infoBar = new Gtk.InfoBar () { message_type = MessageType.ERROR };
@@ -106,7 +106,7 @@ namespace WallpaperCreator.OnScreen {
 			stack.set_transition_type(StackTransitionType.SLIDE_LEFT);
 
 			// Signals
-			closeButton.released.connect(() => { 
+			closeButton.released.connect(() => {
 				popover.show_all();
 			});
 
@@ -138,12 +138,12 @@ namespace WallpaperCreator.OnScreen {
 				if(currentPage == "initial") {
 
 					if(wallpaperName == null || (wallpaperType == "image" || wallpaperType == "video") && filePath == null) {
-				
+
 						displayError("Please enter a wallpaper name and choose a file");
 						return;
-				
+
 					} else if (wallpaperName == null || wallpaperType == "web_page" && webPageUrl == null) {
-				
+
 						displayError("Please enter a wallpaper name, a valid URL, and a thumbnail");
 						return;
 					}
@@ -158,7 +158,7 @@ namespace WallpaperCreator.OnScreen {
 
 					} else {
 						addLayerButton.visible = false;
-						optionsPage.setImage("/usr/share/pixmaps/komorebi/blank.svg");
+						optionsPage.setBlank();
 					}
 
 					stack.add_named(optionsPage, "options");
