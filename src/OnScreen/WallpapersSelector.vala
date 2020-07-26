@@ -70,7 +70,7 @@ namespace Komorebi.OnScreen {
 			foreach(var thumbnail in thumbnailsList)
 				thumbnailsList.remove(thumbnail);
 
-			File wallpapersFolder = File.new_for_path(@"$package_datadir");
+			File wallpapersFolder = File.new_for_path(package_datadir);
 
 			try {
 
