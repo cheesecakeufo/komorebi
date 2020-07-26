@@ -41,13 +41,8 @@ namespace Komorebi {
 
         print(@"Welcome to $package_name\n");
 
-<<<<<<< HEAD
-        if(hasArg("--version", args) || hasArg("version", args)) {
-            print("Version: 2.1 - Summit\nCreated by: Abraham Masri @cheesecakeufo\n\n");
-=======
         if(args[1] == "--version" || args[1] == "version") {
             print(@"Version: $package_version\nMaintained by: Komorebi Team\n\n");
->>>>>>> 950ebb6... Meson Build: Configure Komorebi
             return;
         }
 
