@@ -1,12 +1,17 @@
-project('komorebi', 'vala', 'c', version: '2.2.0', meson_version: '>=0.49', default_options: ['prefix=/usr'])
+project('komorebi', 'vala', 'c',
+    version: '2.2.0',
+    meson_version: '>=0.49',
+)
 
-as_version = meson.project_version()
-ver_arr = as_version.split('.')
 
-as_major_version = ver_arr[0]
-as_minor_version = ver_arr[1]
-as_micro_version = ver_arr[2]
+# as_version = meson.project_version()
+# ver_arr = as_version.split('.')
 
+# as_major_version = ver_arr[0]
+# as_minor_version = ver_arr[1]
+# as_micro_version = ver_arr[2]
+
+# Internationalisation / Localisation. This is currently only used to configure the .desktop files;
 i18n = import('i18n')
 po_dir = meson.source_root() / 'po'
 gettext_package = meson.project_name()
@@ -14,10 +19,20 @@ add_project_arguments('-DGETTEXT_PACKAGE=' + gettext_package, language: 'c')
 i18n.gettext(meson.project_name(),
     args: '--directory=' + meson.source_root()
 )
-prefix = get_option('prefix') # should be /usr
-bindir = get_option('bindir') # should be bin
-# pkgdatadir = join_paths(datadir, meson.project_name())
-datadir = get_option('datadir') # should be /usr/share
+
+# Set some variables
+
+prefix = get_option('prefix')
+bindir = get_option('bindir')
+datadir = get_option('datadir')
+pkgdatadir = join_paths(prefix, datadir, meson.project_name())
+
+# Configure Komorebi
+conf = configuration_data()
+conf.set_quoted('PACKAGE_NAME', meson.project_name())
+conf.set_quoted('PACKAGE_VERSION', meson.project_version())
+conf.set_quoted('PKGDATADIR', pkgdatadir)
+komorebiconfiguration = configure_file(input: 'config.vala.in', output: 'config.vala', configuration: conf)
 
 # Compile resources (images, etc,) so that they're built into the app.
 # TODO: Generate separate resource bundles for Komorebi & Wallpaper Creator;
@@ -28,7 +43,6 @@ komorebiresources = gnome.compile_resources(
     source_dir: 'data/resources',
     c_name: 'as'
 )
-
 
 dependencies = [
       dependency('glib-2.0', version: '>=2.38'),
@@ -45,4 +59,6 @@ subdir('src')
 subdir('wallpaper-creator')
 subdir('data')
 
-meson.add_install_script('data/Other/postinst')
+# Postinst script needs work. Let's not run it blindly.
+# Frankly, I doubt that there's many (any?) users that have yet to update wallpapers to the new format, so maybe do away with it?
+#meson.add_install_script('data/Other/postinst')

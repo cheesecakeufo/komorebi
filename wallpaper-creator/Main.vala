@@ -31,7 +31,7 @@ namespace WallpaperCreator {
     // Properties
     bool showDateTime;
     bool dateTimeParallax;
-    
+
     int marginTop;
     int marginRight;
     int marginLeft;
@@ -56,10 +56,14 @@ namespace WallpaperCreator {
 
     public static void main (string [] args) {
 
-        print("Welcome to Komorebi Wallpaper Creator\n");
+
+        string package_name = Config.package_name;
+        string package_version = Config.package_version;
+
+        print(@"Welcome to $package_name Wallpaper Creator\n");
 
         if(args[1] == "--version" || args[1] == "version") {
-            print("Version: 1.2\nMaintained by: Komorebi Team\n\n");
+            print(@"Version: $package_version\nMaintained by: Komorebi Team\n\n");
             return;
         }
         Gtk.init (ref args);

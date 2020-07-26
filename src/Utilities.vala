@@ -91,8 +91,6 @@ namespace Komorebi.Utilities {
 	int assetMarginLeft;
 	int assetMarginBottom;
 
-
-
 	/* Returns an icon detected from file, IconTheme, etc .. */
 	public Pixbuf getIconFrom (string icon, int size) {
 
@@ -266,14 +264,15 @@ namespace Komorebi.Utilities {
 
 		// check if the wallpaper exists
 		// also, make sure the wallpaper name is valid
-		var wallpaperPath = @"/usr/share/komorebi/$wallpaperName";
+		string package_datadir = Config.package_datadir;
+		var wallpaperPath = @"$package_datadir/$wallpaperName";
 		var wallpaperConfigPath = @"$wallpaperPath/config";
 
 		if(wallpaperName == null || !File.new_for_path(wallpaperPath).query_exists() ||
 			!File.new_for_path(wallpaperConfigPath).query_exists()) {
 
 			wallpaperName = "foggy_sunny_mountain";
-			wallpaperPath = @"/usr/share/komorebi/$wallpaperName";
+			wallpaperPath = @"$package_datadir/$wallpaperName";
 			wallpaperConfigPath = @"$wallpaperPath/config";
 
 			print(@"[ERROR]: got an invalid wallpaper. Setting to default: $wallpaperName\n");
@@ -342,7 +341,7 @@ namespace Komorebi.Utilities {
 		assetHeight = wallpaperKeyFile.get_integer ("Asset", "Height");
 
 		// Set GNOME's wallpaper to this
-		var wallpaperJpgPath = @"/usr/share/komorebi/$wallpaperName/wallpaper.jpg";
+		var wallpaperJpgPath = @"$package_datadir/$wallpaperName/wallpaper.jpg";
 		new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperJpgPath));
 		new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 	}
