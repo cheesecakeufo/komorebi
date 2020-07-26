@@ -33,4 +33,8 @@ endforeach
 
 install_subdir('Wallpapers', install_dir: 'share' / meson.project_name(), strip_directory: true)
 install_subdir('Fonts', install_dir: 'share' / 'fonts', strip_directory: true)
-install_subdir('Icons', install_dir: 'share' / 'pixmaps' / meson.project_name(), strip_directory: true)
+
+# Install only the app icons
+install_data('resources/komorebi.svg', 'resources/wallpaper_creator.svg',
+  install_dir: 'share' / 'pixmaps' / meson.project_name()
+)

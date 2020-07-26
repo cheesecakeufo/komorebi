@@ -3,14 +3,6 @@ project('komorebi', 'vala', 'c',
     meson_version: '>=0.49',
 )
 
-
-# as_version = meson.project_version()
-# ver_arr = as_version.split('.')
-
-# as_major_version = ver_arr[0]
-# as_minor_version = ver_arr[1]
-# as_micro_version = ver_arr[2]
-
 # Internationalisation / Localisation. This is currently only used to configure the .desktop files;
 i18n = import('i18n')
 po_dir = meson.source_root() / 'po'
@@ -21,7 +13,6 @@ i18n.gettext(meson.project_name(),
 )
 
 # Set some variables
-
 prefix = get_option('prefix')
 bindir = get_option('bindir')
 datadir = get_option('datadir')
