@@ -67,7 +67,7 @@ namespace WallpaperCreator.OnScreen {
             titleLabel.halign = Align.START;
 
             titleLabel.set_markup("<span font='Lato Light 30px' color='white'>Komorebi Wallpaper Creator</span>");
-            aboutLabel.set_markup("<span font='Lato Light 15px' color='white'>by Abraham Masri @cheesecakeufo</span>");
+            aboutLabel.set_markup("<span font='Lato Light 15px' color='white'>by Komorebi Team</span>");
 
             aboutLabel.halign = Align.START;
 

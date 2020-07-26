@@ -131,7 +131,7 @@ namespace Komorebi.OnScreen {
 
 			// Setup Widgets
 			titleLabel.set_markup("<span font='Lato Light 30px' color='white'>Komorebi</span>");
-			aboutLabel.set_markup("<span font='Lato Light 15px' color='white'>by Abraham Masri @cheesecakeufo</span>");
+			aboutLabel.set_markup("<span font='Lato Light 15px' color='white'>by Komorebi Team</span>");
 
 			// showSystemStatsButton.active = showInfoBox;
 			twentyFourHoursButton.active = timeTwentyFour;
