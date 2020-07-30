@@ -1,7 +1,7 @@
 # Setup configuration data for .desktop entries
 desktop_conf = configuration_data()
-desktop_conf.set('bindir', join_paths(prefix, bindir))
-desktop_conf.set('datadir', join_paths(prefix,datadir))
+desktop_conf.set('bindir', prefix / bindir)
+desktop_conf.set('datadir', prefix / datadir)
 desktop_conf.set('projectname', meson.project_name())
 
 # Configure desktop entry and do any internationalisation
@@ -31,10 +31,10 @@ foreach appdata_xml: [ 'org.komorebiteam.komorebi.appdata.xml', 'org.komorebitea
   )
 endforeach
 
-install_subdir('Wallpapers', install_dir: 'share' / meson.project_name(), strip_directory: true)
-install_subdir('Fonts', install_dir: 'share' / 'fonts', strip_directory: true)
+install_subdir('Wallpapers', install_dir: get_option('datadir') / meson.project_name(), strip_directory: true)
+install_subdir('Fonts', install_dir: get_option('datadir') / 'fonts', strip_directory: true)
 
 # Install only the app icons
 install_data('resources/komorebi.svg', 'resources/wallpaper_creator.svg',
-  install_dir: 'share' / 'pixmaps' / meson.project_name()
+  install_dir: get_option('datadir') / 'pixmaps' / meson.project_name()
 )
