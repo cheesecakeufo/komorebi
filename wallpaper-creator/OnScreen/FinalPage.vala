@@ -1,4 +1,5 @@
 //
+//  Copyright (C) 2020 Komorebi Team Authors
 //  Copyright (C) 2016-2017 Abraham Masri
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -93,7 +94,7 @@ namespace WallpaperCreator.OnScreen {
 
                 // Copy the video into our new dir
                 File.new_for_path(filePath).copy(File.new_build_filename(dirPath, videoFileName), FileCopyFlags.NONE);
-                
+
 
             } else if (wallpaperType == "web_page")
                 configKeyFile.set_string("Info", "WebPageUrl", webPageUrl);
@@ -103,7 +104,7 @@ namespace WallpaperCreator.OnScreen {
 
                 // Move the thumbnail
                 File.new_for_path(thumbnailPath).copy(File.new_build_filename(dirPath, "wallpaper.jpg"), FileCopyFlags.NONE);
-            
+
             } else {
 
                 // Copy the wallpaper into our new dir

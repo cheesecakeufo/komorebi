@@ -1,4 +1,5 @@
 //
+//  Copyright (C) 2020 Komorebi Team Authors
 //  Copyright (C) 2012-2013 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify it

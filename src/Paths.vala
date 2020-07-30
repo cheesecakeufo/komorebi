@@ -1,6 +1,5 @@
 //
-//  Copyright (C) 2016-2020 Abraham Masri
-//  Copyright (C) 2020-2020 Komorebi Team
+//  Copyright (C) 2020 Komorebi Team Authors
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,7 +16,7 @@
 //
 
 namespace Komorebi.Paths {
-	
+
 	string[] wallpaperPaths;
 
 	/* Returns the path for hosting configuration files and wallpapers */

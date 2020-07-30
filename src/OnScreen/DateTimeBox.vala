@@ -1,4 +1,5 @@
 //
+//  Copyright (C) 2020 Komorebi Team Authors
 //  Copyright (C) 2015-2016 Abraham Masri @cheesecakeufo
 //
 //  This program is free software: you can redistribute it and/or modify it
@@ -51,7 +52,7 @@ namespace Komorebi.OnScreen {
             // Properties
             textContainerActor.layout_manager = boxLayout;
             shadowContainerActor.layout_manager = boxLayout;
-            
+
             background_color = {0,0,0,0};
             opacity = 0;
             reactive = true;
@@ -75,7 +76,7 @@ namespace Komorebi.OnScreen {
 
             textContainerActor.add_child(timeText);
             textContainerActor.add_child(dateText);
-            
+
             shadowContainerActor.add_child(timeShadowText);
             shadowContainerActor.add_child(dateShadowText);
 
