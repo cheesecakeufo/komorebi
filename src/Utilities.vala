@@ -373,11 +373,6 @@ namespace Komorebi.Utilities {
 
 		assetWidth = wallpaperKeyFile.get_integer ("Asset", "Width");
 		assetHeight = wallpaperKeyFile.get_integer ("Asset", "Height");
-
-		// Set GNOME's wallpaper to this
-		var wallpaperJpgPath = GLib.Path.build_filename(wallpaperPath, "wallpaper.jpg");
-		new GLib.Settings("org.gnome.desktop.background").set_string("picture-uri", ("file://" + wallpaperJpgPath));
-		new GLib.Settings("org.gnome.desktop.background").set_string("picture-options", "stretched");
 	}
 
 
