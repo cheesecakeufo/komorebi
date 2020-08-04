@@ -10,7 +10,7 @@
   <description>
     <p>
       Komorebi is an awesome animated wallpaper manager for all Linux platforms.
-      It provides fully customizeable image, video, and web page wallpapers that can be tweaked at any time!
+      It provides fully customisable image, video, and web page wallpapers that can be tweaked at any time!
     </p>
   </description>
 
@@ -27,7 +27,7 @@
   <project_group>Komorebi Team</project_group>
 
    <releases>
-    <release version="2.2.0" date="2020-07-xx">
+    <release version="2.2.0" date="2020-08-06">
       <description>
         <p>New Maintainers; Build system changed to Meson; Bugfixes.</p>
       </description>

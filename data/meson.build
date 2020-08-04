@@ -27,7 +27,7 @@ foreach appdata_xml: [ 'org.komorebiteam.komorebi.appdata.xml', 'org.komorebitea
     output: appdata_xml,
     po_dir: po_dir,
     install: true,
-    install_dir: get_option('datadir') / 'appdata'
+    install_dir: get_option('datadir') / 'metainfo'
   )
 endforeach
 

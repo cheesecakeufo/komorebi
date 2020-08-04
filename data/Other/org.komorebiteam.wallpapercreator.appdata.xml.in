@@ -27,7 +27,7 @@
   <project_group>Komorebi Team</project_group>
 
    <releases>
-    <release version="1.3.0" date="2020-07-xx">
+    <release version="2.2.0" date="2020-08-06">
       <description>
         <p>New Maintainers; Build system changed to Meson; Bugfixes.</p>
       </description>
