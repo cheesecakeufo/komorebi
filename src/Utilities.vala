@@ -93,6 +93,8 @@ namespace Komorebi.Utilities {
 	int assetMarginLeft;
 	int assetMarginBottom;
 
+	bool autostart;
+
 	/* Returns an icon detected from file, IconTheme, etc .. */
 	public Pixbuf getIconFrom (string icon, int size) {
 
@@ -170,6 +172,7 @@ namespace Komorebi.Utilities {
 		enableVideoWallpapers = true;
 		mutePlayback = false;
 		pausePlayback = true;
+		autostart = false;
 
 		if(configFilePath == null)
 			configFilePath = GLib.Path.build_filename(getConfigDir(), "komorebi.prop");
@@ -212,16 +215,21 @@ namespace Komorebi.Utilities {
 		timeTwentyFour = configKeyFile.get_boolean (key_file_group, "TimeTwentyFour");
 		showDesktopIcons = configKeyFile.get_boolean (key_file_group, "ShowDesktopIcons");
 		enableVideoWallpapers = configKeyFile.get_boolean (key_file_group, "EnableVideoWallpapers");
-    if (configKeyFile.has_key(key_file_group, "MutePlayback")) {
+		if (configKeyFile.has_key(key_file_group, "MutePlayback")) {
 			mutePlayback = configKeyFile.get_boolean(key_file_group, "MutePlayback");
 		} else {
 			mutePlayback = false;
-    }
+		}
 		if (configKeyFile.has_key(key_file_group, "PausePlayback")) {
 			pausePlayback = configKeyFile.get_boolean(key_file_group, "PausePlayback");
 		} else {
 			pausePlayback = true;
-    }
+		}
+		if (configKeyFile.has_key(key_file_group, "Autostart")) {
+			autostart = configKeyFile.get_boolean(key_file_group, "Autostart");
+		} else {
+			autostart = false;
+		}
 		fixConflicts();
 	}
 
@@ -253,6 +261,7 @@ namespace Komorebi.Utilities {
 		configKeyFile.set_boolean (key_file_group, "EnableVideoWallpapers", enableVideoWallpapers);
 		configKeyFile.set_boolean(key_file_group, "MutePlayback", mutePlayback);
 		configKeyFile.set_boolean(key_file_group, "PausePlayback", pausePlayback);
+		configKeyFile.set_boolean(key_file_group, "Autostart", autostart);
 
 		// Delete the file
 		if(configFile.query_exists())
@@ -416,6 +425,42 @@ namespace Komorebi.Utilities {
 			return true;
 
 		return false;
+	}
+
+	public void enableAutostart() {
+		var desktopFileName = "org.komorebiteam.komorebi.desktop";
+		File desktopFile = File.new_build_filename(Config.datadir, "applications", desktopFileName);
+		if(!desktopFile.query_exists()) {
+			print("[WARNING] Desktop file not found, autostart won't work!");
+			return;
+		}
+
+		string[] destPaths = {Environment.get_variable("XDG_CONFIG_HOME"), GLib.Path.build_filename(Environment.get_home_dir(), ".config")};
+
+		foreach(string path in destPaths) {
+			if(path == null || !File.new_for_path(path).query_exists())
+				continue;
+
+			File destFile = File.new_build_filename(path, "autostart", desktopFileName);
+			desktopFile.copy(destFile, FileCopyFlags.NONE);
+			return;
+		}
+
+		print("[WARNING] Couldn't find any user directory config, autostart won't work!");
+	}
+
+	public void disableAutostart() {
+		var desktopFileName = "org.komorebiteam.komorebi.desktop";
+		string[] destPaths = {Environment.get_variable("XDG_CONFIG_HOME"), GLib.Path.build_filename(Environment.get_home_dir(), ".config")};
+
+		foreach(string path in destPaths) {
+			if(path == null || !File.new_for_path(path).query_exists())
+				continue;
+
+			File desktopFile = File.new_build_filename(path, "autostart", desktopFileName);
+			desktopFile.delete();
+			return;
+		}
 	}
 
 	/* A quick way to find a given arg from the args list */

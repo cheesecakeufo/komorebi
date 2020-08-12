@@ -23,6 +23,7 @@ conf = configuration_data()
 conf.set_quoted('PACKAGE_NAME', meson.project_name())
 conf.set_quoted('PACKAGE_VERSION', meson.project_version())
 conf.set_quoted('PKGDATADIR', pkgdatadir)
+conf.set_quoted('DATADIR', join_paths(prefix, datadir))
 komorebiconfiguration = configure_file(input: 'config.vala.in', output: 'config.vala', configuration: conf)
 
 # Compile resources (images, etc,) so that they're built into the app.

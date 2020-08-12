@@ -2,4 +2,5 @@ namespace Config {
         const string package_name = @PACKAGE_NAME@;
         const string package_version = @PACKAGE_VERSION@;
         const string package_datadir = @PKGDATADIR@;
+        const string datadir = @DATADIR@;
 }

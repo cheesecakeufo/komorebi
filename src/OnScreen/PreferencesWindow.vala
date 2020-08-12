@@ -45,6 +45,7 @@ namespace Komorebi.OnScreen {
 		Label aboutLabel = new Label("");
 
 		Gtk.CheckButton twentyFourHoursButton = new Gtk.CheckButton.with_label ("Use 24-hour time");
+		Gtk.CheckButton enableAutostartButton = new Gtk.CheckButton.with_label ("Launch Komorebi on system startup");
 		Gtk.CheckButton showDesktopIconsButton = new Gtk.CheckButton.with_label ("Show desktop icons");
 		Gtk.CheckButton enableVideoWallpapersButton = new Gtk.CheckButton.with_label ("Enable Video Wallpapers (Restarting Komorebi is required)");
 		Gtk.CheckButton mutePlaybackButton = new Gtk.CheckButton.with_label ("Mute Video playback");
@@ -136,6 +137,7 @@ namespace Komorebi.OnScreen {
 
 			// showSystemStatsButton.active = showInfoBox;
 			twentyFourHoursButton.active = timeTwentyFour;
+			enableAutostartButton.active = autostart;
 			showDesktopIconsButton.active = showDesktopIcons;
 			enableVideoWallpapersButton.active = enableVideoWallpapers;
       		mutePlaybackButton.active = mutePlayback;
@@ -212,6 +214,15 @@ namespace Komorebi.OnScreen {
 
 			});
 
+			enableAutostartButton.toggled.connect (() => {
+				autostart = enableAutostartButton.active;
+				if (enableAutostartButton.active)
+					enableAutostart();
+				else
+					disableAutostart();
+				updateConfigurationFile();
+			});
+
 			showDesktopIconsButton.toggled.connect (() => {
 				showDesktopIcons = showDesktopIconsButton.active;
 				updateConfigurationFile();
@@ -279,6 +290,7 @@ namespace Komorebi.OnScreen {
 
 			preferencesPage.add(aboutGrid);
 			preferencesPage.add(twentyFourHoursButton);
+			preferencesPage.add(enableAutostartButton);
 			preferencesPage.add(showDesktopIconsButton);
 			preferencesPage.add(enableVideoWallpapersButton);
       		preferencesPage.add(mutePlaybackButton);
