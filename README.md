@@ -69,7 +69,7 @@ There is no `.rpm` package yet, jump to the [compiling section](#compiling); if 
 Install from the [AUR](https://aur.archlinux.org/packages/komorebi/):
 
 ```bash
-sudo yay -S komorebi
+yay -S komorebi
 ```
 
 or grab the required dependencies:
