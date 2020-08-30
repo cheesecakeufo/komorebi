@@ -7,5 +7,5 @@ Exec=@bindir@/@projectname@-wallpaper-creator
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=GNOME;GTK;System;
+Categories=GNOME;GTK;Settings;DesktopSettings;
 X-GNOME-Autostart-enabled=false
