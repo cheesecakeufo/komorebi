@@ -188,6 +188,7 @@ namespace Komorebi.OnScreen {
 			screenHeight = rectangle.height;
 			screenWidth = rectangle.width;
 
+			set_gravity(Gravity.STATIC);
 			move(rectangle.x, rectangle.y);
 
 		}
