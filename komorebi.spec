@@ -1,7 +1,7 @@
 Name: komorebi
-Version: 2.2.0
+Version: 2.2.1
 Release: 1%{?dist}
-Summary: A beautiful and customizable wallpaper manager for Linux 
+Summary: A beautiful and customizable wallpaper manager for Linux
 License: GPL-3.0
 
 URL: https://github.com/Komorebi-Fork/komorebi
@@ -52,6 +52,5 @@ Komorebi is an awesome animated wallpaper manager for all Linux platforms. It pr
 /usr/share/pixmaps/komorebi
 
 %changelog
-* Sun Aug 30 2020 meson <meson@example.com> - 
-- 
-
+* Sun Aug 30 2020 meson <meson@example.com> -
+-
