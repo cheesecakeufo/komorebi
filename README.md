@@ -11,9 +11,9 @@
 </p>
 
 <p align="center">
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=NvfRy5qMsos
-" target="_blank"><img src="http://img.youtube.com/vi/NvfRy5qMsos/0.jpg" 
-alt="Komorebi Demo" width="240" height="180" border="10" /><br>Watch demo</a>
+<a href="https://www.youtube.com/watch?v=A99dP8b5JEA
+" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/youtube-play.svg" 
+alt="Komorebi Demo" width="100" height="100" border="10" /><br>Watch demo</a>
 </p>
 
 ## What is Komorebi?
